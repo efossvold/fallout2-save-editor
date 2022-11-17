@@ -30,4 +30,4 @@ Inspired by https://github.com/freesalu/fallout-2-editor. Item data (for invento
 
 Based on the great documentation from http://falloutmods.wikia.com/wiki/SAVE.DAT_File_Format
 
-App icon from [getdrawings.com](https://getdrawings.com/get-icon#fallout-2-desktop-icon-76.png)
+App icon from [getdrawings.com](http://getdrawings.com/get-icon#fallout-2-desktop-icon-76.png)
