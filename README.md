@@ -22,6 +22,7 @@ This editor is not in any way extensively tested. The author is not responsible 
 
 ## Known Issues
 
+- App does not open with the full window size so you'll have to expand the window by dragging the corners to view the full app.
 - Quitting the app by clicking on the "Quit" button does not work. Just press Cmd+Q
 
 ## Credits
