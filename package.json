@@ -1,6 +1,7 @@
 {
   "name": "f2-save-editor",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "license": "GNU General Public License v3.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",

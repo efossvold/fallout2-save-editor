@@ -1,72 +1,31 @@
 # Fallout 2 Save Game Editor
 
-Very basic save game editor for Fallout 2 (tested on OSX with the GoG.com version.)
+Basic save game editor for Fallout 2 for MacOS (Windows support might be added later).
 
-Wrote this since I couldn't find any save game editors that immediately worked on OSX (and as a fun little learning project!)
+I wrote this editor for fun as hobby project for learning react-native. While replying the classic Fallout 2 recently I ran into an issue where I got the reputation "childkiller" when a kid accidentally got hit by a shrapnel. This reputation blocks a LOT of quests and there's no way of removing it. To make matters worse I also got eye damage which gives you severely poor aim. One can remove this if you have the doctor skill, but there was also a bug in Fallout CE, where if using the doctor skill the screen would go black. Thus, two major pains ruining the fun. So I could start over or write an editor, obviously I chose the latter.
 
-It _should_ work outside of OSX, but no promises.
+Tested on MacOS Monterey (12.6.1) and Ventura (13.0). Mainly tested with the amazing [Fallout CE](https://github.com/alexbatalov/fallout2-ce) (check it out), but also briefly verified it works with the GoG version.
 
-## Word of Caution
+## Disclaimer
 
-<b>Make a backup of any save files before using this!</b>
+This editor is not in any way extensively tested. The author is not responsible for data lost or corrupted. Use on your own responsibility.
 
-This script edits the save file continuously (i.e. as soon as you set a value it is set in the file) and it is easy to corrupt a save file.
-
-## Usage
-
-Most users will probably want to use the command line shell available by running (requires Python 2.7):
-
-```
-python main.py
-```
-
-(Make sure the save file path defined in `main.py` is correct for your system.)
-
-After selecting a save file, `help` will give you an overview of the available commands:
-
-```
-Command: help
-
-Documented commands (type help <topic>):
-========================================
-exit  help  perks  set_perk  set_skill  set_stat  skills  stats
-```
-
-and you can explore the different commands by `help <command>`
-
-```
-Command: help set_stat
-set_stat [stat]
-        Modify stats. Values are limited to be in [1, 10].
-```
-
-and example usage:
-
-```
-Command: set_skill <TAB>
-Barter          Energy Weapons  Lockpick        Repair          Sneak           Throwing
-Big Guns        First Aid       Melee Weapons   Science         Speech          Traps
-Doctor          Gambling        Outdoorsman     Small Guns      Steal           Unarmed
-Command: set_skill Ene<TAB>
-Command: set_skill Energy Weapons
-[Value: 0] New value: 100
-Done.
-```
-
-_Caveats:_
-
-- Skills are the unmodified value (so for a new game all values are 0.)
-- Some perks can be set to more than `1`, but not all support it (and might crash the game.)
+<b>When clicking "Save" no backup is created. Therefore always manually created a backup.</b>
 
 ## Todo
 
-- Add item editing.
-- Show actual modified skill values.
+- Windows version
+
+## Nice to have
+
+- Add inventory/item editing
 
 ## Known Issues
 
-- Some valid save game files fail the parsing stage. This seems to mostly happen with saves towards the end of the game.
+- Quitting the app by clicking on the "Quit" button does not work. Just press Cmd+Q
 
 ## Credits
+
+Inspired by https://github.com/freesalu/fallout-2-editor. Item data (for inventory) is taken from this repository.
 
 Based on the great documentation from http://falloutmods.wikia.com/wiki/SAVE.DAT_File_Format
