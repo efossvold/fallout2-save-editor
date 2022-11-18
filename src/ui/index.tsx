@@ -22,8 +22,6 @@ export const App = () => {
     fn()
   }, [setCurrentDir])
 
-  console.log({ currentDir })
-
   return (
     <VStack
       bg="gray200"
