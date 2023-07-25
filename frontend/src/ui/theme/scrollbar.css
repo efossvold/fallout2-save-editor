@@ -1,0 +1,15 @@
+.styled-scrollbar {
+  --scrollbar-foreground: #777;
+  --scrollbar-background: #222;
+  scrollbar-color: var(--scrollbar-foreground) var(--scrollbar-background);
+}
+.styled-scrollbar::-webkit-scrollbar {
+  width: 10px; /* Mostly for vertical scrollbars */
+  height: 10px; /* Mostly for horizontal scrollbars */
+}
+.styled-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-foreground);
+}
+.styled-scrollbar::-webkit-scrollbar-track {
+  background: var(--scrollbar-background);
+}

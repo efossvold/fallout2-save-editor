@@ -1,0 +1,18 @@
+.gitignore
+.history/*
+.idea/*
+.vscode/*
+**/dist/**
+**/node_modules/**
+**/wailsjs/**
+docker/*
+node_modules
+
+# Disable standard JS linting
+**/*.js
+
+# "Includes"
+!.eslintrc.js
+!**/scripts/*
+!packages/eslint/*.js
+!packages/web-components/src/components/map/layers/animated-line-layer.js
