@@ -7,10 +7,21 @@ import type * as MT from './types/map'
 import type { Getters, SaveHandler, Setters } from './types/save-handler'
 import * as U from './utils'
 
-export const saveHandler = (): SaveHandler => {
+interface SaveHandlerArgs {
+  isDebug?: boolean
+}
+
+export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
   let buffer: Buffer
+  const isDebug = args?.isDebug ?? false
   const map = M.createMap()
   const saveData = createSaveData()
+
+  const logger = (...text: any[]): void => {
+    if (isDebug) {
+      console.log(...text)
+    }
+  }
 
   // const gameStartDate = new Date(2241, 6, 25)
 
@@ -156,6 +167,8 @@ export const saveHandler = (): SaveHandler => {
     sectionName: SectionName,
     customOffset?: number,
   ): ReturnType => {
+    // logger('getSectionData', sectionName)
+
     const offset = customOffset || getOffset(sectionName)
     return Object.entries(map[sectionName].keys).reduce(
       (acc: ReturnType, [key, entry]) => {
@@ -163,6 +176,7 @@ export const saveHandler = (): SaveHandler => {
 
         // @ts-ignore
         saveData[key] = value
+
         // @ts-ignore
         acc[key] = value
         return acc
@@ -176,6 +190,7 @@ export const saveHandler = (): SaveHandler => {
     sectionName: SectionName,
     data: MT.SaveGameData,
   ): void => {
+    logger('setSectionData', sectionName)
     const offset = getOffset(sectionName)
     U.entries(map[sectionName].keys).forEach(([key, spec]) => {
       // @ts-ignore
@@ -437,7 +452,7 @@ export const saveHandler = (): SaveHandler => {
     },
 
     getData() {
-      return saveData
+      return { ...saveData }
     },
   }
 }

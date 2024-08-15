@@ -18,7 +18,7 @@ const n = (skill: {
   desc: skill.dsc,
 })
 
-export const SKILLS: SkillData = Object.freeze({
+export const SKILLS: SkillData = {
   skillSmallGuns: n({
     id: 0,
     n: 'Small Guns',
@@ -170,7 +170,7 @@ export const SKILLS: SkillData = Object.freeze({
     attr2: 'intelligence',
     dsc: 'Practical knowledge of the outdoors, and the ability to live off the land. The knowledge of plants and animals.',
   }),
-})
+} as const
 
 // https://wiki.fonline2.com/Category:Skills#Skill_expanding_costs
 export const SKILL_COST_TABLES = [

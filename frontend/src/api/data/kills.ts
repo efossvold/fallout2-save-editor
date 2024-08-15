@@ -6,7 +6,7 @@ const n = ({ id, name, desc }: Kill): Kill => ({
   desc,
 })
 
-export const KILLS = Object.freeze({
+export const KILLS = {
   men: n({
     id: 0,
     name: 'Men',
@@ -102,4 +102,4 @@ export const KILLS = Object.freeze({
     name: 'Big Bad Boss',
     desc: 'The count of genetically-engineered total homicidal maniac cyborg bodyguards you have wasted.',
   }),
-})
+} as const

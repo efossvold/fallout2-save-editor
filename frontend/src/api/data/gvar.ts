@@ -13,7 +13,7 @@ const n = ({
   maxValue,
 })
 
-export const GVARS = Object.freeze({
+export const GVARS = {
   playerReputation: n({
     id: 0,
     name: 'Karma (Reputation)',
@@ -101,4 +101,4 @@ export const GVARS = Object.freeze({
     name: 'Separated',
     desc: `Your spouse is no longer with you. I hope you're happy.`,
   }),
-})
+} as const

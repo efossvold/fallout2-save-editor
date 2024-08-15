@@ -8,15 +8,19 @@ import { saveHandler } from '../api/save-handler'
 import type * as M from '../api/types/map'
 import * as U from '../api/utils'
 import { getPerk } from './selectors'
-import type { SaveHandler } from '../api/types/save-handler'
 
-export interface StoreState extends SaveHandler {
+export const handler = saveHandler({ isDebug: false })
+
+export interface StoreState {
   data: M.SaveGameData
   currentSaveFile: string | null
 
   adjustStatsFromPerk: (name: keyof PerkValues, level: number) => void
   load: (filename: string, base64: string) => void
   save: () => void
+  getProp: <Prop extends keyof M.SaveGameData>(
+    prop: Prop,
+  ) => M.SaveGameData[Prop]
   setProp: <
     Prop extends keyof M.SaveGameData,
     Type extends M.SaveGameData[Prop],
@@ -27,10 +31,7 @@ export interface StoreState extends SaveHandler {
   setCrippledLimb: (bodyPart: keyof typeof Crippled, value: boolean) => void
 }
 
-const handler = saveHandler()
-
 export const useAPIStore = create<StoreState>((set, get) => ({
-  ...handler,
   data: createSaveData(),
   currentSaveFile: null,
 
@@ -42,6 +43,7 @@ export const useAPIStore = create<StoreState>((set, get) => ({
       produce(state, draft => {
         // [Perk name, Affected stat, value of adjustment]
         const table: [keyof PerkValues, StatNames, number][] = [
+          ['perkActionBoy', 'bonusAP', 1],
           ['perkDodger', 'bonusAC', 5],
           ['perkEarlierSequence', 'bonusSequence', 2],
           ['perkFasterHealing', 'bonusHealingRate', 2],
@@ -77,9 +79,11 @@ export const useAPIStore = create<StoreState>((set, get) => ({
   save() {
     const { currentSaveFile, data } = get()
     if (currentSaveFile) {
-      handler.setData(data)
+      handler.setData({ ...data })
     }
   },
+
+  getProp: prop => get().data[prop],
 
   setProp(prop, value) {
     set(state =>

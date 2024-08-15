@@ -97,12 +97,10 @@ export const calcValueFromPerk = createSelector(
 export const calcValueFromTrait = createSelector(
   [
     getState,
-    (s: StoreState, name: StatNames, baseValue: number) => ({
-      name,
-      baseValue,
-    }),
+    (s: StoreState, name: StatNames) => name,
+    (s: StoreState, name: StatNames, baseValue: number) => baseValue,
   ],
-  (s, { name, baseValue }) => {
+  (s, name, baseValue) => {
     // [Trait name, Affected stat(s), new value or fn calculating value, replace original value (don't derived)]
     const table: [
       TraitNames,

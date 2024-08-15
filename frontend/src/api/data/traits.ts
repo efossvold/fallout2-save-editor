@@ -2,7 +2,7 @@ import type { Trait } from '../types/traits'
 
 const n = (perk: Trait): Trait => perk
 
-export const TRAITS = Object.freeze({
+export const TRAITS = {
   fastMetabolism: n({
     id: 0,
     name: 'Fast Metabolism',
@@ -83,4 +83,4 @@ export const TRAITS = Object.freeze({
     name: 'Gifted',
     desc: 'You have more innate abilities than most, so you have not spent as much time honing your skills. Your primary statistics are each +1, but you lose -10% on all skills to start, and receive 5 less skill points per level.',
   }),
-})
+} as const

@@ -13,7 +13,7 @@ const n = ({
   ranks,
 })
 
-export const PERKS = Object.freeze({
+export const PERKS = {
   awareness: n({
     id: 0,
     name: 'Awareness',
@@ -613,4 +613,4 @@ export const PERKS = Object.freeze({
     name: 'Weapon Enhanced Knockout',
     desc: 'All critical hits cause knockout in addition to their regular effects. Characters with 9 ST have a 1% chance of causing knockout on a regular hit. Characters with 10 ST have a 2% chance of causing knockout on a regular hit.',
   }),
-})
+} as const

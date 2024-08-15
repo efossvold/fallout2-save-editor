@@ -15,7 +15,7 @@ import { useToaster } from './hooks'
 import { Hoverable } from './hoverable'
 import { Logo } from './logo'
 import * as S from './selectors'
-import { useAPIStore } from './store'
+import { useAPIStore, handler } from './store'
 import { colors } from './theme'
 import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
 import { basename, dirname } from './utils'
@@ -96,7 +96,7 @@ const SaveGameMeta = () => {
 
 export const Toolbar = () => {
   const isLargerThanMedium = useIsLargerThanMedium()
-  const { save, toBase64, currentSaveFile } = useAPIStore(s => s)
+  const { save, currentSaveFile } = useAPIStore(s => s)
   const load = useAPIStore(s => s.load)
   const toast = useToaster()
 
@@ -136,9 +136,8 @@ export const Toolbar = () => {
             onClick={async () => {
               try {
                 save()
-
                 const [filename, error] = await SaveFile(
-                  toBase64(),
+                  handler.toBase64(),
                   dirname(currentSaveFile || ''),
                   basename(currentSaveFile || ''),
                 )
