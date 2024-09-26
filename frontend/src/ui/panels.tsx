@@ -2,6 +2,7 @@ import {
   Grid,
   GridItem,
   Stack,
+  Text,
   VStack,
   useBreakpointValue,
 } from '@chakra-ui/react'
@@ -101,6 +102,15 @@ export const Panels = () => {
           <Panel bg="beige.500" h="100%" minHeight={['220px', 'none']}>
             <HelpText />
           </Panel>
+          <Text
+            fontSize={12}
+            color="gray.600"
+            position="absolute"
+            right={3}
+            bottom={1}
+          >
+            v1.1.3
+          </Text>
         </GridItem>
       </Grid>
     </VStack>
