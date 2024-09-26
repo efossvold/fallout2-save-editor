@@ -109,7 +109,7 @@ export const Panels = () => {
             right={3}
             bottom={1}
           >
-            v1.1.3
+            v1.1.2
           </Text>
         </GridItem>
       </Grid>
