@@ -1,8 +1,7 @@
-import type { BoxProps } from '@chakra-ui/react'
 import { Box, Text } from '@chakra-ui/react'
 import { useHelpTextStore } from './store'
 
-export const HelpText = (p: BoxProps) => {
+export const HelpText = () => {
   const title = useHelpTextStore(s => s.title)
   const helpText = useHelpTextStore(s => s.helpText)
 

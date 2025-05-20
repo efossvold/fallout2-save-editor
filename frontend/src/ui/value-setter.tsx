@@ -21,10 +21,10 @@ interface Props {
   color?: string
   hoverColor?: string
   dimOnZero?: boolean
-  minBaseValue?: number | null
-  maxBaseValue?: number | null
-  minBonusValue?: number | null
-  maxBonusValue?: number | null
+  minBaseValue?: number | undefined
+  maxBaseValue?: number | undefined
+  minBonusValue?: number | undefined
+  maxBonusValue?: number | undefined
   isMinValue?: boolean
   isMaxValue?: boolean
   minValueMsg?: string | boolean
@@ -46,9 +46,9 @@ export const ValueSetter = ({
   hoverColor,
   dimOnZero = true,
   minBaseValue = 0,
-  maxBaseValue = null,
-  minBonusValue = null,
-  maxBonusValue = null,
+  maxBaseValue,
+  minBonusValue,
+  maxBonusValue,
   isMinValue,
   isMaxValue,
   minValueMsg = 'Min level reached',
@@ -62,15 +62,12 @@ export const ValueSetter = ({
   const setHelpText = useHelpTextStore(s => s.setHelpText)
 
   const getColor = (isHovered: boolean) => {
+    // eslint-disable-next-line prefer-destructuring
     let defaultColor: TColor = colors.green[600]
 
-    if (dimOnZero && totalValue < 1) {
-      defaultColor = 'green.900'
-    } else {
-      defaultColor = 'green.200'
-    }
+    defaultColor = dimOnZero && totalValue < 1 ? 'green.900' : 'green.200'
 
-    return getHoverColor(isHovered, color || defaultColor, hoverColor)
+    return getHoverColor(isHovered, color ?? defaultColor, hoverColor)
   }
 
   const onIncreasePress = (
@@ -80,8 +77,8 @@ export const ValueSetter = ({
     ev.stopPropagation()
 
     if (
-      (maxBaseValue !== null && baseValue >= maxBaseValue) ||
-      (maxBonusValue !== null && bonusValue >= maxBonusValue) ||
+      (maxBaseValue && baseValue >= maxBaseValue) ||
+      (maxBonusValue && bonusValue >= maxBonusValue) ||
       isMaxValue
     ) {
       if (maxValueMsg) {
@@ -100,8 +97,8 @@ export const ValueSetter = ({
     ev.stopPropagation()
 
     if (
-      (minBaseValue !== null && baseValue <= minBaseValue) ||
-      (minBonusValue !== null && bonusValue <= minBonusValue) ||
+      (minBaseValue && baseValue <= minBaseValue) ||
+      (minBonusValue && bonusValue <= minBonusValue) ||
       isMinValue
     ) {
       if (minValueMsg) {
@@ -115,7 +112,7 @@ export const ValueSetter = ({
 
   return (
     <Hoverable
-      onHover={() => setHelpText(helperTitle || name, helperText)}
+      onHover={() => setHelpText(helperTitle ?? name, helperText)}
       // onUnhover={() => clearHelpText()}
       w="100%"
     >
@@ -146,7 +143,7 @@ export const ValueSetter = ({
             )}
 
             <Text color={getColor(isHovered)}>
-              {valueText || `${totalValue}${unit}`}
+              {valueText ?? `${totalValue}${unit}`}
             </Text>
             {showControls && (
               <Hoverable>

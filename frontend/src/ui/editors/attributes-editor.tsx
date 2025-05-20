@@ -3,10 +3,10 @@ import { ATTRIBUTES } from '../../api/data/attributes'
 import { captializeFirstLetter, entries } from '../../api/utils'
 import { useHelpTextStore } from '../help-text/store'
 import { Hoverable } from '../hoverable'
-import { AttrValueSetter } from './attributes-value-setter'
 import { colors } from '../theme'
 import { useIsMobile } from '../theme/media-queries'
 import { TOOLTIP_PROPS } from '../constants'
+import { AttrValueSetter } from './attributes-value-setter'
 
 export const AttributesEditor = () => {
   const setHelpText = useHelpTextStore(s => s.setHelpText)

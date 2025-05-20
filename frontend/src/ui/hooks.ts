@@ -9,21 +9,20 @@ type GetColor = (
   hoveredColor?: TColor,
 ) => TColor
 
-export const useHoverColor = (): GetColor => {
-  const getColor: GetColor = (isHovered, notHoveredColor, hoveredColor) => {
-    if (isHovered) {
-      const defaultColor: TColor = 'gray.50'
-      return hoveredColor || defaultColor
-    }
-    if (typeof notHoveredColor === 'function') {
-      return notHoveredColor()
-    }
-    return notHoveredColor
+const getColor: GetColor = (isHovered, notHoveredColor, hoveredColor) => {
+  if (isHovered) {
+    const defaultColor: TColor = 'gray.50'
+    return hoveredColor ?? defaultColor
   }
-  return getColor
+  if (typeof notHoveredColor === 'function') {
+    return notHoveredColor()
+  }
+  return notHoveredColor
 }
 
-export type Disclosure = {
+export const useHoverColor = () => getColor
+
+export interface Disclosure {
   isOpen: boolean
   onOpen: () => void
   onClose: () => void
@@ -31,7 +30,7 @@ export type Disclosure = {
 }
 
 export const useDisclose = (initState?: boolean): Disclosure => {
-  const [isOpen, setIsOpen] = useState(initState || false)
+  const [isOpen, setIsOpen] = useState(initState ?? false)
 
   const onOpen = (): void => {
     setIsOpen(true)
@@ -78,10 +77,10 @@ export const useHover = <ElementType extends HTMLElement>(): [
   return [ref, value] as [typeof ref, typeof value]
 }
 
-type TUseToasterReturnType = {
-  info: (message: string, opts?: UseToastOptions | undefined) => void
-  success: (message: string, opts?: UseToastOptions | undefined) => void
-  error: (message: string, opts?: UseToastOptions | undefined) => void
+interface TUseToasterReturnType {
+  info: (message: string, opts?: UseToastOptions) => void
+  success: (message: string, opts?: UseToastOptions) => void
+  error: (message: string, opts?: UseToastOptions) => void
 }
 
 export const useToaster = (): TUseToasterReturnType => {
@@ -95,7 +94,7 @@ export const useToaster = (): TUseToasterReturnType => {
   return {
     info: (message: string, opts?: UseToastOptions) => {
       toast({
-        title: opts?.title || 'Info',
+        title: opts?.title ?? 'Info',
         description: message,
         status: 'info',
         ...defaultOpts,
@@ -104,7 +103,7 @@ export const useToaster = (): TUseToasterReturnType => {
     },
     success: (message: string, opts?: UseToastOptions) => {
       toast({
-        title: opts?.title || 'Success',
+        title: opts?.title ?? 'Success',
         description: message,
         status: 'success',
         ...defaultOpts,
@@ -113,7 +112,7 @@ export const useToaster = (): TUseToasterReturnType => {
     },
     error: (message: string, opts?: UseToastOptions) => {
       toast({
-        title: opts?.title || 'Error',
+        title: opts?.title ?? 'Error',
         description: message,
         status: 'error',
         ...defaultOpts,

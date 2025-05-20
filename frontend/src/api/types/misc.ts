@@ -7,7 +7,7 @@ export type DictValues<D extends Record<string, unknown>, T> = {
 export type MakeOptional<T, K> = Pick<T, Exclude<keyof T, K>> & Partial<T>
 
 export type PrefixedDictIndices<
-  Names extends string | string,
+  Names extends string,
   ValueType,
   Prefix extends string = '',
 > = {
@@ -21,4 +21,4 @@ export type UnionToDict<Union extends string, Type, Prefix extends string> = {
 export interface IError {
   message: string
 }
-export type MayBeError = Error | string | IError | unknown
+export type MayBeError = Error | string | IError

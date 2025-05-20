@@ -10,6 +10,6 @@ interface HelpTextState {
 export const useHelpTextStore = create<HelpTextState>(set => ({
   title: '',
   helpText: '',
-  setHelpText: (title, text) => set(state => ({ title, helpText: text })),
-  clearHelpText: () => set(state => ({ title: '', helpText: '' })),
+  setHelpText: (title, text) => set(_state => ({ title, helpText: text })),
+  clearHelpText: () => set(_state => ({ title: '', helpText: '' })),
 }))

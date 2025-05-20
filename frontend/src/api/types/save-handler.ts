@@ -29,7 +29,7 @@ export type SaveHandler = {
   findF9Offset(): number
   getInventoryItems(): InventoryItem[]
   getPreferences(): void
-  fromBase64(data: string): void
+  fromBase64(data: string): SaveHandler
   setData(data: M.SaveGameData): void
   toBase64(): string
   getData(): M.SaveGameData

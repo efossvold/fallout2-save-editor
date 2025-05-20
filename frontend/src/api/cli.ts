@@ -1,4 +1,4 @@
-import { homedir } from 'os'
+import { homedir } from 'node:os'
 import { saveHandler } from './save-handler'
 import data from './slot01-stats.base64'
 

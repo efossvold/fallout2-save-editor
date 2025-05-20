@@ -10,4 +10,4 @@ export interface Perk {
 }
 
 export type PerkValues = PrefixedDictIndices<keyof typeof PERKS, number, 'perk'>
-export type PerksMap = DictValues<PerkValues, MapKeyValueEntry<number>>
+export type PerksMap = DictValues<PerkValues, MapKeyValueEntry>

@@ -11,20 +11,21 @@ import {
   GridItem,
   useBreakpointValue,
 } from '@chakra-ui/react'
+import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
+import { getError } from '../api/utils'
+import type { MayBeError } from '../api/types/misc'
 import { useToaster } from './hooks'
 import { Hoverable } from './hoverable'
 import { Logo } from './logo'
 import * as S from './selectors'
 import { useAPIStore, handler } from './store'
 import { colors } from './theme'
-import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
 import { basename, dirname } from './utils'
 import { useIsLargerThanMedium } from './theme/media-queries'
-import { getError } from '../api/utils'
 import { TOOLTIP_PROPS } from './constants'
 
 export const IText = (p: PropsWithChildren<TextProps>) => (
-  <Text color={p.color || 'gray600'} fontSize={12}>
+  <Text color={p.color ?? 'gray600'} fontSize={12}>
     {p.children}
   </Text>
 )
@@ -76,7 +77,7 @@ const SaveGameMeta = () => {
           <Box cursor="pointer">
             <InfoItem
               name="Path"
-              value={`${currentSaveFile?.split('/').slice(-2).join('/')}`}
+              value={`${currentSaveFile.split('/').slice(-2).join('/')}`}
             />
           </Box>
         </Tooltip>
@@ -91,7 +92,9 @@ const SaveGameMeta = () => {
         <InfoItem name="Game version" value={gameVersion} />
       </GridItem>
     </Grid>
-  ) : null
+  ) : (
+    <></>
+  )
 }
 
 export const Toolbar = () => {
@@ -118,14 +121,18 @@ export const Toolbar = () => {
           <IButton
             onClick={async () => {
               try {
-                const [path, content, error] = await ReadFile()
+                const [path, content, error] = (await ReadFile()) as [
+                  string,
+                  string,
+                  string,
+                ]
                 if (error) {
                   toast.error(error)
                 } else if (path) {
                   load(path, content)
                 }
-              } catch (err) {
-                toast.error(getError(err).message)
+              } catch (error) {
+                toast.error(getError(error as MayBeError).message)
               }
             }}
           >
@@ -136,18 +143,18 @@ export const Toolbar = () => {
             onClick={async () => {
               try {
                 save()
-                const [filename, error] = await SaveFile(
+                const [filename, error] = (await SaveFile(
                   handler.toBase64(),
-                  dirname(currentSaveFile || ''),
-                  basename(currentSaveFile || ''),
-                )
+                  dirname(currentSaveFile ?? ''),
+                  basename(currentSaveFile ?? ''),
+                )) as [string, string]
                 if (error) {
                   toast.error(error)
                 } else if (filename) {
                   toast.success('Save successful')
                 }
-              } catch (err) {
-                toast.error(getError(err).message)
+              } catch (error) {
+                toast.error(getError(error as MayBeError).message)
               }
             }}
           >
@@ -155,7 +162,7 @@ export const Toolbar = () => {
           </IButton>
           <IButton
             onClick={() => {
-              window.runtime.Quit()
+              globalThis.runtime.Quit()
             }}
           >
             Quit

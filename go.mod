@@ -1,10 +1,10 @@
-module changeme
+module F2SaveEditor
 
 go 1.21
 
-toolchain go1.22.1
+toolchain go1.23.8
 
-require github.com/wailsapp/wails/v2 v2.9.2
+require github.com/wailsapp/wails/v2 v2.9.1
 
 require (
 	github.com/bep/debounce v1.2.1 // indirect
@@ -27,7 +27,7 @@ require (
 	github.com/tkrajina/go-reflector v0.5.6 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
-	github.com/wailsapp/go-webview2 v1.0.16 // indirect
+	github.com/wailsapp/go-webview2 v1.0.10 // indirect
 	github.com/wailsapp/mimetype v1.4.1 // indirect
 	golang.org/x/crypto v0.23.0 // indirect
 	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1 // indirect
@@ -35,3 +35,5 @@ require (
 	golang.org/x/sys v0.20.0 // indirect
 	golang.org/x/text v0.15.0 // indirect
 )
+
+// replace github.com/wailsapp/wails/v2 v2.9.1 => /Users/erikfossvold/go/pkg/mod

@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-shadow
 export enum Crippled {
   DEAD = 0,
   LEFT_LEG = 2,

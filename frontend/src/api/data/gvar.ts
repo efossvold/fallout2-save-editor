@@ -18,13 +18,13 @@ export const GVARS = {
     id: 0,
     name: 'Karma (Reputation)',
     desc: 'This is a ranged stat that represents your general reputation. The higher the number, the better known and respected you are. If your rep is negative, you are hated by some for your evil actions.',
-    maxValue: null,
+    maxValue: undefined,
   }),
   childkiller: n({
     id: 1,
     name: 'Childkiller',
     desc: 'You have killed children, the youth of the wasteland. This is considered to be a really bad thing. You evil, evil person.',
-    maxValue: null,
+    maxValue: undefined,
   }),
   champion: n({
     id: 2,

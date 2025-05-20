@@ -31,9 +31,9 @@ export interface Skill {
   baseValue: number
   multiplier: number
   associatedAttr1: keyof AttributesValues
-  associatedAttr2?: keyof AttributesValues | null
+  associatedAttr2?: keyof AttributesValues
   desc: string
 }
 
 export type SkillValues = { [Key in keyof typeof SKILLS]: number }
-export type SkillMap = DictValues<SkillValues, MapKeyValueEntry<number>>
+export type SkillMap = DictValues<SkillValues, MapKeyValueEntry>

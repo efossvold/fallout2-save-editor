@@ -15,15 +15,14 @@ export const m = (
   offset: number,
   length: number,
   kind: T.MapValueTypes = 'int',
-): T.MapKeyValueEntry<any> => ({
+): T.MapKeyValueEntry => ({
   name,
   offset,
   length,
   kind,
-  type: null,
 })
 
-export const F5_MARKER = '\x00\x00\x46\x50'
+export const F5_MARKER = '\u0000\u0000\u0046\u0050'
 
 export const INVENTORY_ALWAYS_ZERO = [
   m('', 0x0c, 0x04),
@@ -39,7 +38,7 @@ export const INVENTORY_ALWAYS_ZERO = [
 export const createMap = (): T.SaveMap => {
   const map: T.SaveMap = {
     header: {
-      size: 0x7563,
+      size: 0x75_63,
       offset: 0x0,
       keys: {
         gameVersion: m('Game version', 0x18, 0x04, 'float'),
@@ -53,7 +52,7 @@ export const createMap = (): T.SaveMap => {
     },
     f2: {
       size: -1,
-      offset: 0x7567,
+      offset: 0x75_67,
       keys: entries(GVARS).reduce<GVARMap>(
         (acc, [key, value]) => ({
           ...acc,
@@ -63,13 +62,12 @@ export const createMap = (): T.SaveMap => {
             0x04,
           ),
         }),
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         {} as GVARMap,
       ),
     },
     f5: {
       size: -1,
-      offset: null,
+      offset: -1,
       keys: {
         numInventoryItems: m('', 0x48, 0x04),
         currentHP: m('', 0x74, 0x04),
@@ -79,8 +77,8 @@ export const createMap = (): T.SaveMap => {
       },
     },
     f6: {
-      size: 0x0178,
-      offset: null,
+      size: 0x01_78,
+      offset: -1,
       keys: {
         baseHP: m('', 0x24, 0x04),
         baseAP: m('', 0x28, 0x04),
@@ -128,14 +126,14 @@ export const createMap = (): T.SaveMap => {
         bonusDmgResistanceNormal: m('', 0xf4, 0x04),
         bonusDmgResistanceLaser: m('', 0xf8, 0x04),
         bonusDmgResistanceFire: m('', 0xfc, 0x04),
-        bonusDmgResistancePlasma: m('', 0x0100, 0x04),
-        bonusDmgResistanceElectrical: m('', 0x0104, 0x04),
-        bonusDmgResistanceEMP: m('', 0x0108, 0x04),
-        bonusDmgResistanceExplosive: m('', 0x010c, 0x04),
-        bonusRadiationResistance: m('', 0x0110, 0x04),
-        bonusPoisonResistance: m('', 0x0114, 0x04),
-        bonusAge: m('', 0x0118, 0x04),
-        bonusGender: m('', 0x011c, 0x04), // 0 = male, 1 = female
+        bonusDmgResistancePlasma: m('', 0x01_00, 0x04),
+        bonusDmgResistanceElectrical: m('', 0x01_04, 0x04),
+        bonusDmgResistanceEMP: m('', 0x01_08, 0x04),
+        bonusDmgResistanceExplosive: m('', 0x01_0c, 0x04),
+        bonusRadiationResistance: m('', 0x01_10, 0x04),
+        bonusPoisonResistance: m('', 0x01_14, 0x04),
+        bonusAge: m('', 0x01_18, 0x04),
+        bonusGender: m('', 0x01_1c, 0x04), // 0 = male, 1 = female
 
         baseAttrStrength: m('', 0x08, 0x04),
         baseAttrPerception: m('', 0x0c, 0x04),
@@ -156,16 +154,15 @@ export const createMap = (): T.SaveMap => {
         ...entries(SKILLS).reduce<SkillMap>(
           (acc, [key, value]) => ({
             ...acc,
-            [key]: m(value.name, 0x0120 + value.id * 0x04, 0x04),
+            [key]: m(value.name, 0x01_20 + value.id * 0x04, 0x04),
           }),
-          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           {} as SkillMap,
         ),
       },
     },
     f7: {
       size: 0x4c,
-      offset: null,
+      offset: -1,
       keys: {
         ...entries(KILLS).reduce<KillMap>(
           (acc, [key, value]) => ({
@@ -176,14 +173,13 @@ export const createMap = (): T.SaveMap => {
               0x04,
             ),
           }),
-          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           {} as KillMap,
         ),
       },
     },
     f8: {
       size: 0x10,
-      offset: null,
+      offset: -1,
       keys: {
         taggedSkill1: m('', 0x00, 0x04),
         taggedSkill2: m('', 0x04, 0x04),
@@ -192,8 +188,8 @@ export const createMap = (): T.SaveMap => {
       },
     },
     f9: {
-      size: 0x02c8,
-      offset: null,
+      size: 0x02_c8,
+      offset: -1,
       keys: entries(PERKS).reduce<PerksMap>(
         (acc, [key, value]) => ({
           ...acc,
@@ -203,13 +199,12 @@ export const createMap = (): T.SaveMap => {
             0x04,
           ),
         }),
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         {} as PerksMap,
       ),
     },
     f13: {
       size: 0x14,
-      offset: null,
+      offset: -1,
       keys: {
         qtySkillPoints: m('', 0x00, 0x04),
         playerLevel: m('', 0x04, 0x04),
@@ -218,12 +213,12 @@ export const createMap = (): T.SaveMap => {
     },
     f14: {
       size: 0x00,
-      offset: null,
+      offset: -1,
       keys: {},
     },
     f15: {
       size: 0x08,
-      offset: null,
+      offset: -1,
       keys: {
         trait1: m('', 0x00, 0x04),
         trait2: m('', 0x04, 0x04),
@@ -231,12 +226,12 @@ export const createMap = (): T.SaveMap => {
     },
     f16: {
       size: 0x04,
-      offset: null,
+      offset: -1,
       keys: {},
     },
     f17: {
       size: 0x50,
-      offset: null,
+      offset: -1,
       keys: {
         prefGameDifficulty: m('', 0x00, 0x04),
         prefCombatDifficulty: m('', 0x04, 0x04),
@@ -263,17 +258,17 @@ export const createMap = (): T.SaveMap => {
   }
 
   // Name all unnamed specs
-  Object.values(map).forEach(section => {
-    Object.entries(section).forEach(([key, value]) => {
+  for (const section of Object.values(map)) {
+    for (const [key, _value] of Object.entries(section)) {
       if (key === 'keys') {
-        Object.entries(section['keys']).forEach(([name, spec]) => {
-          if (spec && typeof spec === 'object' && spec['name'] === '') {
-            spec['name'] = name
+        for (const [name, spec] of Object.entries(section.keys)) {
+          if (typeof spec === 'object' && spec.name === '') {
+            spec.name = name
           }
-        })
+        }
       }
-    })
-  })
+    }
+  }
 
   return map
 }

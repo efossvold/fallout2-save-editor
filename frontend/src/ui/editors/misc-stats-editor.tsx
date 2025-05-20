@@ -82,7 +82,6 @@ export const MiscStatsEditor = () => {
           baseValue={data.baseDmgResistanceNormal}
           bonusValue={data.bonusDmgResistanceNormal}
           unit="%"
-          minBaseValue={null}
           minBonusValue={0}
           dimOnZero={false}
           helperText="Any damage taken is reduced by this amount. Damage Resistance can be increased by wearing armor."

@@ -1,11 +1,13 @@
-import type { Dict, IError, MayBeError } from './types/misc'
+import type { Dict, MayBeError } from './types/misc'
 
-/* eslint-disable no-bitwise */
+type Entries<T> = {
+  [K in keyof T]: [K, T[K]]
+}[keyof T][]
+
 export const bitTest = (num: number, bit: number): boolean =>
   (num >> bit) % 2 !== 0
 export const bitSet = (num: number, bit: number): number => num | (1 << bit)
 export const bitClear = (num: number, bit: number): number => num & ~(1 << bit)
-/* eslint-enable no-bitwise */
 
 export const bitToggle = (num: number, bit: number): number =>
   bitTest(num, bit) ? bitClear(num, bit) : bitSet(num, bit)
@@ -13,12 +15,8 @@ export const bitToggle = (num: number, bit: number): number =>
 export const ucFirstChar = (str: string): string =>
   str.charAt(0).toUpperCase() + str.slice(1)
 
-export const keysOf = <T extends Dict<unknown>>(obj: T): Array<keyof T> =>
-  Array.from(Object.keys(obj))
-
-type Entries<T> = {
-  [K in keyof T]: [K, T[K]]
-}[keyof T][]
+export const keysOf = <T extends Dict<unknown>>(obj: T): (keyof T)[] =>
+  Object.keys(obj)
 
 export const entries = <T extends Dict<unknown>>(obj: T): Entries<T> =>
   Object.entries(obj) as Entries<T>
@@ -33,8 +31,12 @@ export const sortObjByKey = <Type>(
   ])
 
   items.sort((a, b) => {
-    if (a[1][key] > b[1][key]) return 1
-    if (a[1][key] < b[1][key]) return -1
+    if (a[1][key] > b[1][key]) {
+      return 1
+    }
+    if (a[1][key] < b[1][key]) {
+      return -1
+    }
     return 0
   })
 
@@ -45,9 +47,10 @@ export const loop = (
   times: number,
   callback: (count: number) => void,
 ): void => {
-  Array(times)
-    .fill(0)
-    .forEach((item, i) => callback(i))
+  const range = Array.from<number>({ length: times }).fill(0)
+  for (const [index, _] of range.entries()) {
+    callback(index)
+  }
 }
 
 export const getError = <Err extends MayBeError>(
@@ -59,16 +62,18 @@ export const getError = <Err extends MayBeError>(
   if (error instanceof Error) {
     errObj = error
   } else if (typeof error === 'string') {
-    errObj = Error(error)
-  } else if (typeof error === 'object' && (error as IError).message) {
+    errObj = new Error(error)
+  } else if (typeof error === 'object' && error.message) {
     errObj = error as Error
   } else {
-    const message = `getError: Unknown error type: ${error as string}`
+    const message = `getError: Unknown error type: ${error as unknown as string}`
     console.error(message)
-    return Error(message)
+    return new Error(message)
   }
 
-  if (log) console.error(errObj.message)
+  if (log) {
+    console.error(errObj.message)
+  }
 
   return errObj
 }
@@ -81,5 +86,4 @@ export const captializeFirstLetter = <Value extends string>(
 export const prefixString = <Value extends string, Prefix extends string>(
   s: Value,
   prefix: Prefix,
-): `${Prefix}${Capitalize<Value>}` =>
-  `${prefix}${captializeFirstLetter(s)}` as `${Prefix}${Capitalize<Value>}`
+): `${Prefix}${Capitalize<Value>}` => `${prefix}${captializeFirstLetter(s)}`

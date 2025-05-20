@@ -16,7 +16,7 @@ interface PanelHeaderProps {
 }
 
 export const PanelHeader = (p: PanelHeaderProps) => (
-  <Text color={p.color || colors.beige[500]} mb={LINE_HEIGHT} textAlign="left">
+  <Text color={p.color ?? colors.beige[500]} mb={LINE_HEIGHT} textAlign="left">
     {p.text}
   </Text>
 )

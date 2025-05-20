@@ -5,19 +5,19 @@ import type { GVARValues } from '../api/types/gvar'
 import type { KillValues } from '../api/types/kill'
 import { PERKS } from '../api/data/perks'
 import { ATTRIBUTES, BASE_ATTRIBUTES_NAMES } from '../api/data/attributes'
-import { SKILLS, SKILL_COST_TABLES } from '../api/data/skills'
+import { SKILLS, SKILL_COST } from '../api/data/skills'
 import type { AttributesValues } from '../api/types/attributes'
 import type { SkillValues } from '../api/types/skills'
 import type { TraitNames, TraitValues } from '../api/types/traits'
 import { Crippled } from '../api/data/crippled'
 import { TRAITS } from '../api/data/traits'
 import * as U from '../api/utils'
-import { ATTR_PREFIX, GAME_START_DATE } from './constants'
-import type { StoreState } from './store'
 import type { PerkValues } from '../api/types/perks'
 import type { StatNames } from '../api/save-data'
 import { KILLS } from '../api/data/kills'
 import type { SaveGameData } from '../api/types/map'
+import type { StoreState } from './store'
+import { ATTR_PREFIX, GAME_START_DATE } from './constants'
 
 const getState = (s: StoreState): StoreState => s
 const getData = (s: StoreState): SaveGameData => s.data
@@ -27,7 +27,7 @@ const getData = (s: StoreState): SaveGameData => s.data
 // to bonus value of the stat. Adjustments here are
 // only for "live" view in editor, they are not saved.
 export const calcValueFromPerk = createSelector(
-  [getState, (s: StoreState, name: StatNames) => name],
+  [getState, (_: StoreState, name: StatNames) => name],
   (s, name) => {
     // [Perk name, Affected stat, value of adjustment]
     const table: [keyof PerkValues, StatNames, number][] = [
@@ -74,9 +74,7 @@ export const calcValueFromPerk = createSelector(
 
     const adjustedValues: number[] = []
 
-    for (let i = 0; i < table.length; i += 1) {
-      const [perkName, attr, adjustment] = table[i]
-
+    for (const [perkName, attr, adjustment] of table) {
       if (attr === name) {
         const perkLevel = getPerk(s, perkName)
         if (perkLevel > 0) {
@@ -97,8 +95,8 @@ export const calcValueFromPerk = createSelector(
 export const calcValueFromTrait = createSelector(
   [
     getState,
-    (s: StoreState, name: StatNames) => name,
-    (s: StoreState, name: StatNames, baseValue: number) => baseValue,
+    (_: StoreState, name: StatNames) => name,
+    (_: StoreState, _name: StatNames, baseValue: number) => baseValue,
   ],
   (s, name, baseValue) => {
     // [Trait name, Affected stat(s), new value or fn calculating value, replace original value (don't derived)]
@@ -121,7 +119,7 @@ export const calcValueFromTrait = createSelector(
       [
         'smallFrame',
         'baseCarryWeight',
-        v => 25 + s.data.baseAttrStrength * 15,
+        25 + s.data.baseAttrStrength * 15,
         true,
       ],
       ['gifted', BASE_ATTRIBUTES_NAMES, 1, false],
@@ -149,26 +147,19 @@ export const calcValueFromTrait = createSelector(
 
     const adjustedValues: number[] = []
 
-    for (let i = 0; i < table.length; i += 1) {
-      const [traitName, attr, calc, overrule] = table[i]
+    for (const [traitName, attr, calc, overrule] of table) {
       let attrMatch = false
 
-      if (Array.isArray(attr)) {
-        attrMatch = attr.includes(name)
-      } else {
-        attrMatch = attr === name
-      }
+      attrMatch = Array.isArray(attr) ? attr.includes(name) : attr === name
 
-      if (attrMatch) {
-        if (getTrait(s, traitName)) {
-          const adjustment = typeof calc === 'number' ? calc : calc(baseValue)
+      if (attrMatch && getTrait(s, traitName)) {
+        const adjustment = typeof calc === 'number' ? calc : calc(baseValue)
 
-          if (overrule) {
-            return adjustment
-          }
-
-          adjustedValues.push(adjustment)
+        if (overrule) {
+          return adjustment
         }
+
+        adjustedValues.push(adjustment)
       }
     }
 
@@ -196,27 +187,23 @@ export const getAPDerived = createSelector([getState], s => {
 })
 
 export const getAttributesTotal = createSelector([getState], s => {
-  const attrs = U.entries(ATTRIBUTES).reduce<AttributesValues>(
-    (acc, [key]) => {
-      const baseValue = calcValueFromTrait(
-        s,
-        U.prefixString(key, ATTR_PREFIX.BASE_ATTR),
-        s.data[U.prefixString(key, ATTR_PREFIX.BASE_ATTR)],
-      )
-      acc[key] =
-        baseValue +
-        s.data[U.prefixString(key, ATTR_PREFIX.BONUS_ATTR)] +
-        calcValueFromPerk(s, U.prefixString(key, ATTR_PREFIX.BONUS_ATTR))
-      return acc
-    },
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    {} as AttributesValues,
-  )
+  const attrs = U.entries(ATTRIBUTES).reduce<AttributesValues>((acc, [key]) => {
+    const baseValue = calcValueFromTrait(
+      s,
+      U.prefixString(key, ATTR_PREFIX.BASE_ATTR),
+      s.data[U.prefixString(key, ATTR_PREFIX.BASE_ATTR)],
+    )
+    acc[key] =
+      baseValue +
+      s.data[U.prefixString(key, ATTR_PREFIX.BONUS_ATTR)] +
+      calcValueFromPerk(s, U.prefixString(key, ATTR_PREFIX.BONUS_ATTR))
+    return acc
+  }, {} as AttributesValues)
   return attrs
 })
 
 export const getAttributeTotal = createSelector(
-  [getState, (s: StoreState, name: keyof typeof ATTRIBUTES) => name],
+  [getState, (_: StoreState, name: keyof typeof ATTRIBUTES) => name],
   (s, name) => getAttributesTotal(s)[name],
 )
 
@@ -269,17 +256,13 @@ export const getHPDerived = createSelector([getState], s => {
 })
 
 export const getGVARs = createSelector([getData], s =>
-  U.entries(GVARS).reduce<GVARValues>(
-    (acc, [key]) => {
-      const name = U.prefixString(key, ATTR_PREFIX.GVAR)
-      return {
-        ...acc,
-        [name]: s[name],
-      }
-    },
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    {} as GVARValues,
-  ),
+  U.entries(GVARS).reduce<GVARValues>((acc, [key]) => {
+    const name = U.prefixString(key, ATTR_PREFIX.GVAR)
+    return {
+      ...acc,
+      [name]: s[name],
+    }
+  }, {} as GVARValues),
 )
 
 export const getHPTotal = createSelector(
@@ -288,22 +271,18 @@ export const getHPTotal = createSelector(
 )
 
 export const getIsLimbCrippled = createSelector(
-  [getData, (s: StoreState, bodyPart: keyof typeof Crippled) => bodyPart],
+  [getData, (_: StoreState, bodyPart: keyof typeof Crippled) => bodyPart],
   (s, bodyPart) => U.bitTest(s.crippled, Crippled[bodyPart]),
 )
 
 export const getKills = createSelector([getData], s =>
-  U.entries(KILLS).reduce<KillValues>(
-    (acc, [key]) => {
-      const name = U.prefixString(key, ATTR_PREFIX.KILL)
-      return {
-        ...acc,
-        [name]: s[name],
-      }
-    },
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    {} as KillValues,
-  ),
+  U.entries(KILLS).reduce<KillValues>((acc, [key]) => {
+    const name = U.prefixString(key, ATTR_PREFIX.KILL)
+    return {
+      ...acc,
+      [name]: s[name],
+    }
+  }, {} as KillValues),
 )
 
 export const getMeleeDmgDerived = createSelector([getState], s => {
@@ -317,21 +296,17 @@ export const getMeleeDmgDerived = createSelector([getState], s => {
 })
 
 export const getPerks = createSelector([getData], s =>
-  U.entries(PERKS).reduce<PerkValues>(
-    (acc, [key]) => {
-      const name = U.prefixString(key, ATTR_PREFIX.PERK)
-      return {
-        ...acc,
-        [name]: s[name],
-      }
-    },
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    {} as PerkValues,
-  ),
+  U.entries(PERKS).reduce<PerkValues>((acc, [key]) => {
+    const name = U.prefixString(key, ATTR_PREFIX.PERK)
+    return {
+      ...acc,
+      [name]: s[name],
+    }
+  }, {} as PerkValues),
 )
 
 export const getPerk = createSelector(
-  [getPerks, (s: StoreState, name: keyof PerkValues) => name],
+  [getPerks, (_: StoreState, name: keyof PerkValues) => name],
   (perks, name) => perks[name],
 )
 
@@ -343,8 +318,8 @@ export const getPlayerAge = createSelector([getData], s => {
 })
 
 export const getSelectedTraits = createSelector([getData], s => [
-  s.trait1 !== null ? s.trait1 : -1,
-  s.trait2 !== null ? s.trait2 : -1,
+  s.trait1 ?? -1,
+  s.trait2 ?? -1,
 ])
 
 export const getSequenceDerived = createSelector([getState], s => {
@@ -378,7 +353,7 @@ export const getRadiationResistanceDerived = createSelector([getState], s => {
 })
 
 export const getSkillIsTagged = createSelector(
-  [getData, (s: StoreState, name: keyof SkillValues) => name],
+  [getData, (_: StoreState, name: keyof SkillValues) => name],
   (s, name) =>
     [s.taggedSkill1, s.taggedSkill2, s.taggedSkill3, s.taggedSkill4].includes(
       SKILLS[name].id,
@@ -391,14 +366,13 @@ export const getSkills = createSelector([getData], s => {
       ...acc,
       [id]: s[id],
     }),
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     {} as SkillValues,
   )
   return skills
 })
 
 export const getSkillTotal = createSelector(
-  [getState, (s: StoreState, name: keyof SkillValues) => name],
+  [getState, (_: StoreState, name: keyof SkillValues) => name],
   (s, name) => {
     /*
      * Skills formula for tag
@@ -423,26 +397,34 @@ export const getSkillTotal = createSelector(
       ? getAttributeTotal(s, associatedAttr2)
       : 0
 
-    let total = baseValue + multiplier * (attrValue1 + attrValue2)
+    let totalSkillPoints = baseValue + multiplier * (attrValue1 + attrValue2)
 
     // All tagged skills receive +20 points at start
     if (isTagged) {
-      total += 20
+      totalSkillPoints += 20
     }
 
-    total = calcValueFromTrait(s, name, total)
-    total += calcValueFromPerk(s, name)
+    totalSkillPoints = calcValueFromTrait(s, name, totalSkillPoints)
+    totalSkillPoints += calcValueFromPerk(s, name)
 
-    const startValue = Math.round(total)
+    const startValue = Math.round(totalSkillPoints)
     let skillPointsLeft = assignedPoints
     let done = false
 
-    total = Math.round(total)
+    totalSkillPoints = Math.round(totalSkillPoints)
 
     const assignPoint = (costTable: number[][]): boolean => {
       let costIndex = -1
-      for (let i = 0; i < costTable.length; i += 1) {
-        if (total < costTable[i][1]) {
+      for (const [i, range] of costTable.entries()) {
+        const rangeTotal = range.at(1) ?? 0
+
+        console.assert(
+          rangeTotal > 0,
+          `rangeTotal value not found in SKILL_COST`,
+          { rangeTotal },
+        )
+
+        if (totalSkillPoints < rangeTotal) {
           costIndex = i
           break
         }
@@ -451,7 +433,15 @@ export const getSkillTotal = createSelector(
       const left = skillPointsLeft - 1
 
       if (left >= 0) {
-        total += costTable[costIndex][3]
+        const pointsToIncrease = costTable.at(costIndex)?.at(3) ?? 0
+
+        console.assert(
+          pointsToIncrease > 0,
+          `pointsToIncrease value not found in SKILL_COST`,
+          { pointsToIncrease },
+        )
+
+        totalSkillPoints += pointsToIncrease
         skillPointsLeft -= 1
       }
 
@@ -461,18 +451,19 @@ export const getSkillTotal = createSelector(
     while (!done) {
       if (isTagged) {
         if (startValue % 2 === 0) {
-          done = assignPoint(SKILL_COST_TABLES[0])
+          // skill is tagged, starting value is odd
+          done = assignPoint(SKILL_COST.TAGGED_ODD)
         } else if (startValue % 2 === 1) {
-          done = assignPoint(SKILL_COST_TABLES[1])
-        } else {
-          throw Error('Unknown case when assigning skill point')
+          // skill is tagged, starting value is even
+          done = assignPoint(SKILL_COST.TAGGED_EVEN)
         }
       } else {
-        done = assignPoint(SKILL_COST_TABLES[2])
+        // skill is untagged, starting value doesn't matter
+        done = assignPoint(SKILL_COST.UNTAGGED)
       }
     }
 
-    return Math.round(total)
+    return Math.round(totalSkillPoints)
   },
 )
 
@@ -482,20 +473,18 @@ export const getSkillsTotal = createSelector([getState], s =>
       ...acc,
       [key]: getSkillTotal(s, key),
     }),
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     {} as SkillValues,
   ),
 )
 
 export const getTraits = createSelector([getData], s => {
-  const selectedTraits = [s.trait1, s.trait2]
+  const selectedTraits = new Set([s.trait1, s.trait2])
 
   const traits = U.entries(TRAITS).reduce<TraitValues>(
     (acc, [id, value]) => ({
       ...acc,
-      [id]: selectedTraits.includes(value.id),
+      [id]: selectedTraits.has(value.id),
     }),
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     {} as TraitValues,
   )
 
@@ -503,6 +492,6 @@ export const getTraits = createSelector([getData], s => {
 })
 
 export const getTrait = createSelector(
-  [getTraits, (s: StoreState, name: TraitNames) => name],
+  [getTraits, (_: StoreState, name: TraitNames) => name],
   (traits, name) => traits[name],
 )

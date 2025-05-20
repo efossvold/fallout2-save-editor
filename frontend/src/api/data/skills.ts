@@ -172,19 +172,29 @@ export const SKILLS: SkillData = {
   }),
 } as const
 
-// https://wiki.fonline2.com/Category:Skills#Skill_expanding_costs
-export const SKILL_COST_TABLES = [
-  // Case A (skill is tagged, starting value is odd)
-  [
-    [1, 100, 1, 2],
-    [101, 127, 2, 2],
-    [127, 151, 3, 2],
-    [151, 177, 4, 2],
-    [177, 201, 5, 2],
-    [201, 300, 6, 2],
-  ],
+/**
+ * https://wiki.fonline2.com/Category:Skills#Skill_expanding_costs
+ * @member
+ * [
+ *   Range start,
+ *   Range end,
+ *   Cost in number of learning point to increase skill by one step,
+ *   Number of skill points increased by each step (untagged: 1, tagged: 2)
+ * ]
+ */
+export const SKILL_COST = {
+  TAGGED_ODD:
+    // Case A (skill is tagged, starting value is odd)
+    [
+      [1, 100, 1, 2],
+      [101, 127, 2, 2],
+      [127, 151, 3, 2],
+      [151, 177, 4, 2],
+      [177, 201, 5, 2],
+      [201, 300, 6, 2],
+    ],
   // Case B (skill is tagged, starting value is even)
-  [
+  TAGGED_EVEN: [
     [1, 102, 1, 2],
     [102, 126, 2, 2],
     [126, 152, 3, 2],
@@ -193,7 +203,7 @@ export const SKILL_COST_TABLES = [
     [202, 300, 6, 2],
   ],
   // Case C (skill is untagged, starting value doesn't matter)
-  [
+  UNTAGGED: [
     [1, 101, 1, 1],
     [101, 126, 2, 1],
     [126, 151, 3, 1],
@@ -201,4 +211,4 @@ export const SKILL_COST_TABLES = [
     [176, 201, 5, 1],
     [201, 300, 6, 1],
   ],
-]
+}

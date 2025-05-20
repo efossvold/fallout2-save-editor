@@ -27,6 +27,7 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
       <HStack bg="#181818" rounded={4} spacing={2} px={2}>
         {`0${totalValue}`
           .slice(-2)
+          // eslint-disable-next-line unicorn/prefer-spread
           .split('')
           .map((digit, index) => (
             <Text

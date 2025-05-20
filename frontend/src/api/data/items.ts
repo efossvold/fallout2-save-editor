@@ -1,6 +1,5 @@
 import type { Item, Items } from '../types/items'
 
-// eslint-disable-next-line no-shadow
 export enum ItemCategory {
   WEAPON,
   AMMO,
@@ -462,5 +461,5 @@ export const getCategory = (item: Item): ItemCategory => {
   if (MISC.includes(item)) {
     return ItemCategory.MISC
   }
-  throw Error(`Unknown category for item ID (${item.id})`)
+  throw new Error(`Unknown category for item ID (${item.id})`)
 }

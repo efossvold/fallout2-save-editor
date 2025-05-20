@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-type TabsState = {
+interface TabsState {
   index: number
   setIndex: (index: number) => void
 }

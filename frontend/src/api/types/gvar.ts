@@ -7,7 +7,7 @@ export interface GVAR {
   id: number
   name: string
   desc: string
-  maxValue: number | null
+  maxValue?: number
 }
 
 export type GVARValues = PrefixedDictIndices<
@@ -15,4 +15,4 @@ export type GVARValues = PrefixedDictIndices<
   number,
   ATTR_PREFIX.GVAR
 >
-export type GVARMap = DictValues<GVARValues, MapKeyValueEntry<number>>
+export type GVARMap = DictValues<GVARValues, MapKeyValueEntry>

@@ -2,9 +2,9 @@ import type { PropsWithChildren } from 'react'
 import { Box, HStack } from '@chakra-ui/react'
 import { Hoverable } from '../hoverable'
 import { colors } from '../theme'
-import { useTabsStore } from './store'
 import * as E from '../editors'
 import { LINE_HEIGHT } from '../constants'
+import { useTabsStore } from './store'
 
 const TabButton = (p: PropsWithChildren<{ index: number }>) => {
   const store = useTabsStore()

@@ -4,7 +4,6 @@ Thumbs.db
 *.log
 
 # IDE
-.idea
 .history
 .vscode
 
@@ -20,10 +19,6 @@ node_modules
 
 # Optional npm cache directory
 .npm
-
-# yarn
-yarn.lock
-yarn-error.log
 
 # typescript
 tsBuildInfoFile

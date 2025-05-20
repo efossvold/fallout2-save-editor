@@ -1,5 +1,5 @@
-import { produce } from 'immer'
 import { create } from 'zustand'
+import { immer } from 'zustand/middleware/immer'
 import type { PerkValues } from '../api/types/perks'
 import { Crippled } from '../api/data/crippled'
 import type { StatNames } from '../api/save-data'
@@ -13,7 +13,7 @@ export const handler = saveHandler({ isDebug: false })
 
 export interface StoreState {
   data: M.SaveGameData
-  currentSaveFile: string | null
+  currentSaveFile?: string
 
   adjustStatsFromPerk: (name: keyof PerkValues, level: number) => void
   load: (filename: string, base64: string) => void
@@ -31,78 +31,74 @@ export interface StoreState {
   setCrippledLimb: (bodyPart: keyof typeof Crippled, value: boolean) => void
 }
 
-export const useAPIStore = create<StoreState>((set, get) => ({
-  data: createSaveData(),
-  currentSaveFile: null,
+export const useAPIStore = create<StoreState>()(
+  immer((set, get) => ({
+    data: createSaveData(),
 
-  // Calculate permanent bonus/penalties from perks
-  // Adjustments from these perks are permanently added
-  // to bonus value of the stat
-  adjustStatsFromPerk: (name, newLevel) =>
-    set(state =>
-      produce(state, draft => {
+    // Calculate permanent bonus/penalties from perks
+    // Adjustments from these perks are permanently added
+    // to bonus value of the stat
+    adjustStatsFromPerk: (name, newLevel) =>
+      set(state => {
+        const f = <A extends keyof PerkValues, B extends StatNames>(
+          a: A,
+          b: B,
+          c: number,
+          // eslint-disable-next-line unicorn/consistent-function-scoping
+        ): [A, B, number] => [a, b, c]
+
         // [Perk name, Affected stat, value of adjustment]
-        const table: [keyof PerkValues, StatNames, number][] = [
-          ['perkActionBoy', 'bonusAP', 1],
-          ['perkDodger', 'bonusAC', 5],
-          ['perkEarlierSequence', 'bonusSequence', 2],
-          ['perkFasterHealing', 'bonusHealingRate', 2],
-          ['perkMoreCriticals', 'bonusCriticalChance', 5],
-          ['perkPackRat', 'bonusCarryWeight', 50],
-          ['perkRadResistance', 'bonusRadiationResistance', 15],
-          ['perkSnakeeater', 'bonusPoisonResistance', 25],
-          ['perkStrongBack', 'bonusCarryWeight', 50],
-          ['perkToughness', 'bonusDmgResistanceNormal', 10],
-          ['perkPhoenixAssaultEnhancements', 'bonusAttrCharisma', -1],
+        const table = [
+          f('perkActionBoy', 'bonusAP', 1),
+          f('perkDodger', 'bonusAC', 5),
+          f('perkEarlierSequence', 'bonusSequence', 2),
+          f('perkFasterHealing', 'bonusHealingRate', 2),
+          f('perkMoreCriticals', 'bonusCriticalChance', 5),
+          f('perkPackRat', 'bonusCarryWeight', 50),
+          f('perkRadResistance', 'bonusRadiationResistance', 15),
+          f('perkSnakeeater', 'bonusPoisonResistance', 25),
+          f('perkStrongBack', 'bonusCarryWeight', 50),
+          f('perkToughness', 'bonusDmgResistanceNormal', 10),
+          f('perkPhoenixAssaultEnhancements', 'bonusAttrCharisma', -1),
         ]
 
-        table.forEach(([perkName, attr, value]) => {
+        for (const [perkName, attr, value] of table) {
           if (name === perkName) {
             const prevLevel = getPerk(state, perkName)
             const statValue = state.data[attr]
             const newAdjustment = newLevel > prevLevel ? value : value * -1
-            // @ts-ignore
-            draft.data[attr] = statValue + newAdjustment
+            state.data[attr] = statValue + newAdjustment
           }
-        })
+        }
       }),
-    ),
 
-  load(filename, base64) {
-    handler.fromBase64(base64)
-    set({
-      currentSaveFile: filename,
-      data: handler.getData(),
-    })
-  },
+    load(filename, base64) {
+      console.log('load')
+      handler.fromBase64(base64)
+      set({
+        currentSaveFile: filename,
+        data: handler.getData(),
+      })
+    },
 
-  save() {
-    const { currentSaveFile, data } = get()
-    if (currentSaveFile) {
-      handler.setData({ ...data })
-    }
-  },
+    save() {
+      const { currentSaveFile, data } = get()
+      if (currentSaveFile) {
+        handler.setData({ ...data })
+      }
+    },
 
-  getProp: prop => get().data[prop],
+    getProp: prop => get().data[prop],
 
-  setProp(prop, value) {
-    set(state =>
-      produce(state, draft => {
-        draft.data[prop] = value
+    setProp: (prop, value) =>
+      set(state => {
+        state.data[prop] = value
       }),
-    )
-  },
 
-  setCrippledLimb(bodyPart, isCrippled) {
-    const fn = isCrippled ? U.bitSet : U.bitClear
-
-    set(state =>
-      produce(state, draft => {
-        draft.data.crippled = fn(
-          get().data.crippled,
-          Crippled[bodyPart as keyof typeof Crippled],
-        )
+    setCrippledLimb: (bodyPart, isCrippled) =>
+      set(state => {
+        const fn = isCrippled ? U.bitSet : U.bitClear
+        state.data.crippled = fn(get().data.crippled, Crippled[bodyPart])
       }),
-    )
-  },
-}))
+  })),
+)

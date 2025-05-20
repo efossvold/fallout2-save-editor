@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
 import type { BaseAttributesValues, BonusAttributesValues } from './attributes'
 import type { F17Preferences } from './f15-preferences'
 import type { F6StatsBase, F6StatsBonus } from './f6-stats'
@@ -10,18 +10,17 @@ import type { SkillValues } from './skills'
 
 export type MapValueTypes = 'float' | 'int' | 'string'
 
-export type MapKeyValueEntry<T> = {
+export type MapKeyValueEntry = {
   name: string
   offset: number
   length: number
   kind: MapValueTypes
-  type: T
 }
 
 export type MapSection<T extends Record<string, any>> = {
   size: number
-  offset: number | null
-  keys: { [Key in keyof T]: MapKeyValueEntry<T[Key]> }
+  offset: number
+  keys: { [Key in keyof T]: MapKeyValueEntry }
 }
 
 export type MapHeaderSection = {
@@ -56,7 +55,7 @@ export type MapF7Section = KillValues
 
 export type MapF8Section = PrefixedDictIndices<
   '1' | '2' | '3' | '4',
-  number | null,
+  number | undefined,
   'taggedSkill'
 >
 
@@ -71,7 +70,7 @@ export type MapF13Section = {
 
 export type MapF15Section = PrefixedDictIndices<
   '1' | '2',
-  number | null,
+  number | undefined,
   'trait'
 >
 
@@ -105,14 +104,14 @@ export type SaveMap = {
   [Key in keyof SaveTypesMap]: MapSection<SaveTypesMap[Key]>
 }
 
-export type SaveGameData = MapHeaderSection &
-  MapF2Section &
-  MapF5Section &
-  MapF6Section &
-  MapF6Section &
-  MapF7Section &
-  MapF8Section &
-  MapF9Section &
-  MapF13Section &
-  MapF15Section &
-  MapF17Section
+export interface SaveGameData
+  extends MapHeaderSection,
+    MapF2Section,
+    MapF5Section,
+    MapF6Section,
+    MapF7Section,
+    MapF8Section,
+    MapF9Section,
+    MapF13Section,
+    MapF15Section,
+    MapF17Section {}

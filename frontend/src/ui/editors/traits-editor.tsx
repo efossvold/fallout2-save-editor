@@ -13,17 +13,17 @@ export const TraitsEditor = () => {
   const traits = useAPIStore(S.getSelectedTraits)
 
   const maxTraitId = entries(TRAITS).reduce<number>(
-    (acc, [key, t]) => (t.id > acc ? t.id : acc),
+    (acc, [_key, t]) => Math.max(t.id, acc),
     0,
   )
 
   const isValidTraitId = (id: number) => id >= 0 && id <= maxTraitId
 
   const hasMaxTraits = () => {
-    if (!traits) {
+    if (traits.length === 0) {
       return true
     }
-    return traits?.filter(isValidTraitId).length >= MAX_TRAITS
+    return traits.filter(trait => isValidTraitId(trait)).length >= MAX_TRAITS
   }
 
   return (
@@ -48,10 +48,10 @@ export const TraitsEditor = () => {
                 return
               }
 
-              if (!isValidTraitId(traits[0])) {
-                setProp('trait1', trait.id)
-              } else {
+              if (isValidTraitId(traits.at(0) ?? -1)) {
                 setProp('trait2', trait.id)
+              } else {
+                setProp('trait1', trait.id)
               }
             }}
             onUncheck={() => {

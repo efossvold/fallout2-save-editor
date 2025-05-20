@@ -36,7 +36,6 @@ export const createSaveData = (): SaveGameData => ({
       ...acc,
       [`${prefixString(key, ATTR_PREFIX.GVAR)}`]: 0,
     }),
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     {} as GVARValues,
   ),
 
@@ -108,7 +107,6 @@ export const createSaveData = (): SaveGameData => ({
       ...acc,
       [`${prefixString(key, ATTR_PREFIX.BASE_ATTR)}`]: 0,
     }),
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     {} as BaseAttributesValues,
   ),
 
@@ -117,7 +115,6 @@ export const createSaveData = (): SaveGameData => ({
       ...acc,
       [`${prefixString(key, ATTR_PREFIX.BONUS_ATTR)}`]: 0,
     }),
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     {} as BonusAttributesValues,
   ),
 
@@ -126,7 +123,6 @@ export const createSaveData = (): SaveGameData => ({
       ...acc,
       [key]: 0,
     }),
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     {} as SkillValues,
   ),
 
@@ -136,7 +132,6 @@ export const createSaveData = (): SaveGameData => ({
       ...acc,
       [`${prefixString(key, ATTR_PREFIX.KILL)}`]: 0,
     }),
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     {} as KillValues,
   ),
 
@@ -154,7 +149,6 @@ export const createSaveData = (): SaveGameData => ({
       ...acc,
       [`${prefixString(key, ATTR_PREFIX.PERK)}`]: 0,
     }),
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     {} as PerkValues,
   ),
 
@@ -175,7 +169,6 @@ export const createSaveData = (): SaveGameData => ({
       ...acc,
       [key]: 0,
     }),
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     {} as MapF17Section,
   ),
 })

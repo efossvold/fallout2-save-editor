@@ -14,4 +14,4 @@ export type KillValues = PrefixedDictIndices<
   number,
   ATTR_PREFIX.KILL
 >
-export type KillMap = DictValues<KillValues, MapKeyValueEntry<number>>
+export type KillMap = DictValues<KillValues, MapKeyValueEntry>
