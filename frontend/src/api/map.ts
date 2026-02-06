@@ -202,6 +202,31 @@ export const createMap = (): T.SaveMap => {
         {} as PerksMap,
       ),
     },
+    f10: {
+      // In Fallout 2 v1.02d it is 0x3058 (decimal 12376) bytes.
+      // Contains 119 (0x77) values for each party member (26 in Fallout 2)
+      // 26 * 119 * 4 = 12376 bytes
+      // https://fallout.wiki/wiki/Party.txt
+      // Other version may have more: https://github.com/BGforgeNet/Fallout2_Restoration_Project/blob/master/data/data/party.txt
+      size: 0x30_58,
+      offset: -1,
+      keys: {},
+    },
+
+    f11: {
+      size: 0x04,
+      offset: -1,
+      keys: {
+        combatStatus: m('', 0x00, 0x04),
+        unknown1: m('', 0x04, 0x10),
+        unknown2: m('', 0x14, 0x04),
+        numNPCs: m('', 0x18, 0x04),
+        playerID: m('', 0x1c, 0x04),
+        turnOrder: m('', 0x20, 0x04),
+        unknown3: m('', 0x00, 0x10),
+      },
+    },
+
     f13: {
       size: 0x14,
       offset: -1,

@@ -2,6 +2,9 @@
 go = "1.23"
 node = "24"
 
+[env]
+_.path = ["{{config_root}}/frontend/node_modules/.bin"]
+
 [tasks]
 dev = "wails dev"
 build = "./build.sh"

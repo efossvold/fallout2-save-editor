@@ -304,6 +304,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     ...createGetters('f6'),
     ...createGetters('f8'),
     ...createGetters('f9', 'Perk'),
+    ...createGetters('f11'),
     ...createGetters('f13'),
     ...createGetters('f15'),
     ...createGetters('f17'),
@@ -313,6 +314,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     ...createSetters('f6'),
     ...createSetters('f8'),
     ...createSetters('f9', 'Perk'),
+    ...createSetters('f11'),
     ...createSetters('f13'),
     ...createSetters('f15'),
     ...createSetters('f17'),
@@ -335,6 +337,16 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     findF9Offset() {
       map.f9.offset = getOffset('f8') + map.f8.size
       return getOffset('f9')
+    },
+
+    findF10Offset() {
+      map.f10.offset = getOffset('f9') + map.f9.size
+      return getOffset('f10')
+    },
+
+    findF11Offset() {
+      map.f11.offset = getOffset('f10') + map.f10.size
+      return getOffset('f11')
     },
 
     findF13Offset() {
@@ -380,10 +392,11 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
       }
 
       const buffer = getBuffer()
-      map.f17.offset = getOffset('f9') + map.f17.size
+      map.f17.offset = map.f11.offset
 
       let offsetFound = false
-      let searchOffset = getOffset('f9') + map.f9.size
+      let searchOffset = map.f11.offset
+      // let searchOffset = 54_078 // F14
       let prefs: MT.MapF17Section
 
       // eslint-disable-next-line unicorn/consistent-function-scoping
@@ -402,9 +415,9 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
         prefs = getSectionData('f17', searchOffset)
 
         if (
-          verifyValue(prefs.prefGameDifficulty, 1, 1) &&
-          verifyValue(prefs.prefCombatDifficulty, 1, 1) &&
-          verifyValue(prefs.prefViolenceLevel, 3, 3) &&
+          verifyValue(prefs.prefGameDifficulty, 0, 2) &&
+          verifyValue(prefs.prefCombatDifficulty, 0, 2) &&
+          verifyValue(prefs.prefViolenceLevel, 0, 3) &&
           verifyValue(prefs.prefTargetHighlight, 0, 2) &&
           verifyValue(prefs.prefCombatLooks, 0, 1) &&
           verifyValue(prefs.prefCombatMessages, 0, 1) &&
@@ -415,15 +428,12 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
           verifyValue(prefs.prefItemHighlight, 0, 1) &&
           verifyValue(prefs.prefCombatSpeed, 0, 50) &&
           verifyValue(prefs.prefPlayerSpeedup, 0, 1) &&
-          // verifyValue(data.textBaseDelay, 0.0, 6.0) &&
           verifyValue(prefs.prefTextBaseDelay, 0, Number.MAX_SAFE_INTEGER) &&
           verifyValue(prefs.prefMasterVolume, 0, 32_767) &&
           verifyValue(prefs.prefMusicVolume, 0, 32_767) &&
           verifyValue(prefs.prefSndFxVolume, 0, 32_767) &&
           verifyValue(prefs.prefSpeechVolume, 0, 32_767) &&
-          // verifyValue(data.brightness, 0, 1.18) &&
           verifyValue(prefs.prefBrightness, 0, Number.MAX_SAFE_INTEGER) &&
-          // verifyValue(data.mouseSensitivity, 0, 2.5)
           verifyValue(prefs.prefMouseSensitivity, 0, Number.MAX_SAFE_INTEGER)
         ) {
           const nonZeroValues = Object.values(prefs).filter(v => v !== 0)
@@ -469,16 +479,13 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
       buffer = Buffer.from(base64, 'base64')
 
       map.f5.offset = buffer.indexOf(M.F5_MARKER)
-      map.f6.offset = -1
-      map.f7.offset = -1
-      map.f8.offset = -1
-      map.f9.offset = -1
-      map.f17.offset = -1
 
       this.findF6Offset()
       this.findF7Offset()
       this.findF8Offset()
       this.findF9Offset()
+      this.findF10Offset()
+      this.findF11Offset()
       this.findF17Offset()
 
       getSectionData('header')
@@ -488,6 +495,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
       getSectionData('f7')
       getSectionData('f8')
       getSectionData('f9')
+      getSectionData('f11')
       getSectionData('f13')
       getSectionData('f15')
       getSectionData('f17')

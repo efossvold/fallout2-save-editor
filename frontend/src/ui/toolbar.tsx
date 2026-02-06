@@ -22,6 +22,7 @@ import { useAPIStore, handler } from './store'
 import { colors } from './theme'
 import { basename, dirname } from './utils'
 import { useIsLargerThanMedium } from './theme/media-queries'
+// import saveBase64 from '../api/slot01-stats.base64'
 import { TOOLTIP_PROPS } from './constants'
 
 export const IText = (p: PropsWithChildren<TextProps>) => (
@@ -131,6 +132,7 @@ export const Toolbar = () => {
                 } else if (path) {
                   load(path, content)
                 }
+                // load('/savegame.file', saveBase64)
               } catch (error) {
                 toast.error(getError(error as MayBeError).message)
               }

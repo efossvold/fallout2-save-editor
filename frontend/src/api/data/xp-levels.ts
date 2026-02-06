@@ -6,13 +6,9 @@ export const XP_LEVELS = [
 
 export const getLevelXP = (level: number): number | string => {
   if (level < XP_LEVELS.length - 1) {
-    const xp = XP_LEVELS.at(level - 1)
-    if (!xp) {
-      console.error(`XP leve ${level} does not exist`)
-    }
-    return xp ?? 0
-  }
-  if (level > 99) {
+    const xp = XP_LEVELS.at(level - 1) ?? 0
+    return xp
+  } else if (level > 99) {
     return 'Godhood'
   }
   return ((level * (level - 1)) / 2) * 1000

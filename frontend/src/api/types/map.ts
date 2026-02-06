@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 import type { BaseAttributesValues, BonusAttributesValues } from './attributes'
-import type { F17Preferences } from './f15-preferences'
+import type { F17Preferences } from './f17-preferences'
 import type { F6StatsBase, F6StatsBonus } from './f6-stats'
 import type { GVARValues } from './gvar'
 import type { KillValues } from './kill'
@@ -62,6 +62,16 @@ export type MapF8Section = PrefixedDictIndices<
 export type MapF9Section = PerkValues
 // export type MapF9Section = PerkValues
 
+export type MapF11Section = {
+  combatStatus: number // 02 - not in combat; 03 - in combat
+  unknown1: number
+  unknown2: number
+  numNPCs: number
+  playerID: number
+  turnOrder: number // size = 0x04 * numNPCs
+  unknown3: number // size = 0x10 * numNPCs
+}
+
 export type MapF13Section = {
   qtySkillPoints: number
   playerLevel: number
@@ -92,6 +102,8 @@ export interface SaveTypesMap {
   f7: MapF7Section
   f8: MapF8Section
   f9: MapF9Section
+  f10: {}
+  f11: MapF11Section
   f13: MapF13Section
   f14: {}
   f15: MapF15Section

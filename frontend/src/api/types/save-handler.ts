@@ -27,6 +27,8 @@ export type SaveHandler = {
   findF7Offset(): number
   findF8Offset(): number
   findF9Offset(): number
+  findF10Offset(): number
+  findF11Offset(): number
   getInventoryItems(): InventoryItem[]
   getPreferences(): void
   fromBase64(data: string): SaveHandler
@@ -47,6 +49,9 @@ export type SaveHandler = {
   // Perks
   Getters<M.MapF9Section> &
   Setters<M.MapF9Section> &
+  // Combat
+  Getters<M.MapF11Section> &
+  Setters<M.MapF11Section> &
   // Experience and level
   Getters<M.MapF13Section> &
   Setters<M.MapF13Section> &

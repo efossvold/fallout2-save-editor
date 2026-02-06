@@ -6,6 +6,7 @@ import {
   VStack,
   useBreakpointValue,
 } from '@chakra-ui/react'
+import { VERSION } from '../version'
 import { SECTION_SPACING } from './constants'
 import * as E from './editors'
 import { Panel } from './panel'
@@ -109,7 +110,7 @@ export const Panels = () => {
             right={3}
             bottom={1}
           >
-            v1.1.3
+            {VERSION}
           </Text>
         </GridItem>
       </Grid>
