@@ -1,0 +1,164 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "eslint",
+    "typescript",
+    "unicorn",
+    "react",
+    "react-perf",
+    "oxc",
+    "import",
+    "jsx-a11y",
+    "promise",
+    "vitest"
+  ],
+  "categories": {
+    "correctness": "error",
+    "nursery": "warn",
+    "pedantic": "off",
+    "perf": "warn",
+    "restriction": "off",
+    "style": "warn",
+    "suspicious": "warn"
+  },
+  "settings": {
+    "jsx-a11y": {
+      "polymorphicPropName": null,
+      "components": {},
+      "attributes": {}
+    },
+    "react": {
+      "formComponents": [],
+      "linkComponents": [],
+      "version": null,
+      "componentWrapperFunctions": []
+    },
+    "vitest": {
+      "typecheck": false
+    }
+  },
+  "env": {
+    "builtin": true,
+    "browser": true,
+    "node": true,
+    "es2024": true
+  },
+  "globals": {},
+  "rules": {
+    /**
+     * base javascript
+     */
+    "arrow-body-style": "warn",
+    "curly": "warn",
+    "no-extra-boolean-cast": "warn",
+    "no-nested-ternary": "error",
+    "no-unneeded-ternary": "error",
+    "no-unused-vars": [
+      "warn",
+      {
+        "args": "after-used",
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_"
+      }
+    ],
+    "no-var": "error",
+    "object-shorthand": "warn",
+    "prefer-arrow-callback": "warn",
+    "prefer-destructuring": "warn",
+    "prefer-object-spread": "warn",
+    "prefer-spread": "warn",
+    "prefer-template": "warn",
+    "require-await": "error",
+
+    /**
+     * base typescript
+     */
+    "typescript/await-thenable": "error",
+    "typescript/consistent-type-exports": "error",
+    "typescript/consistent-type-imports": "error",
+    "typescript/no-empty-object-type": "off",
+    "typescript/no-unnecessary-condition": "error",
+    "typescript/prefer-nullish-coalescing": "error",
+    "typescript/prefer-optional-chain": "error",
+    "typescript/require-await": "error",
+    "typescript/triple-slash-reference": "off",
+    "typescript/no-unsafe-type-assertion": "off",
+
+    /**
+     * import
+     */
+    "import/consistent-type-specifier-style": ["error"],
+    "import/exports-last": "off",
+    "import/first": "error",
+    "import/group-exports": "off",
+    "import/no-cycle": ["warn", { "ignoreExternal": true }],
+    "import/no-named-as-default": "off",
+    "import/no-named-export": "off",
+    "import/no-namespace": "off",
+    "import/no-nodejs-modules": "off",
+    "import/no-unassigned-import": "off",
+    "import/no-unused-modules": "warn",
+    "import/order": "error",
+    "import/prefer-default-export": "off",
+
+    /**
+     * unicorn
+     */
+    "require-module-specifiers": "off",
+
+    /**
+     * disable style-rules
+     */
+    "capitalized-comments": "off",
+    "id-length": "off",
+    "init-declarations": "off",
+    "jest/require-hook": "off",
+    "max-params": "off",
+    "max-statements": "off",
+    "no-duplicate-imports": ["error", { "allowSeparateTypeImports": true }],
+    "no-implicit-coercion": "off",
+    "no-magic-numbers": "off",
+    "no-ternary": "off",
+    "sort-imports": "off",
+    "sort-keys": "off",
+    "typescript/consistent-indexed-object-style": "off",
+    "unicorn/number-literal-case": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.tsx"],
+      "rules": {
+        "import/no-nodejs-modules": "error",
+        "react-perf/jsx-no-new-array-as-prop": "off",
+        "react-perf/jsx-no-new-function-as-prop": "off",
+        "react-perf/jsx-no-new-object-as-prop": "off",
+        "react/jsx-handler-names": "off",
+        "react/jsx-max-depth": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/react-in-jsx-scope": "off"
+      }
+    },
+    {
+      "files": ["**/*.test.ts"],
+      "rules": {
+        "vitest/no-hooks": "off",
+        "vitest/prefer-expect-assertions": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    ".idea",
+    ".vscode",
+    ".history",
+    "eslint.config.mjs",
+    "build",
+    "dist",
+    "wailsjs",
+    "node_modules",
+    // Cypress,
+    "cypress/coverage",
+    "cypress/reports"
+  ]
+}

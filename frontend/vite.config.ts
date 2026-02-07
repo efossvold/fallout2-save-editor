@@ -1,14 +1,27 @@
-import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+import { defineConfig as defineTestConfig, mergeConfig } from 'vitest/config'
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
+
+const viteConfig = defineConfig({
+  plugins: [
+    react({
+      babel: {
+        plugins: ['babel-plugin-react-compiler'],
+      },
+    }),
+  ],
   build: {
     target: 'baseline-widely-available',
   },
-  test: {
-    environment: 'node',
-    include: ['**/*.test.ts'],
+  resolve: {
+    tsconfigPaths: true,
   },
 })
+
+const vitestConfig = defineTestConfig({
+  test: { environment: 'node', include: ['**/*.test.ts'] },
+})
+
+export default mergeConfig(viteConfig, vitestConfig)

@@ -1,19 +1,19 @@
-// @ts-check
+// @ts-nocheck
 import eslint from '@eslint/js'
-// eslint-disable-next-line import/no-unresolved
-import tseslint from 'typescript-eslint'
+import pluginVitest from '@vitest/eslint-plugin'
+import configPrettier from 'eslint-config-prettier'
+import pluginCypress from 'eslint-plugin-cypress'
 import importPlugin from 'eslint-plugin-import'
+import pluginJsxA11y from 'eslint-plugin-jsx-a11y'
+import pluginMocha from 'eslint-plugin-mocha'
 import pluginReact from 'eslint-plugin-react'
 import pluginReactHooks from 'eslint-plugin-react-hooks'
-import pluginJsxA11y from 'eslint-plugin-jsx-a11y'
-import pluginCypress from 'eslint-plugin-cypress'
-import pluginMocha from 'eslint-plugin-mocha'
-import pluginVitest from '@vitest/eslint-plugin'
-import pluginUnicorn from 'eslint-plugin-unicorn'
-import configPrettier from 'eslint-config-prettier'
-import unusedImportsPlugin from 'eslint-plugin-unused-imports'
 import youMightNotNeedAnEffect from 'eslint-plugin-react-you-might-not-need-an-effect'
+import pluginUnicorn from 'eslint-plugin-unicorn'
+import unusedImportsPlugin from 'eslint-plugin-unused-imports'
 import globals from 'globals'
+// eslint-disable-next-line import/no-unresolved
+import tseslint from 'typescript-eslint'
 
 const GLOB_TS = ['**/*.{ts,tsx,cts,mts}']
 

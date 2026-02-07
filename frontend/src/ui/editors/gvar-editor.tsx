@@ -1,4 +1,5 @@
 import { VStack } from '@chakra-ui/react'
+
 import { GVARS } from '../../api/data/gvar'
 import { keysOf, prefixString } from '../../api/utils'
 import { ATTR_PREFIX, LINE_HEIGHT } from '../constants'
@@ -9,7 +10,7 @@ import { ValueSetter } from '../value-setter'
 export const GVAREditor = () => {
   const setProp = useAPIStore(s => s.setProp)
   const gvars = useAPIStore(S.getGVARs)
-  const gvarKeysSorted = keysOf(GVARS).sort((a, b) => a.localeCompare(b))
+  const gvarKeysSorted = keysOf(GVARS).toSorted((a, b) => a.localeCompare(b))
 
   return (
     <VStack spacing={LINE_HEIGHT}>

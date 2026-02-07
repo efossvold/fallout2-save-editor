@@ -1,4 +1,3 @@
-import type { PropsWithChildren } from 'react'
 import type { ButtonProps, TextProps } from '@chakra-ui/react'
 import {
   HStack,
@@ -11,19 +10,25 @@ import {
   GridItem,
   useBreakpointValue,
 } from '@chakra-ui/react'
+import type { PropsWithChildren } from 'react'
+// oxlint-disable-next-line no-unused-vars
+import { useEffect, useState } from 'react'
+
 import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
-import { getError } from '../api/utils'
+// oxlint-disable-next-line no-unused-vars
+import saveBase64 from '../api/slot01-stats.base64'
 import type { MayBeError } from '../api/types/misc'
+import { getError } from '../api/utils'
+
+import { TOOLTIP_PROPS } from './constants'
 import { useToaster } from './hooks'
 import { Hoverable } from './hoverable'
 import { Logo } from './logo'
 import * as S from './selectors'
 import { useAPIStore, handler } from './store'
 import { colors } from './theme'
-import { basename, dirname } from './utils'
 import { useIsLargerThanMedium } from './theme/media-queries'
-// import saveBase64 from '../api/slot01-stats.base64'
-import { TOOLTIP_PROPS } from './constants'
+import { basename, dirname } from './utils'
 
 export const IText = (p: PropsWithChildren<TextProps>) => (
   <Text color={p.color ?? 'gray600'} fontSize={12}>
@@ -76,10 +81,7 @@ const SaveGameMeta = () => {
       <GridItem>
         <Tooltip {...TOOLTIP_PROPS} label={currentSaveFile} cursor="pointer">
           <Box cursor="pointer">
-            <InfoItem
-              name="Path"
-              value={`${currentSaveFile.split('/').slice(-2).join('/')}`}
-            />
+            <InfoItem name="Path" value={currentSaveFile.split('/').slice(-2).join('/')} />
           </Box>
         </Tooltip>
       </GridItem>
@@ -104,15 +106,21 @@ export const Toolbar = () => {
   const load = useAPIStore(s => s.load)
   const toast = useToaster()
 
+  // const [hasLoaded, setHasLoaded] = useState(false)
+
+  // useEffect(() => {
+  //   if (!hasLoaded) {
+  //     load('/savegame.file', saveBase64)
+  //     setHasLoaded(true)
+  //   }
+  // }, [hasLoaded, load, setHasLoaded])
+
   return (
     <VStack w="100%" py={1} px={2} bg="gray.50" rounded={4}>
       <HStack justify="space-between" w="100%">
         <Hoverable>
           {({ isHovered }) => (
-            <Logo
-              height={38}
-              fill={isHovered ? colors.blue[400] : colors.gray[200]}
-            />
+            <Logo height={38} fill={isHovered ? colors.blue[400] : colors.gray[200]} />
           )}
         </Hoverable>
 
@@ -122,19 +130,15 @@ export const Toolbar = () => {
           <IButton
             onClick={async () => {
               try {
-                const [path, content, error] = (await ReadFile()) as [
-                  string,
-                  string,
-                  string,
-                ]
+                // oxlint-disable-next-line new-cap
+                const [path, content, error] = (await ReadFile()) as [string, string, string]
                 if (error) {
                   toast.error(error)
                 } else if (path) {
                   load(path, content)
                 }
-                // load('/savegame.file', saveBase64)
               } catch (error) {
-                toast.error(getError(error as MayBeError).message)
+                toast.error(getError(error).message)
               }
             }}
           >
@@ -145,6 +149,7 @@ export const Toolbar = () => {
             onClick={async () => {
               try {
                 save()
+                // oxlint-disable-next-line new-cap
                 const [filename, error] = (await SaveFile(
                   handler.toBase64(),
                   dirname(currentSaveFile ?? ''),
@@ -164,6 +169,7 @@ export const Toolbar = () => {
           </IButton>
           <IButton
             onClick={() => {
+              // oxlint-disable-next-line new-cap
               globalThis.runtime.Quit()
             }}
           >

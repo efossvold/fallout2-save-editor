@@ -1,33 +1,28 @@
 import { Box, Center, HStack, Text, VStack } from '@chakra-ui/react'
+
 import type { AttributesValues } from '../../api/types/attributes'
 import { prefixString } from '../../api/utils'
-import {
-  ATTR_PREFIX,
-  MAX_ATTRIBUTE_VALUE,
-  MIN_ATTRIBUTE_VAULE,
-} from '../constants'
+import { ATTR_PREFIX, MAX_ATTRIBUTE_VALUE, MIN_ATTRIBUTE_VAULE } from '../constants'
+import { useToaster } from '../hooks'
 import { Hoverable } from '../hoverable'
 import { caretDown, caretUp } from '../icons'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
-import { useToaster } from '../hooks'
 
 export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
   const toast = useToaster()
   const setProp = useAPIStore(s => s.setProp)
 
-  const baseValue = useAPIStore(
-    s => s.data[`${prefixString(p.name, ATTR_PREFIX.BASE_ATTR)}`],
-  )
+  const baseValue = useAPIStore(s => s.data[prefixString(p.name, ATTR_PREFIX.BASE_ATTR)])
 
   const totalValue = useAPIStore(s => S.getAttributeTotal(s, p.name))
 
   return (
     <HStack spacing={2}>
       <HStack bg="#181818" rounded={4} spacing={2} px={2}>
+        {/* oxlint-disable-next-line unicorn/prefer-spread */}
         {`0${totalValue}`
           .slice(-2)
-          // eslint-disable-next-line unicorn/prefer-spread
           .split('')
           .map((digit, index) => (
             <Text
@@ -53,10 +48,7 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
                   ev.stopPropagation()
 
                   if (totalValue < MAX_ATTRIBUTE_VALUE) {
-                    setProp(
-                      prefixString(p.name, ATTR_PREFIX.BASE_ATTR),
-                      baseValue + 1,
-                    )
+                    setProp(prefixString(p.name, ATTR_PREFIX.BASE_ATTR), baseValue + 1)
                   } else {
                     toast.info('Max attribute level reached, you rock!')
                   }
@@ -76,14 +68,9 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
                   ev.stopPropagation()
 
                   if (baseValue > MIN_ATTRIBUTE_VAULE) {
-                    setProp(
-                      prefixString(p.name, ATTR_PREFIX.BASE_ATTR),
-                      baseValue - 1,
-                    )
+                    setProp(prefixString(p.name, ATTR_PREFIX.BASE_ATTR), baseValue - 1)
                   } else {
-                    toast.info(
-                      'Minimum attribute level reached, not your strongest side is it?',
-                    )
+                    toast.info('Minimum attribute level reached, not your strongest side is it?')
                   }
                 }}
               />

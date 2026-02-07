@@ -1,4 +1,6 @@
-import { HStack, Text, Box, Center, Tooltip } from '@chakra-ui/react'
+import { Box, Center, HStack, Text, Tooltip } from '@chakra-ui/react'
+
+import { TOOLTIP_PROPS } from './constants'
 import { useHelpTextStore } from './help-text/store'
 import { useHoverColor, useToaster } from './hooks'
 import { Hoverable } from './hoverable'
@@ -6,7 +8,6 @@ import { caretLeft, caretRight } from './icons'
 import type { TColor } from './theme'
 import { colors } from './theme'
 import { useIsMobile } from './theme/media-queries'
-import { TOOLTIP_PROPS } from './constants'
 
 interface Props {
   name: string
@@ -62,7 +63,7 @@ export const ValueSetter = ({
   const setHelpText = useHelpTextStore(s => s.setHelpText)
 
   const getColor = (isHovered: boolean) => {
-    // eslint-disable-next-line prefer-destructuring
+    // oxlint-disable-next-line prefer-destructuring
     let defaultColor: TColor = colors.green[600]
 
     defaultColor = dimOnZero && totalValue < 1 ? 'green.900' : 'green.200'
@@ -70,9 +71,7 @@ export const ValueSetter = ({
     return getHoverColor(isHovered, color ?? defaultColor, hoverColor)
   }
 
-  const onIncreasePress = (
-    ev: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
+  const onIncreasePress = (ev: React.MouseEvent<HTMLButtonElement>) => {
     ev.preventDefault()
     ev.stopPropagation()
 
@@ -90,9 +89,7 @@ export const ValueSetter = ({
     onIncrease()
   }
 
-  const onDecreasePress = (
-    ev: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
+  const onDecreasePress = (ev: React.MouseEvent<HTMLButtonElement>) => {
     ev.preventDefault()
     ev.stopPropagation()
 
@@ -113,7 +110,7 @@ export const ValueSetter = ({
   return (
     <Hoverable
       onHover={() => setHelpText(helperTitle ?? name, helperText)}
-      // onUnhover={() => clearHelpText()}
+      // OnUnhover={() => clearHelpText()}
       w="100%"
     >
       {({ isHovered }) => (
@@ -142,9 +139,7 @@ export const ValueSetter = ({
               </Hoverable>
             )}
 
-            <Text color={getColor(isHovered)}>
-              {valueText ?? `${totalValue}${unit}`}
-            </Text>
+            <Text color={getColor(isHovered)}>{valueText ?? `${totalValue}${unit}`}</Text>
             {showControls && (
               <Hoverable>
                 {({ isHovered: isBtnHovered }) => (

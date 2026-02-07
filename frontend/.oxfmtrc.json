@@ -1,0 +1,36 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "experimentalSortImports": {
+    "groups": [
+      ["side-effect"],
+      ["builtin"],
+      ["external", "type-external"],
+      ["internal", "type-internal"],
+      ["parent", "type-parent"],
+      ["sibling", "type-sibling"],
+      ["index", "type-index"]
+    ]
+  },
+  "trailingComma": "all",
+  "tabWidth": 2,
+  "semi": false,
+  "singleQuote": true,
+  "jsxSingleQuote": false,
+  "jsxBracketSameLine": false,
+  "arrowParens": "avoid",
+  "ignorePatterns": [
+    ".idea",
+    ".vscode",
+    // Build files
+    "build",
+    "dist",
+    "wailsjs",
+    // Node
+    "node_modules",
+    // VS Code history plugin
+    ".history",
+    // Cypress,
+    "cypress/coverage",
+    "cypress/reports"
+  ]
+}

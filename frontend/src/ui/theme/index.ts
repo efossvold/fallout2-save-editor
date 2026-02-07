@@ -1,8 +1,9 @@
 import type { ColorProps, Theme as DefaultTheme } from '@chakra-ui/react'
 import { extendTheme } from '@chakra-ui/react'
 import { mode } from '@chakra-ui/theme-tools'
-import colors from './colors'
+
 import { breakpoints } from './breakpoints'
+import colors from './colors'
 
 export type TColor = ColorProps['color']
 
@@ -17,9 +18,7 @@ const theme = extendTheme({
   styles: {
     global: (props: any) => ({
       body: {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         color: mode('gray.300', 'whiteAlpha.900')(props),
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         bg: mode('gray.300', 'gray.800')(props),
         paddingLeft: 0,
         paddingTop: 0,

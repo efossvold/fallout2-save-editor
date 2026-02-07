@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
 import type { BaseAttributesValues, BonusAttributesValues } from './attributes'
-import type { F17Preferences } from './f17-preferences'
 import type { F6StatsBase, F6StatsBonus } from './f6-stats'
+import type { F17Preferences } from './f17-preferences'
 import type { GVARValues } from './gvar'
 import type { KillValues } from './kill'
 import type { PrefixedDictIndices } from './misc'
@@ -10,19 +9,20 @@ import type { SkillValues } from './skills'
 
 export type MapValueTypes = 'float' | 'int' | 'string'
 
-export type MapKeyValueEntry = {
+export interface MapKeyValueEntry {
   name: string
   offset: number
   length: number
   kind: MapValueTypes
 }
 
-export type MapSection<T extends Record<string, any>> = {
+export interface MapSection<T extends Record<string, any>> {
   size: number
   offset: number
   keys: { [Key in keyof T]: MapKeyValueEntry }
 }
 
+// oxlint-disable-next-line typescript/consistent-type-definitions
 export type MapHeaderSection = {
   gameVersion: string
   characterName: string
@@ -35,6 +35,7 @@ export type MapHeaderSection = {
 
 export type MapF2Section = GVARValues
 
+// oxlint-disable-next-line typescript/consistent-type-definitions
 export type MapF5Section = {
   currentHP: number
   radiation: number
@@ -60,29 +61,27 @@ export type MapF8Section = PrefixedDictIndices<
 >
 
 export type MapF9Section = PerkValues
-// export type MapF9Section = PerkValues
+// Export type MapF9Section = PerkValues
 
+// oxlint-disable-next-line typescript/consistent-type-definitions
 export type MapF11Section = {
   combatStatus: number // 02 - not in combat; 03 - in combat
   unknown1: number
   unknown2: number
   numNPCs: number
   playerID: number
-  turnOrder: number // size = 0x04 * numNPCs
-  unknown3: number // size = 0x10 * numNPCs
+  turnOrder: number // Size = 0x04 * numNPCs
+  unknown3: number // Size = 0x10 * numNPCs
 }
 
+// oxlint-disable-next-line typescript/consistent-type-definitions
 export type MapF13Section = {
   qtySkillPoints: number
   playerLevel: number
   playerXP: number
 }
 
-export type MapF15Section = PrefixedDictIndices<
-  '1' | '2',
-  number | undefined,
-  'trait'
->
+export type MapF15Section = PrefixedDictIndices<'1' | '2', number | undefined, 'trait'>
 
 export type MapF17Section = F17Preferences
 
@@ -109,7 +108,7 @@ export interface SaveTypesMap {
   f15: MapF15Section
   f16: {}
   f17: MapF17Section
-  // inventory: MapInventory
+  // Inventory: MapInventory
 }
 
 export type SaveMap = {
@@ -117,7 +116,8 @@ export type SaveMap = {
 }
 
 export interface SaveGameData
-  extends MapHeaderSection,
+  extends
+    MapHeaderSection,
     MapF2Section,
     MapF5Section,
     MapF6Section,

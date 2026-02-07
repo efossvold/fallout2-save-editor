@@ -1,4 +1,5 @@
 import { ATTR_PREFIX } from '../ui/constants'
+
 import { GVARS } from './data/gvar'
 import { KILLS } from './data/kills'
 import { PERKS } from './data/perks'
@@ -53,17 +54,10 @@ export const createMap = (): T.SaveMap => {
     f2: {
       size: -1,
       offset: 0x75_67,
-      keys: entries(GVARS).reduce<GVARMap>(
-        (acc, [key, value]) => ({
-          ...acc,
-          [`${prefixString(key, ATTR_PREFIX.GVAR)}`]: m(
-            value.name,
-            value.id * 0x04,
-            0x04,
-          ),
-        }),
-        {} as GVARMap,
-      ),
+      keys: entries(GVARS).reduce<GVARMap>((acc, [key, value]) => {
+        acc[prefixString(key, ATTR_PREFIX.GVAR)] = m(value.name, value.id * 0x04, 0x04)
+        return acc
+      }, {} as GVARMap),
     },
     f5: {
       size: -1,
@@ -151,31 +145,19 @@ export const createMap = (): T.SaveMap => {
         bonusAttrAgility: m('', 0xa8, 0x04),
         bonusAttrLuck: m('', 0xac, 0x04),
 
-        ...entries(SKILLS).reduce<SkillMap>(
-          (acc, [key, value]) => ({
-            ...acc,
-            [key]: m(value.name, 0x01_20 + value.id * 0x04, 0x04),
-          }),
-          {} as SkillMap,
-        ),
+        ...entries(SKILLS).reduce<SkillMap>((acc, [key, value]) => {
+          acc[key] = m(value.name, 0x01_20 + value.id * 0x04, 0x04)
+          return acc
+        }, {} as SkillMap),
       },
     },
     f7: {
       size: 0x4c,
       offset: -1,
-      keys: {
-        ...entries(KILLS).reduce<KillMap>(
-          (acc, [key, value]) => ({
-            ...acc,
-            [`${prefixString(key, ATTR_PREFIX.KILL)}`]: m(
-              value.name,
-              value.id * 0x04,
-              0x04,
-            ),
-          }),
-          {} as KillMap,
-        ),
-      },
+      keys: entries(KILLS).reduce<KillMap>((acc, [key, value]) => {
+        acc[prefixString(key, ATTR_PREFIX.KILL)] = m(value.name, value.id * 0x04, 0x04)
+        return acc
+      }, {} as KillMap),
     },
     f8: {
       size: 0x10,
@@ -190,17 +172,10 @@ export const createMap = (): T.SaveMap => {
     f9: {
       size: 0x02_c8,
       offset: -1,
-      keys: entries(PERKS).reduce<PerksMap>(
-        (acc, [key, value]) => ({
-          ...acc,
-          [`${prefixString(key, ATTR_PREFIX.PERK)}`]: m(
-            value.name,
-            value.id * 0x04,
-            0x04,
-          ),
-        }),
-        {} as PerksMap,
-      ),
+      keys: entries(PERKS).reduce<PerksMap>((acc, [key, value]) => {
+        acc[prefixString(key, ATTR_PREFIX.PERK)] = m(value.name, value.id * 0x04, 0x04)
+        return acc
+      }, {} as PerksMap),
     },
     f10: {
       // In Fallout 2 v1.02d it is 0x3058 (decimal 12376) bytes.

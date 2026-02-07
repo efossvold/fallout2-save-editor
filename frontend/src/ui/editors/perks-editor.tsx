@@ -1,11 +1,12 @@
 import { Box, VStack } from '@chakra-ui/react'
 import React from 'react'
+
 import { PERKS } from '../../api/data/perks'
 import { keysOf, prefixString } from '../../api/utils'
+import { LINE_HEIGHT } from '../constants'
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
-import { LINE_HEIGHT } from '../constants'
 import { ValueSetter } from '../value-setter'
 
 export const PerksEditor = () => {
@@ -13,16 +14,12 @@ export const PerksEditor = () => {
   const perks = useAPIStore(S.getPerks)
   const adjustStatsFromPerk = useAPIStore(s => s.adjustStatsFromPerk)
 
-  const perkKeysSorted = keysOf(PERKS).sort((a, b) => a.localeCompare(b))
+  const perkKeysSorted = keysOf(PERKS).toSorted((a, b) => a.localeCompare(b))
 
   return (
     <>
       <PanelHeader text="PERKS" />
-      <Box
-        overflowY="auto"
-        maxH={['none', '420px']}
-        className="styled-scrollbar"
-      >
+      <Box overflowY="auto" maxH={['none', '420px']} className="styled-scrollbar">
         <VStack spacing={LINE_HEIGHT}>
           {perkKeysSorted.map(key => {
             const { name, ranks, desc } = PERKS[key]
@@ -30,11 +27,7 @@ export const PerksEditor = () => {
             const value = perks[perkKey]
 
             // Filter out Fallout 1 perks
-            if (
-              desc
-                .toLocaleLowerCase()
-                .includes('unimplemented'.toLocaleLowerCase())
-            ) {
+            if (desc.toLocaleLowerCase().includes('unimplemented'.toLocaleLowerCase())) {
               return <React.Fragment key={name} />
             }
 

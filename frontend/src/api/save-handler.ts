@@ -1,5 +1,5 @@
-// eslint-disable-next-line unicorn/prefer-node-protocol
 import { Buffer } from 'buffer'
+
 import { getCategory, ItemCategory, ITEMS } from './data/items'
 import * as M from './map'
 import { createSaveData } from './save-data'
@@ -14,9 +14,9 @@ interface SaveHandlerArgs {
 
 export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
   let buffer: Buffer | undefined
+  let saveData = createSaveData()
+  let map = M.createMap()
   const isDebug = args?.isDebug ?? false
-  const map = M.createMap()
-  const saveData = createSaveData()
 
   const logger = (...text: (string | number | object)[]): void => {
     if (isDebug) {
@@ -24,7 +24,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     }
   }
 
-  // const gameStartDate = new Date(2241, 6, 25)
+  // Const gameStartDate = new Date(2241, 6, 25)
 
   const getBuffer = (): Buffer => {
     if (!buffer) {
@@ -33,10 +33,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     return buffer
   }
 
-  const getOffset = (
-    sectionName: keyof MT.SaveMap,
-    errMsg?: string,
-  ): number => {
+  const getOffset = (sectionName: keyof MT.SaveMap, errMsg?: string): number => {
     const { offset } = map[sectionName]
     if (offset < 0) {
       throw new Error(errMsg ?? `Could not find '${sectionName}' offset`)
@@ -54,19 +51,16 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     prefix = '',
   ): SectionGetters => {
     const section = map[sectionName]
-    return Object.entries(section.keys).reduce<SectionGetters>(
-      (getters, [key, _entry]) => {
-        // @ts-expect-error literal cannot be used to index type unknown
-        getters[`get${prefix}${U.ucFirstChar(key)}`] = () =>
-          getValue(
-            getOffset(sectionName),
-            // @ts-expect-error Element implicitly has an 'any' type because expression of type 'string' can't be used to index section.keys
-            section.keys[key],
-          )
-        return getters
-      },
-      {} as SectionGetters,
-    )
+    return Object.entries(section.keys).reduce<SectionGetters>((getters, [key, _entry]) => {
+      // @ts-expect-error literal cannot be used to index type unknown
+      getters[`get${prefix}${U.ucFirstChar(key)}`] = () =>
+        getValue(
+          getOffset(sectionName),
+          // @ts-expect-error Element implicitly has an 'any' type because expression of type 'string' can't be used to index section.keys
+          section.keys[key],
+        )
+      return getters
+    }, {} as SectionGetters)
   }
 
   const createSetters = <
@@ -78,18 +72,13 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     prefix = '',
   ): SectionSetters => {
     const section = map[sectionName]
-    return U.entries(section.keys).reduce<SectionSetters>(
-      (setters, [key, _entry]) => {
-        // @ts-expect-error key is string and cannot be used to index element
-        setters[`set${prefix}${U.ucFirstChar(key)}`] = (
-          value: string | number,
-        ) => {
-          setValue(getOffset(sectionName), section.keys[key], value)
-        }
-        return setters
-      },
-      {} as SectionSetters,
-    )
+    return U.entries(section.keys).reduce<SectionSetters>((setters, [key, _entry]) => {
+      // @ts-expect-error key is string and cannot be used to index element
+      setters[`set${prefix}${U.ucFirstChar(key)}`] = (value: string | number) => {
+        setValue(getOffset(sectionName), section.keys[key], value)
+      }
+      return setters
+    }, {} as SectionSetters)
   }
 
   const getValue = <Entry extends MT.MapKeyValueEntry>(
@@ -152,24 +141,24 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
       case 'float': {
         // Can only write 4 byte floats (2B.2B)
 
-        console.assert(+value < 99, `setValue: Invalid float: ${value}`)
+        console.assert(Number(value) < 99, `setValue: Invalid float: ${value}`)
 
         const [integral = '', fractional = ''] = value.toString().split('.')
         const [n1 = '0', n2 = '0'] = String(integral).padStart(2, '0')
         const [d1 = '0', d2 = '0'] = String(fractional).padStart(2, '0')
 
-        buffer.writeUInt8(+n1, offset)
-        buffer.writeUInt8(+n2, offset + 0x01)
-        buffer.writeUInt8(+d1, offset + 0x02)
-        buffer.writeUInt8(+d2, offset + 0x03)
+        buffer.writeUInt8(Number(n1), offset)
+        buffer.writeUInt8(Number(n2), offset + 0x01)
+        buffer.writeUInt8(Number(d1), offset + 0x02)
+        buffer.writeUInt8(Number(d2), offset + 0x03)
 
         break
       }
       case 'int': {
-        if (+value < 0) {
-          buffer.writeIntBE(+value, offset, length)
+        if (Number(value) < 0) {
+          buffer.writeIntBE(Number(value), offset, length)
         } else {
-          buffer.writeUIntBE(+value, offset, length)
+          buffer.writeUIntBE(Number(value), offset, length)
         }
 
         break
@@ -196,22 +185,19 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     sectionName: SectionName,
     customOffset?: number,
   ): ReturnType => {
-    // logger('getSectionData', sectionName)
+    // Logger('getSectionData', sectionName)
     const offset = customOffset ?? getOffset(sectionName)
 
-    return Object.entries(map[sectionName].keys).reduce(
-      (acc: ReturnType, [key, entry]) => {
-        const value = getValue(offset, entry as any)
+    return Object.entries(map[sectionName].keys).reduce((acc: ReturnType, [key, entry]) => {
+      const value = getValue(offset, entry as any)
 
-        // @ts-expect-error value is any
-        saveData[key] = value
+      // @ts-expect-error value is any
+      saveData[key] = value
 
-        // @ts-expect-error value is any
-        acc[key] = value
-        return acc
-      },
-      {} as ReturnType,
-    )
+      // @ts-expect-error value is any
+      acc[key] = value
+      return acc
+    }, {} as ReturnType)
   }
 
   const setSectionData = <SectionName extends keyof MT.SaveMap>(
@@ -222,35 +208,27 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     const offset = getOffset(sectionName)
     for (const [key, spec] of U.entries(map[sectionName].keys)) {
       // @ts-expect-error shite
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      //
       const value = data[key]
 
-      console.assert(
-        value !== undefined,
-        `setSectionData: Not value found for '${key.toString()}'`,
-      )
+      console.assert(value !== undefined, `setSectionData: Not value found for '${key.toString()}'`)
 
       setValue(offset, spec, value as string | number)
     }
   }
 
   const readInventoryItem = (offset: number): [InventoryItem, number] => {
-    // number of fields * field size
+    // Number of fields * field size
     const itemSize = 0x58 + 0x04
     const itemId = getValue(offset, M.inventoryKeys.id).toString()
     const item = ITEMS[itemId.toString()]
 
     if (!item) {
-      throw new Error(
-        `Found unknown item id (${itemId}). Editing this file will corrupt it.`,
-      )
+      throw new Error(`Found unknown item id (${itemId}). Editing this file will corrupt it.`)
     }
 
     const qty = getValue(offset, M.inventoryKeys.qty) as number
-    const qtyContained = getValue(
-      offset,
-      M.inventoryKeys.qtyContained,
-    ) as number
+    const qtyContained = getValue(offset, M.inventoryKeys.qtyContained) as number
     const category = getCategory(item)
 
     let nextOffset = offset + itemSize
@@ -379,13 +357,13 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
       return items
     },
 
-    // /**
-    //  * Section: F17 (Preferences)
-    //  * This function extracts preference settings.
-    //  * It's mainly used to identify the offset of F17 as so to use that
-    //  * offset to calculate other offsets such as F13 (player level & XP)
-    //  * and F15 (traits).
-    //  */
+    /**
+     * Section: F17 (Preferences)
+     * This function extracts preference settings.
+     * It's mainly used to identify the offset of F17 as so to use that
+     * offset to calculate other offsets such as F13 (player level & XP)
+     * and F15 (traits).
+     */
     getPreferences() {
       if (map.f17.offset > -1) {
         return getSectionData('f17')
@@ -396,10 +374,10 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
 
       let offsetFound = false
       let searchOffset = map.f11.offset
-      // let searchOffset = 54_078 // F14
+      // Let searchOffset = 54_078 // F14
       let prefs: MT.MapF17Section
 
-      // eslint-disable-next-line unicorn/consistent-function-scoping
+      // oxlint-disable-next-line unicorn/consistent-function-scoping
       const verifyValue = (value: number, min: number, max: number): boolean =>
         value >= min && value <= max
 
@@ -408,10 +386,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
        * will each be within a certain range so using this search pattern is very
        * efficient to identifying the F17 offset.
        */
-      while (
-        !offsetFound &&
-        searchOffset < buffer.byteLength - map.f17.size - 0x04
-      ) {
+      while (!offsetFound && searchOffset < buffer.byteLength - map.f17.size - 0x04) {
         prefs = getSectionData('f17', searchOffset)
 
         if (
@@ -438,7 +413,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
         ) {
           const nonZeroValues = Object.values(prefs).filter(v => v !== 0)
 
-          //  brightness: 63132.8049,
+          //  Brightness: 63132.8049,
           if (nonZeroValues.length > 0) {
             offsetFound = true
           }
@@ -477,6 +452,8 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
 
     fromBase64(base64) {
       buffer = Buffer.from(base64, 'base64')
+      saveData = createSaveData()
+      map = M.createMap()
 
       map.f5.offset = buffer.indexOf(M.F5_MARKER)
 
@@ -509,7 +486,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
 
     getData() {
       this.fromBase64(this.toBase64())
-      return { ...saveData }
+      return saveData
     },
   }
 }

@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react'
 import type { UseDisclosureReturn } from '@chakra-ui/react'
 import {
   HStack,
@@ -14,6 +13,8 @@ import {
   VStack,
   useDisclosure,
 } from '@chakra-ui/react'
+import { useEffect, useRef, useState } from 'react'
+
 import { Hoverable } from './hoverable'
 import { useAPIStore } from './store'
 import { colors } from './theme'
@@ -29,11 +30,7 @@ export const NameChanger = (p: { name: string }) => {
         }}
       >
         {({ isHovered }) => (
-          <Text
-            color={isHovered ? colors.gray[50] : colors.green[200]}
-            mr={11}
-            cursor="pointer"
-          >
+          <Text color={isHovered ? colors.gray[50] : colors.green[200]} mr={11} cursor="pointer">
             {p.name}
           </Text>
         )}
@@ -43,10 +40,7 @@ export const NameChanger = (p: { name: string }) => {
   )
 }
 
-const NameChangerModal = (p: {
-  initialValue: string
-  disclosure: UseDisclosureReturn
-}) => {
+const NameChangerModal = (p: { initialValue: string; disclosure: UseDisclosureReturn }) => {
   const setProp = useAPIStore(s => s.setProp)
   const [name, setName] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
@@ -62,11 +56,7 @@ const NameChangerModal = (p: {
   }, [isInitialValueSet, p.disclosure.isOpen, p.initialValue])
 
   return (
-    <Modal
-      isOpen={p.disclosure.isOpen}
-      onClose={p.disclosure.onClose}
-      initialFocusRef={inputRef}
-    >
+    <Modal isOpen={p.disclosure.isOpen} onClose={p.disclosure.onClose} initialFocusRef={inputRef}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader color="gray.600">Character Name</ModalHeader>

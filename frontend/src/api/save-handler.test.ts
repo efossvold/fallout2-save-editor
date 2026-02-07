@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { saveHandler } from './save-handler'
-import dataBase64 from './slot01-stats.base64'
 import stats from './slot01-stats'
+import dataBase64 from './slot01-stats.base64'
 import type { SaveHandler } from './types/save-handler'
 
 let handler: SaveHandler
@@ -53,8 +54,7 @@ describe('save-handler', () => {
     handler.setGameVersion(1)
     const data = handler.getData()
 
-    // eslint-disable-next-line unicorn/no-zero-fractions
-    expect(data).toStrictEqual({ ...stats, gameVersion: 1.0 })
+    expect(data).toStrictEqual({ ...stats, gameVersion: 1 })
   })
 
   it('should set float correctly (.03)', () => {
@@ -71,9 +71,6 @@ describe('save-handler', () => {
     const data = handler.getData()
 
     expect(data).toStrictEqual({ ...stats, gameVersion: 12 })
-    expect(consoleSpy).toHaveBeenCalledWith(
-      false,
-      'setValue: Invalid float: 1234',
-    )
+    expect(consoleSpy).toHaveBeenCalledWith(false, 'setValue: Invalid float: 1234')
   })
 })

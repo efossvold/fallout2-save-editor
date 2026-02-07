@@ -1,4 +1,4 @@
-export default {
+const STATS = {
   gameVersion: 1.02,
   characterName:
     'White Swan\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000',
@@ -273,3 +273,5 @@ export default {
   prefBrightness: 1_066_863_104,
   prefMouseSensitivity: 1_075_838_976,
 }
+
+export default STATS

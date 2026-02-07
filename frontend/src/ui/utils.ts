@@ -1,5 +1,4 @@
-export const basename = (path: string): string =>
-  path.split('/').reverse().at(0) ?? ''
+export const basename = (path: string): string => path.split('/').toReversed().at(0) ?? ''
 
 export const dirname = (path: string): string => {
   const parts = path.split('/')

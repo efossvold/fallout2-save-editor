@@ -1,12 +1,14 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
-import type { PerkValues } from '../api/types/perks'
+
 import { Crippled } from '../api/data/crippled'
-import type { StatNames } from '../api/save-data'
 import { createSaveData } from '../api/save-data'
+import type { StatNames } from '../api/save-data'
 import { saveHandler } from '../api/save-handler'
 import type * as M from '../api/types/map'
+import type { PerkValues } from '../api/types/perks'
 import * as U from '../api/utils'
+
 import { getPerk } from './selectors'
 
 export const handler = saveHandler({ isDebug: false })
@@ -18,13 +20,8 @@ export interface StoreState {
   adjustStatsFromPerk: (name: keyof PerkValues, level: number) => void
   load: (filename: string, base64: string) => void
   save: () => void
-  getProp: <Prop extends keyof M.SaveGameData>(
-    prop: Prop,
-  ) => M.SaveGameData[Prop]
-  setProp: <
-    Prop extends keyof M.SaveGameData,
-    Type extends M.SaveGameData[Prop],
-  >(
+  getProp: <Prop extends keyof M.SaveGameData>(prop: Prop) => M.SaveGameData[Prop]
+  setProp: <Prop extends keyof M.SaveGameData, Type extends M.SaveGameData[Prop]>(
     prop: Prop,
     value: Type,
   ) => void
@@ -37,14 +34,15 @@ export const useAPIStore = create<StoreState>()(
 
     // Calculate permanent bonus/penalties from perks
     // Adjustments from these perks are permanently added
-    // to bonus value of the stat
+    // To bonus value of the stat
     adjustStatsFromPerk: (name, newLevel) =>
       set(state => {
+        // oxlint-disable-next-line unicorn/consistent-function-scoping
         const f = <A extends keyof PerkValues, B extends StatNames>(
           a: A,
           b: B,
           c: number,
-          // eslint-disable-next-line unicorn/consistent-function-scoping
+          //
         ): [A, B, number] => [a, b, c]
 
         // [Perk name, Affected stat, value of adjustment]
@@ -73,7 +71,6 @@ export const useAPIStore = create<StoreState>()(
       }),
 
     load(filename, base64) {
-      console.log('load')
       handler.fromBase64(base64)
       set({
         currentSaveFile: filename,

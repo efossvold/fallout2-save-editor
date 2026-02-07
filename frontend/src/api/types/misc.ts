@@ -6,11 +6,7 @@ export type DictValues<D extends Record<string, unknown>, T> = {
 
 export type MakeOptional<T, K> = Pick<T, Exclude<keyof T, K>> & Partial<T>
 
-export type PrefixedDictIndices<
-  Names extends string,
-  ValueType,
-  Prefix extends string = '',
-> = {
+export type PrefixedDictIndices<Names extends string, ValueType, Prefix extends string = ''> = {
   [Key in Names as `${Prefix}${Capitalize<Key>}`]: ValueType
 }
 

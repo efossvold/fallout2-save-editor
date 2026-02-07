@@ -1,23 +1,25 @@
 import { addSeconds, differenceInYears, format } from 'date-fns'
 import { createSelector } from 'reselect'
+
+import { ATTRIBUTES, BASE_ATTRIBUTES_NAMES } from '../api/data/attributes'
+import { Crippled } from '../api/data/crippled'
 import { GVARS } from '../api/data/gvar'
+import { KILLS } from '../api/data/kills'
+import { PERKS } from '../api/data/perks'
+import { SKILLS, SKILL_COST } from '../api/data/skills'
+import { TRAITS } from '../api/data/traits'
+import type { StatNames } from '../api/save-data'
+import type { AttributesValues } from '../api/types/attributes'
 import type { GVARValues } from '../api/types/gvar'
 import type { KillValues } from '../api/types/kill'
-import { PERKS } from '../api/data/perks'
-import { ATTRIBUTES, BASE_ATTRIBUTES_NAMES } from '../api/data/attributes'
-import { SKILLS, SKILL_COST } from '../api/data/skills'
-import type { AttributesValues } from '../api/types/attributes'
+import type { SaveGameData } from '../api/types/map'
+import type { PerkValues } from '../api/types/perks'
 import type { SkillValues } from '../api/types/skills'
 import type { TraitNames, TraitValues } from '../api/types/traits'
-import { Crippled } from '../api/data/crippled'
-import { TRAITS } from '../api/data/traits'
 import * as U from '../api/utils'
-import type { PerkValues } from '../api/types/perks'
-import type { StatNames } from '../api/save-data'
-import { KILLS } from '../api/data/kills'
-import type { SaveGameData } from '../api/types/map'
-import type { StoreState } from './store'
+
 import { ATTR_PREFIX, GAME_START_DATE } from './constants'
+import type { StoreState } from './store'
 
 const getState = (s: StoreState): StoreState => s
 const getData = (s: StoreState): SaveGameData => s.data
@@ -116,20 +118,10 @@ export const calcValueFromTrait = createSelector(
       ['kamikaze', 'baseSequence', 5, false],
       ['kamikaze', 'baseAC', 0, true],
       ['smallFrame', 'baseAttrAgility', 1, false],
-      [
-        'smallFrame',
-        'baseCarryWeight',
-        25 + s.data.baseAttrStrength * 15,
-        true,
-      ],
+      ['smallFrame', 'baseCarryWeight', 25 + s.data.baseAttrStrength * 15, true],
       ['gifted', BASE_ATTRIBUTES_NAMES, 1, false],
       ['gifted', U.keysOf(SKILLS), -10, false],
-      [
-        'goodNatured',
-        ['skillFirstAid', 'skillDoctor', 'skillSpeech', 'skillBarter'],
-        15,
-        false,
-      ],
+      ['goodNatured', ['skillFirstAid', 'skillDoctor', 'skillSpeech', 'skillBarter'], 15, false],
       [
         'goodNatured',
         [
@@ -258,17 +250,12 @@ export const getHPDerived = createSelector([getState], s => {
 export const getGVARs = createSelector([getData], s =>
   U.entries(GVARS).reduce<GVARValues>((acc, [key]) => {
     const name = U.prefixString(key, ATTR_PREFIX.GVAR)
-    return {
-      ...acc,
-      [name]: s[name],
-    }
+    acc[name] = s[name]
+    return acc
   }, {} as GVARValues),
 )
 
-export const getHPTotal = createSelector(
-  [getState],
-  s => getHPDerived(s) + s.data.bonusHP,
-)
+export const getHPTotal = createSelector([getState], s => getHPDerived(s) + s.data.bonusHP)
 
 export const getIsLimbCrippled = createSelector(
   [getData, (_: StoreState, bodyPart: keyof typeof Crippled) => bodyPart],
@@ -278,10 +265,8 @@ export const getIsLimbCrippled = createSelector(
 export const getKills = createSelector([getData], s =>
   U.entries(KILLS).reduce<KillValues>((acc, [key]) => {
     const name = U.prefixString(key, ATTR_PREFIX.KILL)
-    return {
-      ...acc,
-      [name]: s[name],
-    }
+    acc[name] = s[name]
+    return acc
   }, {} as KillValues),
 )
 
@@ -298,10 +283,8 @@ export const getMeleeDmgDerived = createSelector([getState], s => {
 export const getPerks = createSelector([getData], s =>
   U.entries(PERKS).reduce<PerkValues>((acc, [key]) => {
     const name = U.prefixString(key, ATTR_PREFIX.PERK)
-    return {
-      ...acc,
-      [name]: s[name],
-    }
+    acc[name] = s[name]
+    return acc
   }, {} as PerkValues),
 )
 
@@ -317,10 +300,7 @@ export const getPlayerAge = createSelector([getData], s => {
   return differenceInYears(nowTime, startTime) + baseAge + bonusAge
 })
 
-export const getSelectedTraits = createSelector([getData], s => [
-  s.trait1 ?? -1,
-  s.trait2 ?? -1,
-])
+export const getSelectedTraits = createSelector([getData], s => [s.trait1 ?? -1, s.trait2 ?? -1])
 
 export const getSequenceDerived = createSelector([getState], s => {
   /**
@@ -355,19 +335,14 @@ export const getRadiationResistanceDerived = createSelector([getState], s => {
 export const getSkillIsTagged = createSelector(
   [getData, (_: StoreState, name: keyof SkillValues) => name],
   (s, name) =>
-    [s.taggedSkill1, s.taggedSkill2, s.taggedSkill3, s.taggedSkill4].includes(
-      SKILLS[name].id,
-    ),
+    [s.taggedSkill1, s.taggedSkill2, s.taggedSkill3, s.taggedSkill4].includes(SKILLS[name].id),
 )
 
 export const getSkills = createSelector([getData], s => {
-  const skills = U.entries(SKILLS).reduce<SkillValues>(
-    (acc, [id]) => ({
-      ...acc,
-      [id]: s[id],
-    }),
-    {} as SkillValues,
-  )
+  const skills = U.entries(SKILLS).reduce<SkillValues>((acc, [id]) => {
+    acc[id] = s[id]
+    return acc
+  }, {} as SkillValues)
   return skills
 })
 
@@ -385,17 +360,14 @@ export const getSkillTotal = createSelector(
     // ( (5+ (4 * 9) + 20 ) -10 ) + (23 * 2)  = 101 (round up)
     const assignedPoints = s.data[name]
 
-    const { baseValue, multiplier, associatedAttr1, associatedAttr2 } =
-      SKILLS[name]
+    const { baseValue, multiplier, associatedAttr1, associatedAttr2 } = SKILLS[name]
 
     // Tagged skills receive +20 at start and additionally
     // * 2 for every point invested (until > 100)
     const isTagged = getSkillIsTagged(s, name)
 
     const attrValue1 = getAttributeTotal(s, associatedAttr1)
-    const attrValue2 = associatedAttr2
-      ? getAttributeTotal(s, associatedAttr2)
-      : 0
+    const attrValue2 = associatedAttr2 ? getAttributeTotal(s, associatedAttr2) : 0
 
     let totalSkillPoints = baseValue + multiplier * (attrValue1 + attrValue2)
 
@@ -418,11 +390,7 @@ export const getSkillTotal = createSelector(
       for (const [i, range] of costTable.entries()) {
         const rangeTotal = range.at(1) ?? 0
 
-        console.assert(
-          rangeTotal > 0,
-          `rangeTotal value not found in SKILL_COST`,
-          { rangeTotal },
-        )
+        console.assert(rangeTotal > 0, `rangeTotal value not found in SKILL_COST`, { rangeTotal })
 
         if (totalSkillPoints < rangeTotal) {
           costIndex = i
@@ -435,11 +403,9 @@ export const getSkillTotal = createSelector(
       if (left >= 0) {
         const pointsToIncrease = costTable.at(costIndex)?.at(3) ?? 0
 
-        console.assert(
-          pointsToIncrease > 0,
-          `pointsToIncrease value not found in SKILL_COST`,
-          { pointsToIncrease },
-        )
+        console.assert(pointsToIncrease > 0, `pointsToIncrease value not found in SKILL_COST`, {
+          pointsToIncrease,
+        })
 
         totalSkillPoints += pointsToIncrease
         skillPointsLeft -= 1
@@ -468,25 +434,19 @@ export const getSkillTotal = createSelector(
 )
 
 export const getSkillsTotal = createSelector([getState], s =>
-  U.keysOf(SKILLS).reduce<SkillValues>(
-    (acc, key) => ({
-      ...acc,
-      [key]: getSkillTotal(s, key),
-    }),
-    {} as SkillValues,
-  ),
+  U.keysOf(SKILLS).reduce<SkillValues>((acc, key) => {
+    acc[key] = getSkillTotal(s, key)
+    return acc
+  }, {} as SkillValues),
 )
 
 export const getTraits = createSelector([getData], s => {
   const selectedTraits = new Set([s.trait1, s.trait2])
 
-  const traits = U.entries(TRAITS).reduce<TraitValues>(
-    (acc, [id, value]) => ({
-      ...acc,
-      [id]: selectedTraits.has(value.id),
-    }),
-    {} as TraitValues,
-  )
+  const traits = U.entries(TRAITS).reduce<TraitValues>((acc, [id, value]) => {
+    acc[id] = selectedTraits.has(value.id)
+    return acc
+  }, {} as TraitValues)
 
   return traits
 })

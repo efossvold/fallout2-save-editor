@@ -1,30 +1,24 @@
-import type { Dict, MayBeError } from './types/misc'
+import type { Dict } from './types/misc'
 
 type Entries<T> = {
   [K in keyof T]: [K, T[K]]
 }[keyof T][]
 
-export const bitTest = (num: number, bit: number): boolean =>
-  (num >> bit) % 2 !== 0
+export const bitTest = (num: number, bit: number): boolean => (num >> bit) % 2 !== 0
 export const bitSet = (num: number, bit: number): number => num | (1 << bit)
 export const bitClear = (num: number, bit: number): number => num & ~(1 << bit)
 
 export const bitToggle = (num: number, bit: number): number =>
   bitTest(num, bit) ? bitClear(num, bit) : bitSet(num, bit)
 
-export const ucFirstChar = (str: string): string =>
-  str.charAt(0).toUpperCase() + str.slice(1)
+export const ucFirstChar = (str: string): string => str.charAt(0).toUpperCase() + str.slice(1)
 
-export const keysOf = <T extends Dict<unknown>>(obj: T): (keyof T)[] =>
-  Object.keys(obj)
+export const keysOf = <T extends Dict<unknown>>(obj: T): (keyof T)[] => Object.keys(obj)
 
 export const entries = <T extends Dict<unknown>>(obj: T): Entries<T> =>
   Object.entries(obj) as Entries<T>
 
-export const sortObjByKey = <Type>(
-  dict: Dict<Type | undefined>,
-  key: keyof Type,
-): Type[] => {
+export const sortObjByKey = <Type>(dict: Dict<Type | undefined>, key: keyof Type): Type[] => {
   const items = entries(dict).map<[keyof Type, Type]>(entry => [
     entry[0] as keyof Type,
     entry[1] as Type,
@@ -43,30 +37,30 @@ export const sortObjByKey = <Type>(
   return items.map(e => e[1])
 }
 
-export const loop = (
-  times: number,
-  callback: (count: number) => void,
-): void => {
-  const range = Array.from<number>({ length: times }).fill(0)
-  for (const [index, _] of range.entries()) {
-    callback(index)
-  }
-}
-
-export const getError = <Err extends MayBeError>(
-  error: Err,
-  log = true,
-): Error => {
+export const getError = (error: unknown, log = true): Error => {
   let errObj: Error
 
-  if (error instanceof Error) {
+  if (error === null) {
+    errObj = new Error('Invalid error: null')
+  } else if (error instanceof Error) {
     errObj = error
   } else if (typeof error === 'string') {
     errObj = new Error(error)
-  } else if (typeof error === 'object' && error.message) {
-    errObj = error as Error
+  } else if (typeof error === 'object' && 'message' in error) {
+    // Object.prototype.hasOwnProperty('message')
+    if (typeof error.message === 'string') {
+      errObj = new Error(error.message)
+    } else {
+      errObj = new Error('MESSAGE_NOT_STRING')
+    }
   } else {
-    const message = `getError: Unknown error type: ${error as unknown as string}`
+    let errorMsg = ''
+    try {
+      errorMsg = JSON.stringify(error)
+    } catch {
+      errorMsg = 'INVALID_ERROR_OBJECT'
+    }
+    const message = `getError: Unknown error type: ${errorMsg}`
     console.error(message)
     return new Error(message)
   }
@@ -78,10 +72,8 @@ export const getError = <Err extends MayBeError>(
   return errObj
 }
 
-export const captializeFirstLetter = <Value extends string>(
-  s: Value,
-): `${Capitalize<Value>}` =>
-  (s.charAt(0).toUpperCase() + s.slice(1)) as `${Capitalize<Value>}`
+export const captializeFirstLetter = <Value extends string>(s: Value): Capitalize<Value> =>
+  (s.charAt(0).toUpperCase() + s.slice(1)) as Capitalize<Value>
 
 export const prefixString = <Value extends string, Prefix extends string>(
   s: Value,

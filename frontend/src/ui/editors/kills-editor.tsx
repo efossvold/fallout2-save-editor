@@ -1,4 +1,5 @@
 import { VStack } from '@chakra-ui/react'
+
 import { KILLS } from '../../api/data/kills'
 import { keysOf, prefixString } from '../../api/utils'
 import { ATTR_PREFIX, LINE_HEIGHT } from '../constants'
@@ -9,7 +10,7 @@ import { ValueSetter } from '../value-setter'
 export const KillsEditor = () => {
   const setProp = useAPIStore(s => s.setProp)
   const kills = useAPIStore(S.getKills)
-  const killKeysSorted = keysOf(KILLS).sort((a, b) => a.localeCompare(b))
+  const killKeysSorted = keysOf(KILLS).toSorted((a, b) => a.localeCompare(b))
 
   return (
     <VStack spacing={LINE_HEIGHT}>
