@@ -61,8 +61,7 @@ export const getError = (error: unknown, log = true): Error => {
       errorMsg = 'INVALID_ERROR_OBJECT'
     }
     const message = `getError: Unknown error type: ${errorMsg}`
-    console.error(message)
-    return new Error(message)
+    errObj = new Error(message)
   }
 
   if (log) {

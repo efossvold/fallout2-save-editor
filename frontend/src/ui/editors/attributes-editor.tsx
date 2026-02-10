@@ -1,53 +1,35 @@
-import { HStack, Text, Tooltip, VStack } from '@chakra-ui/react'
 import { ATTRIBUTES } from '../../api/data/attributes'
 import { captializeFirstLetter, entries } from '../../api/utils'
 import { useHelpTextStore } from '../help-text/store'
 import { Hoverable } from '../hoverable'
-import { colors } from '../theme'
-import { useIsMobile } from '../theme/media-queries'
-import { TOOLTIP_PROPS } from '../constants'
+
 import { AttrValueSetter } from './attributes-value-setter'
 
 export const AttributesEditor = () => {
   const setHelpText = useHelpTextStore(s => s.setHelpText)
   const clearHelpText = useHelpTextStore(s => s.clearHelpText)
-  const isMobile = useIsMobile()
 
   return (
-    <VStack spacing={1} align="flex-start">
+    <div className="flex flex-wrap gap-1">
       {entries(ATTRIBUTES).map(([name, attr]) => (
         <Hoverable
           key={name}
-          onHover={() =>
-            setHelpText(captializeFirstLetter(name), ATTRIBUTES[name].desc)
-          }
+          onHover={() => setHelpText(captializeFirstLetter(name), ATTRIBUTES[name].desc)}
           onUnhover={() => clearHelpText()}
-          w="100%"
+          className="w-full"
         >
           {({ isHovered }) => (
-            <HStack justifyContent="space-between">
-              <Text
-                flex={1}
-                color={isHovered ? colors.gray[50] : colors.gold[400]}
-                fontSize={[24, 20]}
-                fontFamily="fallouty"
-                textAlign="left"
-                position="relative"
-                top="-1px"
+            <div className="flex justify-between items-center">
+              <div
+                className={`flex text-left relative text-2xl sm:text-xl ${isHovered ? 'text-gray-50' : 'text-gold-400'}`}
               >
-                <Tooltip
-                  {...TOOLTIP_PROPS}
-                  label={ATTRIBUTES[name].desc}
-                  isDisabled={!isMobile}
-                >
-                  {attr.name}
-                </Tooltip>
-              </Text>
+                {attr.name}
+              </div>
               <AttrValueSetter name={name} />
-            </HStack>
+            </div>
           )}
         </Hoverable>
       ))}
-    </VStack>
+    </div>
   )
 }

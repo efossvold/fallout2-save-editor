@@ -1,8 +1,6 @@
-import { VStack } from '@chakra-ui/react'
-
 import { GVARS } from '../../api/data/gvar'
 import { keysOf, prefixString } from '../../api/utils'
-import { ATTR_PREFIX, LINE_HEIGHT } from '../constants'
+import { ATTR_PREFIX } from '../constants'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
 import { ValueSetter } from '../value-setter'
@@ -13,7 +11,7 @@ export const GVAREditor = () => {
   const gvarKeysSorted = keysOf(GVARS).toSorted((a, b) => a.localeCompare(b))
 
   return (
-    <VStack spacing={LINE_HEIGHT}>
+    <div className="flex flex-col">
       {gvarKeysSorted.map(key => {
         const { name, maxValue, desc } = GVARS[key]
         const gvarKey = prefixString(key, ATTR_PREFIX.GVAR)
@@ -36,6 +34,6 @@ export const GVAREditor = () => {
           />
         )
       })}
-    </VStack>
+    </div>
   )
 }

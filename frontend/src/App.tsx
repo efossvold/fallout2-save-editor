@@ -1,16 +1,24 @@
+import './ui/theme/app.css'
 import './ui/theme/fonts.css'
 import './ui/theme/scrollbar.css'
 
-import { ChakraProvider } from '@chakra-ui/react'
+import { Toaster } from 'react-hot-toast'
 
 import { Panels } from './ui/panels'
-import theme from './ui/theme'
 
 const App = () => (
-  // window.runtime.WindowSetSize(WIN_START_WIDTH, MIN_WIN_HEIGHT)
-  <ChakraProvider theme={theme} resetCSS>
-    <Panels />
-  </ChakraProvider>
+  <>
+    <div className="m-auto px-0.5 py-1 min-w-125 sm:w-full md:w-full xl:max-w-300">
+      <Panels />
+    </div>
+
+    <Toaster
+      position="bottom-center"
+      toastOptions={{
+        className: 'bg-red-500',
+      }}
+    />
+  </>
 )
 
 export default App

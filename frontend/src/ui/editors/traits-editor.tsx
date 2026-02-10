@@ -1,21 +1,17 @@
-import { Box, HStack } from '@chakra-ui/react'
+import { toast } from 'react-hot-toast'
+
 import { TRAITS } from '../../api/data/traits'
 import { entries } from '../../api/utils'
-import { MAX_TRAITS, LINE_HEIGHT } from '../constants'
+import { MAX_TRAITS } from '../constants'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
 import { ValueCheckbox } from '../value-checkbox'
-import { useToaster } from '../hooks'
 
 export const TraitsEditor = () => {
-  const toast = useToaster()
   const setProp = useAPIStore(s => s.setProp)
   const traits = useAPIStore(S.getSelectedTraits)
 
-  const maxTraitId = entries(TRAITS).reduce<number>(
-    (acc, [_key, t]) => Math.max(t.id, acc),
-    0,
-  )
+  const maxTraitId = entries(TRAITS).reduce<number>((acc, [_key, t]) => Math.max(t.id, acc), 0)
 
   const isValidTraitId = (id: number) => id >= 0 && id <= maxTraitId
 
@@ -27,22 +23,16 @@ export const TraitsEditor = () => {
   }
 
   return (
-    <HStack
-      w="100%"
-      justifyContent="space-between"
-      flexWrap="wrap"
-      spacing={LINE_HEIGHT}
-    >
-      {entries(TRAITS).map(([, trait], i) => (
-        <Box key={trait.name} w="49%" mb={LINE_HEIGHT}>
+    <div className="flex flex-row flex-wrap justify-between w-full">
+      {entries(TRAITS).map(([, trait]) => (
+        <div key={trait.name} className="w-full md:w-[45%]">
           <ValueCheckbox
             name={trait.name}
             value={traits.includes(trait.id)}
             helperText={trait.desc}
-            checkboxProps={{ mr: i % 2 === 0 ? 6 : 1 }}
             onCheck={() => {
               if (hasMaxTraits()) {
-                toast.info(
+                toast(
                   `Woah, hold on there. Can't have more than 2 perks. This is a game limitation.`,
                 )
                 return
@@ -63,10 +53,8 @@ export const TraitsEditor = () => {
               }
             }}
           />
-        </Box>
+        </div>
       ))}
-      {/* Hack to aligned the last trait (Gifted) with the rest of the traits */}
-      <Box w={12} />
-    </HStack>
+    </div>
   )
 }

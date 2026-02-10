@@ -1,93 +1,113 @@
-import type { UseDisclosureReturn } from '@chakra-ui/react'
-import {
-  HStack,
-  Text,
-  Input,
-  Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  VStack,
-  useDisclosure,
-} from '@chakra-ui/react'
-import { useEffect, useRef, useState } from 'react'
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
+import { clsx } from 'clsx'
+import { useEffect, useState } from 'react'
+import ReactDOM from 'react-dom'
 
+import type { UseDisclosureReturn } from '../types/types'
+
+import { IButton } from './components/buttons'
+import { IInput } from './components/input'
+import { MAX_CHARACTER_NAME_LENGTH } from './constants'
+import { useDisclosure } from './hooks'
 import { Hoverable } from './hoverable'
 import { useAPIStore } from './store'
-import { colors } from './theme'
 
 export const NameChanger = (p: { name: string }) => {
   const disclosure = useDisclosure()
 
   return (
     <>
-      <Hoverable
-        onClick={() => {
-          disclosure.onOpen()
-        }}
-      >
+      <Hoverable onClick={disclosure.onOpen}>
         {({ isHovered }) => (
-          <Text color={isHovered ? colors.gray[50] : colors.green[200]} mr={11} cursor="pointer">
-            {p.name}
-          </Text>
+          <div
+            className={clsx(
+              'flex justify-between mr-2.5 cursor-pointer',
+              isHovered ? 'text-gray-50' : 'text-green-200',
+            )}
+          >
+            <p>Name</p>
+            <div className="flex justify-between">
+              <p className={clsx(isHovered ? 'underline' : 'no-underline')}>{p.name}</p>
+              <NameChangerModal
+                initialValue={p.name}
+                disclosure={disclosure}
+                isHovered={isHovered}
+              />
+              <div className="w-2" />
+            </div>
+          </div>
         )}
       </Hoverable>
-      <NameChangerModal initialValue={p.name} disclosure={disclosure} />
     </>
   )
 }
 
-const NameChangerModal = (p: { initialValue: string; disclosure: UseDisclosureReturn }) => {
+const NameChangerModal = (p: {
+  initialValue: string
+  disclosure: UseDisclosureReturn
+  isHovered: boolean
+}) => {
+  const { isOpen, onClose } = p.disclosure
   const setProp = useAPIStore(s => s.setProp)
   const [name, setName] = useState('')
-  const inputRef = useRef<HTMLInputElement>(null)
   const [isInitialValueSet, setIsInitialValueSet] = useState(false)
+  const [modalRoot, setModalRoot] = useState<HTMLElement | null>()
 
   useEffect(() => {
-    if (p.disclosure.isOpen && !isInitialValueSet) {
+    setModalRoot(document.getElementById('modal'))
+  }, [])
+
+  useEffect(() => {
+    if (isOpen && !isInitialValueSet) {
       setIsInitialValueSet(true)
-      setName(p.initialValue)
-    } else if (!p.disclosure.isOpen) {
+      setName(p.initialValue.replaceAll('\x00', ''))
+    } else if (!isOpen) {
       setIsInitialValueSet(false)
     }
-  }, [isInitialValueSet, p.disclosure.isOpen, p.initialValue])
+  }, [isInitialValueSet, isOpen, p.initialValue])
 
-  return (
-    <Modal isOpen={p.disclosure.isOpen} onClose={p.disclosure.onClose} initialFocusRef={inputRef}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader color="gray.600">Character Name</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <VStack>
-            <Input
-              ref={inputRef}
-              rounded="sm"
-              fontSize={20}
+  if (!isOpen || !modalRoot) {
+    return
+  }
+
+  return ReactDOM.createPortal(
+    <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none" onClose={onClose}>
+      <DialogBackdrop
+        transition
+        className="fixed inset-0 bg-gray-900/40 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+      />
+      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div className="flex min-h-full items-center justify-center p-4">
+          <DialogPanel
+            transition
+            className="w-full max-w-lg sm:max-w-md rounded-lg bg-white text-gray-600 p-4 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 text-2xl sm:text-xl"
+          >
+            <DialogTitle as="h3">Character Name</DialogTitle>
+
+            <IInput
+              autoFocus
               value={name}
-              onChange={ev => setName(ev.target.value)}
+              onChange={ev => {
+                setName(ev.target.value)
+              }}
+              maxLength={MAX_CHARACTER_NAME_LENGTH}
             />
-            <HStack justifyContent="flex-end" w="100%" spacing={4}>
-              <Button w={100} bg="gray.100" onClick={p.disclosure.onClose}>
-                Close
-              </Button>
-              <Button
-                w={100}
-                bg="gray.400"
+
+            <div className="flex flex-row justify-end gap-4 mt-4">
+              <IButton onClick={onClose}>Close</IButton>
+              <IButton
                 onClick={() => {
-                  setProp('characterName', name)
+                  setProp('characterName', name.slice(0, MAX_CHARACTER_NAME_LENGTH))
                   p.disclosure.onClose()
                 }}
               >
                 Save
-              </Button>
-            </HStack>
-          </VStack>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+              </IButton>
+            </div>
+          </DialogPanel>
+        </div>
+      </div>
+    </Dialog>,
+    modalRoot,
   )
 }

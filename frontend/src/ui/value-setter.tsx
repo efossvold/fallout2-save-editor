@@ -1,17 +1,15 @@
-import { Box, Center, HStack, Text, Tooltip } from '@chakra-ui/react'
+import { Button } from '@headlessui/react'
+import { clsx } from 'clsx'
+import { toast } from 'react-hot-toast'
 
-import { TOOLTIP_PROPS } from './constants'
 import { useHelpTextStore } from './help-text/store'
-import { useHoverColor, useToaster } from './hooks'
+import { useHoverColor } from './hooks'
 import { Hoverable } from './hoverable'
 import { caretLeft, caretRight } from './icons'
-import type { TColor } from './theme'
-import { colors } from './theme'
-import { useIsMobile } from './theme/media-queries'
 
 interface Props {
   name: string
-  baseValue: number
+  baseValue?: number
   bonusValue?: number
   valueText?: string
   helperTitle?: string
@@ -22,10 +20,11 @@ interface Props {
   color?: string
   hoverColor?: string
   dimOnZero?: boolean
-  minBaseValue?: number | undefined
-  maxBaseValue?: number | undefined
-  minBonusValue?: number | undefined
-  maxBonusValue?: number | undefined
+  minValue?: number
+  minBaseValue?: number
+  maxBaseValue?: number
+  minBonusValue?: number
+  maxBonusValue?: number
   isMinValue?: boolean
   isMaxValue?: boolean
   minValueMsg?: string | boolean
@@ -35,7 +34,7 @@ interface Props {
 
 export const ValueSetter = ({
   name,
-  baseValue,
+  baseValue = 0,
   bonusValue = 0,
   valueText,
   helperTitle,
@@ -46,6 +45,7 @@ export const ValueSetter = ({
   color,
   hoverColor,
   dimOnZero = true,
+  minValue = 0,
   minBaseValue = 0,
   maxBaseValue,
   minBonusValue,
@@ -56,22 +56,19 @@ export const ValueSetter = ({
   maxValueMsg = 'Max level reached',
   showControls = true,
 }: Props) => {
-  const isMobile = useIsMobile()
   const totalValue = baseValue + bonusValue
-  const toast = useToaster()
   const getHoverColor = useHoverColor()
   const setHelpText = useHelpTextStore(s => s.setHelpText)
 
   const getColor = (isHovered: boolean) => {
-    // oxlint-disable-next-line prefer-destructuring
-    let defaultColor: TColor = colors.green[600]
+    let defaultColor = clsx('text-green-600')
 
-    defaultColor = dimOnZero && totalValue < 1 ? 'green.900' : 'green.200'
+    defaultColor = dimOnZero && totalValue < 1 ? clsx('text-green-900') : clsx('text-green-200')
 
     return getHoverColor(isHovered, color ?? defaultColor, hoverColor)
   }
 
-  const onIncreasePress = (ev: React.MouseEvent<HTMLButtonElement>) => {
+  const onIncreasePress = (ev: React.SyntheticEvent) => {
     ev.preventDefault()
     ev.stopPropagation()
 
@@ -81,7 +78,7 @@ export const ValueSetter = ({
       isMaxValue
     ) {
       if (maxValueMsg) {
-        toast.info(maxValueMsg as string)
+        toast(maxValueMsg as string)
       }
       return
     }
@@ -89,17 +86,21 @@ export const ValueSetter = ({
     onIncrease()
   }
 
-  const onDecreasePress = (ev: React.MouseEvent<HTMLButtonElement>) => {
+  const onDecreasePress = (ev: React.SyntheticEvent) => {
     ev.preventDefault()
     ev.stopPropagation()
 
+    const totValue = baseValue + bonusValue
+
     if (
+      totValue <= minValue ||
       (minBaseValue && baseValue <= minBaseValue) ||
       (minBonusValue && bonusValue <= minBonusValue) ||
+      (minBaseValue && minBaseValue >= baseValue + bonusValue) ||
       isMinValue
     ) {
       if (minValueMsg) {
-        toast.info(minValueMsg as string)
+        toast(minValueMsg as string)
       }
       return
     }
@@ -110,57 +111,49 @@ export const ValueSetter = ({
   return (
     <Hoverable
       onHover={() => setHelpText(helperTitle ?? name, helperText)}
-      // OnUnhover={() => clearHelpText()}
-      w="100%"
+      // onUnhover={() => clearHelpText()}
+      className="w-full"
     >
       {({ isHovered }) => (
-        <HStack justify="space-between">
-          <Tooltip {...TOOLTIP_PROPS} label={helperText} isDisabled={!isMobile}>
-            <Text color={getColor(isHovered)}>{name}</Text>
-          </Tooltip>
-          <HStack>
+        <div className="flex justify-between">
+          <p className={getColor(isHovered)}>{name}</p>
+          <div className="flex flex-row items-center gap-0.5">
             {showControls && (
               <Hoverable>
                 {({ isHovered: isBtnHovered }) => (
-                  <Center>
-                    {isHovered || isMobile ? (
-                      <Box
-                        as="button"
-                        style={caretLeft({ isHovered: isBtnHovered })}
-                        onClick={onDecreasePress}
-                        position="relative"
-                        top="1px"
-                      />
-                    ) : (
-                      <Box w="11px" />
-                    )}
-                  </Center>
+                  <div className="flex items-center">
+                    <Button
+                      className={clsx(
+                        caretLeft({ isHovered: isBtnHovered }),
+                        isHovered ? 'visible' : 'sm:invisible',
+                        'relative top-px',
+                      )}
+                      onClick={onDecreasePress}
+                    />
+                  </div>
                 )}
               </Hoverable>
             )}
 
-            <Text color={getColor(isHovered)}>{valueText ?? `${totalValue}${unit}`}</Text>
+            <p className={getColor(isHovered)}>{valueText ?? `${totalValue}${unit}`}</p>
             {showControls && (
               <Hoverable>
                 {({ isHovered: isBtnHovered }) => (
-                  <Center>
-                    {isHovered || isMobile ? (
-                      <Box
-                        as="button"
-                        style={caretRight({ isHovered: isBtnHovered })}
-                        onClick={onIncreasePress}
-                        position="relative"
-                        top="1px"
-                      />
-                    ) : (
-                      <Box w="11px" />
-                    )}
-                  </Center>
+                  <div className="flex flex-row items-center gap-0.5">
+                    <Button
+                      className={clsx(
+                        caretRight({ isHovered: isBtnHovered }),
+                        isHovered ? 'visible' : 'sm:invisible',
+                        'relative top-px',
+                      )}
+                      onClick={onIncreasePress}
+                    />
+                  </div>
                 )}
               </Hoverable>
             )}
-          </HStack>
-        </HStack>
+          </div>
+        </div>
       )}
     </Hoverable>
   )

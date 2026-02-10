@@ -137,7 +137,10 @@
         "react/jsx-handler-names": "off",
         "react/jsx-max-depth": "off",
         "react/jsx-props-no-spreading": "off",
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "jsx-a11y/prefer-tag-over-role": "off",
+        "jsx-a11y/no-autofocus": "off"
+        // "unicorn/consistent-function-scoping": "off"
       }
     },
     {

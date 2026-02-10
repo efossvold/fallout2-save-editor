@@ -1,8 +1,7 @@
-import { VStack } from '@chakra-ui/react'
 import { SKILLS } from '../../api/data/skills'
 import type { SkillValues } from '../../api/types/skills'
 import { entries } from '../../api/utils'
-import { MAX_SKILL_VALUE, MIN_SKILL_VALUE, LINE_HEIGHT } from '../constants'
+import { MAX_SKILL_VALUE, MIN_SKILL_VALUE } from '../constants'
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
@@ -40,12 +39,12 @@ export const SkillsEditor = () => {
 
   return (
     <>
-      <PanelHeader text="SKILLS" />
-      <VStack spacing={LINE_HEIGHT}>
+      <PanelHeader title="SKILLS" />
+      <div className="flex flex-col">
         {entries(skills).map(([name, value]) => (
           <SkillSetter key={name} name={name} value={value} />
         ))}
-      </VStack>
+      </div>
     </>
   )
 }

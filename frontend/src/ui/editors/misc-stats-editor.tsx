@@ -1,8 +1,6 @@
-import { VStack, Box } from '@chakra-ui/react'
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
-import { LINE_HEIGHT } from '../constants'
 import { ValueSetter } from '../value-setter'
 
 export const MiscStatsEditor = () => {
@@ -10,9 +8,9 @@ export const MiscStatsEditor = () => {
   const setProp = useAPIStore(s => s.setProp)
 
   return (
-    <Box>
-      <PanelHeader text="MISCHELLANEOUS" />
-      <VStack spacing={LINE_HEIGHT}>
+    <>
+      <PanelHeader title="MISCHELLANEOUS" />
+      <div className="flex flex-col">
         <ValueSetter
           name="Armor Class"
           baseValue={useAPIStore(S.getACDerived)}
@@ -49,7 +47,7 @@ export const MiscStatsEditor = () => {
           name="Carry Weight"
           baseValue={useAPIStore(S.getCarryWeightDerived)}
           bonusValue={data.bonusCarryWeight}
-          minBonusValue={0}
+          minBaseValue={0}
           dimOnZero={false}
           helperText="The maximum amount of equipment your character can carry, in pounds."
           minValueMsg="Fate has decided to... NOT grant your request"
@@ -87,16 +85,10 @@ export const MiscStatsEditor = () => {
           helperText="Any damage taken is reduced by this amount. Damage Resistance can be increased by wearing armor."
           minValueMsg="You definitely like the extra challenge..."
           onIncrease={() => {
-            setProp(
-              'bonusDmgResistanceNormal',
-              data.bonusDmgResistanceNormal + 1,
-            )
+            setProp('bonusDmgResistanceNormal', data.bonusDmgResistanceNormal + 1)
           }}
           onDecrease={() => {
-            setProp(
-              'bonusDmgResistanceNormal',
-              data.bonusDmgResistanceNormal - 1,
-            )
+            setProp('bonusDmgResistanceNormal', data.bonusDmgResistanceNormal - 1)
           }}
         />
 
@@ -127,16 +119,10 @@ export const MiscStatsEditor = () => {
           helperText="The amound of radiation you are exposed to is reduced by this percentage. Radiation Resistance can be modified by the type of armor worn, and anti-radiation chems."
           minValueMsg="That's as low as it goes, be thankful"
           onIncrease={() => {
-            setProp(
-              'bonusRadiationResistance',
-              data.bonusRadiationResistance + 1,
-            )
+            setProp('bonusRadiationResistance', data.bonusRadiationResistance + 1)
           }}
           onDecrease={() => {
-            setProp(
-              'bonusRadiationResistance',
-              data.bonusRadiationResistance - 1,
-            )
+            setProp('bonusRadiationResistance', data.bonusRadiationResistance - 1)
           }}
         />
 
@@ -176,7 +162,6 @@ export const MiscStatsEditor = () => {
           name="Critical Change"
           baseValue={useAPIStore(S.getCriticalChanceDerived)}
           bonusValue={data.bonusCriticalChance}
-          minBonusValue={0}
           dimOnZero={false}
           unit="%"
           helperText="The chance to cause a criticial hit in combat is increased by this amount."
@@ -188,7 +173,7 @@ export const MiscStatsEditor = () => {
             setProp('bonusCriticalChance', data.bonusCriticalChance - 1)
           }}
         />
-      </VStack>
-    </Box>
+      </div>
+    </>
   )
 }

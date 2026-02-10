@@ -1,22 +1,19 @@
+import { clsx } from 'clsx'
 import type { PropsWithChildren } from 'react'
-import type { BoxProps } from '@chakra-ui/react'
-import { Box, Text } from '@chakra-ui/react'
-import { colors } from './theme'
-import { LINE_HEIGHT } from './constants'
 
-export const Panel = ({ children, ...props }: PropsWithChildren<BoxProps>) => (
-  <Box pt={2} pb={1} px={2} rounded={4} {...props}>
-    {children}
-  </Box>
+export const Panel = ({
+  children,
+  bg,
+  className = '',
+}: PropsWithChildren<{ bg?: string; className?: string }>) => (
+  <div className={clsx(bg ?? 'bg-gray-900', className, 'p-2 rounded-sm')}>{children}</div>
 )
 
 interface PanelHeaderProps {
-  text: string
+  title: string
   color?: string
 }
 
 export const PanelHeader = (p: PanelHeaderProps) => (
-  <Text color={p.color ?? colors.beige[500]} mb={LINE_HEIGHT} textAlign="left">
-    {p.text}
-  </Text>
+  <p className={`${p.color ?? 'text-beige-500'} mb-0 uppercase`}>{p.title}</p>
 )

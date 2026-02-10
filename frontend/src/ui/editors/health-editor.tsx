@@ -1,9 +1,12 @@
 import { useEffect } from 'react'
+
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
 import { ValueCheckbox } from '../value-checkbox'
 import { ValueSetter } from '../value-setter'
+
+const checkboxClassName = 'mr-3.25'
 
 export const HealthEditor = () => {
   const data = useAPIStore(s => s.data)
@@ -13,18 +16,10 @@ export const HealthEditor = () => {
   const setCrippledLimb = useAPIStore(s => s.setCrippledLimb)
 
   const hasEyeDamage = useAPIStore(s => S.getIsLimbCrippled(s, 'EYES'))
-  const hasCrippledRightArm = useAPIStore(s =>
-    S.getIsLimbCrippled(s, 'RIGHT_ARM'),
-  )
-  const hasCrippledLeftArm = useAPIStore(s =>
-    S.getIsLimbCrippled(s, 'LEFT_ARM'),
-  )
-  const hasCrippledRightLeg = useAPIStore(s =>
-    S.getIsLimbCrippled(s, 'RIGHT_LEG'),
-  )
-  const hasCrippledLeftLeg = useAPIStore(s =>
-    S.getIsLimbCrippled(s, 'LEFT_LEG'),
-  )
+  const hasCrippledRightArm = useAPIStore(s => S.getIsLimbCrippled(s, 'RIGHT_ARM'))
+  const hasCrippledLeftArm = useAPIStore(s => S.getIsLimbCrippled(s, 'LEFT_ARM'))
+  const hasCrippledRightLeg = useAPIStore(s => S.getIsLimbCrippled(s, 'RIGHT_LEG'))
+  const hasCrippledLeftLeg = useAPIStore(s => S.getIsLimbCrippled(s, 'LEFT_LEG'))
 
   useEffect(() => {
     setProp('currentHP', HPDerived + data.bonusHP)
@@ -32,7 +27,7 @@ export const HealthEditor = () => {
 
   return (
     <>
-      <PanelHeader text="HEALTH" />
+      <PanelHeader title="HEALTH" />
       <ValueSetter
         name="Hit Points"
         baseValue={HPDerived}
@@ -85,6 +80,7 @@ export const HealthEditor = () => {
         onUncheck={() => {
           setCrippledLimb('EYES', !hasEyeDamage)
         }}
+        className={checkboxClassName}
       />
 
       <ValueCheckbox
@@ -97,6 +93,7 @@ export const HealthEditor = () => {
         onUncheck={() => {
           setCrippledLimb('RIGHT_ARM', !hasCrippledRightArm)
         }}
+        className={checkboxClassName}
       />
 
       <ValueCheckbox
@@ -109,6 +106,7 @@ export const HealthEditor = () => {
         onUncheck={() => {
           setCrippledLimb('LEFT_ARM', !hasCrippledLeftArm)
         }}
+        className={checkboxClassName}
       />
 
       <ValueCheckbox
@@ -121,6 +119,7 @@ export const HealthEditor = () => {
         onUncheck={() => {
           setCrippledLimb('RIGHT_LEG', !hasCrippledRightLeg)
         }}
+        className={checkboxClassName}
       />
 
       <ValueCheckbox
@@ -133,6 +132,7 @@ export const HealthEditor = () => {
         onUncheck={() => {
           setCrippledLimb('LEFT_LEG', !hasCrippledLeftLeg)
         }}
+        className={checkboxClassName}
       />
     </>
   )

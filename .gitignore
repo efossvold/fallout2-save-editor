@@ -2,6 +2,7 @@
 Thumbs.db
 .DS_Store
 *.log
+eslint.config.mjs
 
 # IDE
 .history

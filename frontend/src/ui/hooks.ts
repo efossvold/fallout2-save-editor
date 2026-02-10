@@ -1,17 +1,42 @@
+import { clsx } from 'clsx'
 import { useEffect, useRef, useState } from 'react'
-import type { UseToastOptions } from '@chakra-ui/react'
-import { useToast } from '@chakra-ui/react'
-import type { TColor } from './theme'
+
+import type { UseDisclosureReturn } from '../types/types'
 
 type GetColor = (
   isHovered: boolean,
-  notHoveredColor: TColor | (() => TColor),
-  hoveredColor?: TColor,
-) => TColor
+  notHoveredColor: string | (() => string),
+  hoveredColor?: string,
+) => string
+
+export const useLocation = () => {
+  const [location, setLocation] = useState<Location | undefined>()
+
+  useEffect(() => {
+    setLocation(globalThis.window.location)
+  }, [setLocation])
+
+  return location
+}
+
+/** Returns
+ * undefined when location is not yet available,
+ * true when app is viewed in browser
+ * false when is local app
+ */
+export const useIsWeb = (): boolean | undefined => {
+  const location = useLocation()
+
+  if (location === undefined) {
+    return undefined
+  }
+
+  return !location?.href.startsWith('wails://')
+}
 
 const getColor: GetColor = (isHovered, notHoveredColor, hoveredColor) => {
   if (isHovered) {
-    const defaultColor: TColor = 'gray.50'
+    const defaultColor = clsx('text-gray-50')
     return hoveredColor ?? defaultColor
   }
   if (typeof notHoveredColor === 'function') {
@@ -53,7 +78,7 @@ export const useDisclose = (initState?: boolean): Disclosure => {
 }
 
 export const useHover = <ElementType extends HTMLElement>(): [
-  React.RefObject<ElementType>,
+  React.RefObject<ElementType | null>,
   boolean,
 ] => {
   const [value, setValue] = useState(false)
@@ -74,50 +99,15 @@ export const useHover = <ElementType extends HTMLElement>(): [
     }
   }, [])
 
-  return [ref, value] as [typeof ref, typeof value]
+  return [ref, value]
 }
 
-interface TUseToasterReturnType {
-  info: (message: string, opts?: UseToastOptions) => void
-  success: (message: string, opts?: UseToastOptions) => void
-  error: (message: string, opts?: UseToastOptions) => void
-}
+export const useDisclosure = (): UseDisclosureReturn => {
+  const [isOpen, setIsOpen] = useState(false)
 
-export const useToaster = (): TUseToasterReturnType => {
-  const toast = useToast()
-  const defaultOpts: UseToastOptions = {
-    duration: 4000,
-    isClosable: true,
-    position: 'bottom',
-  }
+  const onOpen = () => setIsOpen(true)
+  const onClose = () => setIsOpen(false)
+  const onToggle = () => setIsOpen(!isOpen)
 
-  return {
-    info: (message: string, opts?: UseToastOptions) => {
-      toast({
-        title: opts?.title ?? 'Info',
-        description: message,
-        status: 'info',
-        ...defaultOpts,
-        ...opts,
-      })
-    },
-    success: (message: string, opts?: UseToastOptions) => {
-      toast({
-        title: opts?.title ?? 'Success',
-        description: message,
-        status: 'success',
-        ...defaultOpts,
-        ...opts,
-      })
-    },
-    error: (message: string, opts?: UseToastOptions) => {
-      toast({
-        title: opts?.title ?? 'Error',
-        description: message,
-        status: 'error',
-        ...defaultOpts,
-        ...opts,
-      })
-    },
-  }
+  return { isOpen, onOpen, onClose, onToggle }
 }

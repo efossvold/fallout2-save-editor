@@ -1,119 +1,55 @@
-import {
-  Grid,
-  GridItem,
-  Stack,
-  Text,
-  VStack,
-  useBreakpointValue,
-} from '@chakra-ui/react'
 import { VERSION } from '../version'
-import { SECTION_SPACING } from './constants'
+
 import * as E from './editors'
-import { Panel } from './panel'
-import { Toolbar } from './toolbar'
-import { Tabs } from './tabs'
 import { HelpText } from './help-text'
+import { Panel } from './panel'
+import { Tabs } from './tabs'
+import { Toolbar } from './toolbar'
 
-export const Panels = () => {
-  const maxWidth = useBreakpointValue({
-    base: '520px',
-    sm: '768px',
-    md: '1200px',
-  })
-  const gridStyle = useBreakpointValue({
-    base: {
-      gridTemplateColumns: '100%',
-      templateColumns: 'repeat(1)',
-    },
-    md: {
-      gridTemplateColumns: '47% 1fr',
-      templateColumns: 'repeat(2, 1fr)',
-    },
-  })
+export const Panels = () => (
+  <div className="flex flex-col gap-0.5">
+    <Toolbar />
 
-  return (
-    <VStack
-      w="100%"
-      h="100vh"
-      minW="500px"
-      maxW={maxWidth}
-      spacing={SECTION_SPACING}
-      p={0.5}
-      m="0 auto"
-    >
-      <Toolbar />
-      <Grid {...gridStyle} gap={SECTION_SPACING} flex={1}>
-        <GridItem>
-          <Stack
-            direction={['column', 'row']}
-            h="100%"
-            w="100%"
-            align="stretch"
-            spacing={SECTION_SPACING}
-          >
-            <VStack
-              w={['100%', '47%']}
-              align="stretch"
-              spacing={SECTION_SPACING}
-            >
-              <Panel bg="brown.500">
-                <E.AttributesEditor />
-              </Panel>
-
-              <Panel bg="gray.900" flex={1}>
-                <E.PlayerXP />
-              </Panel>
-            </VStack>
-
-            <VStack flex={1} align="stretch" spacing={SECTION_SPACING}>
-              <Panel bg="gray.900">
-                <E.HealthEditor />
-              </Panel>
-
-              <Panel bg="gray.900" flex={1}>
-                <E.MiscStatsEditor />
-              </Panel>
-            </VStack>
-          </Stack>
-        </GridItem>
-
-        <GridItem>
-          <Stack
-            direction={['column', 'row']}
-            h="100%"
-            w="100%"
-            align="stretch"
-            spacing={SECTION_SPACING}
-          >
-            <Panel bg="gray.900" w={['100%', '44%']}>
-              <E.SkillsEditor />
-            </Panel>
-            <Panel bg="gray.900" flex={1}>
-              <E.PerksEditor />
-            </Panel>
-          </Stack>
-        </GridItem>
-
-        <GridItem>
-          <Panel bg="gray.900" h="100%">
-            <Tabs />
+    <div className="grid grid-cols-1 lg:grid-cols-[47%_1fr] gap-0.5">
+      <div className="grid-cols-1 grid sm:grid-cols-2 gap-0.5">
+        <div className="grid grid-rows-[auto 1fr] gap-0.5">
+          <Panel bg="bg-brown-500">
+            <E.AttributesEditor />
           </Panel>
-        </GridItem>
-        <GridItem>
-          <Panel bg="beige.500" h="100%" minHeight={['220px', 'none']}>
-            <HelpText />
+          <Panel>
+            <E.PlayerXP />
           </Panel>
-          <Text
-            fontSize={12}
-            color="gray.600"
-            position="absolute"
-            right={3}
-            bottom={1}
-          >
-            {VERSION}
-          </Text>
-        </GridItem>
-      </Grid>
-    </VStack>
-  )
-}
+        </div>
+        <div className="grid grid-rows-[auto 1fr] gap-0.5">
+          <Panel>
+            <E.HealthEditor />
+          </Panel>
+          <Panel>
+            <E.MiscStatsEditor />
+          </Panel>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-[44%_1fr] gap-0.5">
+        <Panel>
+          <E.SkillsEditor />
+        </Panel>
+        <Panel>
+          <E.PerksEditor />
+        </Panel>
+      </div>
+    </div>
+
+    <div className="grid-cols-1 grid sm:grid-cols-[47%_1fr] gap-0.5">
+      <Panel>
+        <Tabs />
+      </Panel>
+      <Panel bg="bg-beige-500">
+        <div className="relative">
+          <HelpText />
+          <div className="absolute right-0 bottom-0 text-gray-50">v{VERSION}</div>
+        </div>
+      </Panel>
+    </div>
+  </div>
+)

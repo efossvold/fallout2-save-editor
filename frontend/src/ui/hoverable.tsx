@@ -1,31 +1,29 @@
-import type { BoxProps } from '@chakra-ui/react'
-import { Box } from '@chakra-ui/react'
+import type { ClassName, BoxProps } from '../types/types'
+
 import { useHover } from './hooks'
 
-export type HoverableProps = {
-  children:
-    | React.ReactNode
-    | ((state: { isHovered: boolean }) => React.ReactNode)
-  onHover?: (ev: PointerEvent) => any
+export interface HoverableProps extends Omit<BoxProps, 'children'> {
+  children: React.ReactNode | ((state: { isHovered: boolean }) => React.ReactNode)
+  className?: ClassName
+  onHover?: (ev: React.PointerEvent<HTMLDivElement>) => any
   onUnhover?: (ev: React.SyntheticEvent) => any
-} & Omit<BoxProps, 'children'>
+}
 
-export const Hoverable = ({
-  children,
-  onHover,
-  onUnhover,
-  ...rest
-}: HoverableProps) => {
+export const Hoverable = ({ children, onHover, onUnhover, ...rest }: HoverableProps) => {
   const [ref, isHovered] = useHover<HTMLDivElement>()
 
   return (
-    <Box
+    <div
       ref={ref}
-      onPointerEnter={onHover}
+      onPointerEnter={ev => {
+        if (onHover) {
+          onHover(ev)
+        }
+      }}
       onPointerLeave={onUnhover}
       {...rest}
     >
       {typeof children === 'function' ? children({ isHovered }) : children}
-    </Box>
+    </div>
   )
 }

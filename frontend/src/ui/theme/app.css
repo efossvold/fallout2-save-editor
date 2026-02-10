@@ -1,0 +1,104 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-heading: fallouty, var(--font-base);
+  --font-body: fallouty, var(--font-base);
+  --font-mono: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-falloutx: falloutx, var(--font-base);
+  --font-fallouty: fallouty, var(--font-base);
+
+  --breakpoint-sm: 32.5rem; /* 520px */
+  --breakpoint-md: 48rem; /* 768px */
+  --breakpoint-lg: 60rem; /* 960px */
+  --breakpoint-xl: 75rem; /* 1200px */
+  --breakpoint-2xl: 96rem; /* 1536px */
+
+  --default-transition-timing-function: var(--ease-in-out);
+  --default-transition-duration: 200ms;
+
+  --color-gray-50: oklch(99.11% 0 0);
+  --color-gray-100: oklch(89.14% 0 0);
+  --color-gray-200: oklch(78.89% 0 0);
+  --color-gray-300: oklch(68.62% 0 0);
+  --color-gray-400: oklch(57.61% 0 0);
+  --color-gray-500: oklch(46.04% 0 0);
+  --color-gray-600: oklch(38.29% 0 0);
+  --color-gray-700: oklch(29.72% 0 0);
+  --color-gray-800: oklch(20.9% 0 0);
+  --color-gray-900: oklch(9.69% 0 0);
+
+  --color-green-50: oklch(31.94% 0.0966 136.9);
+  --color-green-100: oklch(91.17% 0.1888 135);
+  --color-green-200: oklch(87.23% 0.2743 138.9);
+  --color-green-300: oklch(79.82% 0.2508 138.8);
+  --color-green-400: oklch(72.26% 0.2262 138.7);
+  --color-green-500: oklch(29.93% 0.0898 136.5);
+  --color-green-600: oklch(64.48% 0.2014 138.5);
+  --color-green-700: oklch(56.45% 0.1758 138.4);
+  --color-green-800: oklch(48.16% 0.1488 138);
+  --color-green-900: oklch(39.46% 0.1209 137.6);
+
+  --color-blue-50: oklch(73.84% 0.0575 257.7);
+  --color-blue-100: oklch(67.04% 0.0739 257.9);
+  --color-blue-200: oklch(60.41% 0.0901 257);
+  --color-blue-300: oklch(53.57% 0.1077 257.3);
+  --color-blue-400: oklch(46.81% 0.1253 257.8);
+  --color-blue-500: oklch(43.48% 0.115 257.8);
+  --color-blue-600: oklch(40.08% 0.1044 257.8);
+  --color-blue-700: oklch(36.61% 0.0935 257.8);
+  --color-blue-800: oklch(33.06% 0.0823 257.8);
+  --color-blue-900: oklch(29.74% 0.071 257.2);
+
+  --color-beige-50: oklch(34.19% 0.0435 73.9);
+  --color-beige-100: oklch(43.87% 0.0587 73);
+  --color-beige-200: oklch(53.37% 0.0739 73.1);
+  --color-beige-300: oklch(62.36% 0.0877 73.8);
+  --color-beige-400: oklch(70.94% 0.1014 72.7);
+  --color-beige-500: oklch(79.35% 0.1142 73.3);
+  --color-beige-600: oklch(82.3% 0.0986 74.7);
+  --color-beige-700: oklch(85.42% 0.0816 74.9);
+  --color-beige-800: oklch(88.48% 0.0644 76);
+  --color-beige-900: oklch(91.47% 0.047 74.5);
+
+  --color-brown-50: oklch(75.4% 0.0323 61);
+  --color-brown-100: oklch(68.82% 0.0396 63.1);
+  --color-brown-200: oklch(62.47% 0.0461 63.3);
+  --color-brown-300: oklch(55.65% 0.053 63.3);
+  --color-brown-400: oklch(48.7% 0.0592 61.9);
+  --color-brown-500: oklch(43.82% 0.0498 62.5);
+  --color-brown-600: oklch(38.92% 0.0419 63.2);
+  --color-brown-700: oklch(33.62% 0.0338 60.8);
+  --color-brown-800: oklch(28.35% 0.0251 61.3);
+  --color-brown-900: oklch(22.81% 0.017 66.8);
+
+  --color-gold-50: oklch(95.48% 0.1221 102.9);
+  --color-gold-100: oklch(94.35% 0.1426 102.3);
+  --color-gold-200: oklch(92.9% 0.1573 100.7);
+  --color-gold-300: oklch(91.32% 0.1667 98.6);
+  --color-gold-400: oklch(89.52% 0.1726 97.5);
+  --color-gold-500: oklch(79.16% 0.1503 97.9);
+  --color-gold-600: oklch(68.85% 0.1281 98.1);
+  --color-gold-700: oklch(58.14% 0.1051 98.4);
+  --color-gold-800: oklch(47.36% 0.082 98.2);
+  --color-gold-900: oklch(36.28% 0.0586 98);
+}
+
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-gray-300);
+}
+
+body {
+  color: var(--color-gray-300);
+  font-family: var(--font-body);
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  font-size: var(--text-xl);
+
+  @variant sm {
+    font-size: var(--text-sm);
+  }
+}

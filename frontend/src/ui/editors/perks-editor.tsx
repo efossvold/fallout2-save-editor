@@ -1,9 +1,7 @@
-import { Box, VStack } from '@chakra-ui/react'
 import React from 'react'
 
 import { PERKS } from '../../api/data/perks'
 import { keysOf, prefixString } from '../../api/utils'
-import { LINE_HEIGHT } from '../constants'
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
@@ -18,9 +16,9 @@ export const PerksEditor = () => {
 
   return (
     <>
-      <PanelHeader text="PERKS" />
-      <Box overflowY="auto" maxH={['none', '420px']} className="styled-scrollbar">
-        <VStack spacing={LINE_HEIGHT}>
+      <PanelHeader title="PERKS" />
+      <div className="overflow-y-auto styled-scrollbar max-h-none sm:max-h-105">
+        <div className="flex flex-col">
           {perkKeysSorted.map(key => {
             const { name, ranks, desc } = PERKS[key]
             const perkKey = prefixString(key, 'perk')
@@ -53,8 +51,8 @@ export const PerksEditor = () => {
               />
             )
           })}
-        </VStack>
-      </Box>
+        </div>
+      </div>
     </>
   )
 }

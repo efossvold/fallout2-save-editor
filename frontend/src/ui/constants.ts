@@ -1,5 +1,3 @@
-import type { TooltipProps } from '@chakra-ui/react'
-
 export const WIN_START_WIDTH = 990
 export const MIN_WIN_HEIGHT = 740
 
@@ -17,6 +15,8 @@ export const MAX_SKILL_VALUE = 300
 
 export const MAX_TRAITS = 2
 
+export const MAX_CHARACTER_NAME_LENGTH = 31
+
 export const SAVE_FILENAME = 'SAVE.DAT'
 
 // Fallout 1 starts at December 5th 2161
@@ -29,9 +29,4 @@ export enum ATTR_PREFIX {
   PERK = 'perk',
   KILL = 'kill',
   GVAR = 'gvar',
-}
-
-export const TOOLTIP_PROPS: Partial<TooltipProps> = {
-  fontSize: [18, 14],
-  openDelay: 500,
 }

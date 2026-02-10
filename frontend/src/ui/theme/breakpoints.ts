@@ -1,9 +1,7 @@
-import type { BaseBreakpointConfig } from '@chakra-ui/theme-tools'
-
 /**
  * Breakpoints for responsive design
  */
-export const breakpoints:  BaseBreakpointConfig = {
+export const breakpoints = {
   sm: '32.5em', // 520px
   // md: '48em', // 768px
   md: '60em', // 960px

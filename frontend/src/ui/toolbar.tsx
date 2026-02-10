@@ -1,52 +1,36 @@
-import type { ButtonProps, TextProps } from '@chakra-ui/react'
-import {
-  HStack,
-  Text,
-  VStack,
-  Button,
-  Tooltip,
-  Box,
-  Grid,
-  GridItem,
-  useBreakpointValue,
-} from '@chakra-ui/react'
-import type { PropsWithChildren } from 'react'
-// oxlint-disable-next-line no-unused-vars
-import { useEffect, useState } from 'react'
+import { Button } from '@headlessui/react'
+import { clsx } from 'clsx'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
-// oxlint-disable-next-line no-unused-vars
-import saveBase64 from '../api/slot01-stats.base64'
+// import saveBase64 from '../api/slot01-stats.base64'
 import type { MayBeError } from '../api/types/misc'
 import { getError } from '../api/utils'
+import type { ButtonProps } from '../types/types'
 
-import { TOOLTIP_PROPS } from './constants'
-import { useToaster } from './hooks'
+import { useIsWeb } from './hooks'
 import { Hoverable } from './hoverable'
 import { Logo } from './logo'
 import * as S from './selectors'
 import { useAPIStore, handler } from './store'
-import { colors } from './theme'
-import { useIsLargerThanMedium } from './theme/media-queries'
 import { basename, dirname } from './utils'
 
-export const IText = (p: PropsWithChildren<TextProps>) => (
-  <Text color={p.color ?? 'gray600'} fontSize={12}>
-    {p.children}
-  </Text>
-)
-
-const IButton = ({ children, ...rest }: ButtonProps) => (
-  <Button w={['100px', '90px']} {...rest}>
-    <Text fontSize={[20, 16]}>{children}</Text>
+const ToolbarButton = ({ children, onClick, isDisabled }: ButtonProps) => (
+  <Button
+    className="h-11 w-24 flex justify-center items-center sm:text-lg  bg-gray-100 text-gray-900 font-semibold rounded-sm hover:bg-gray-200 cursor-pointer transition-colors data-disabled:bg-gray-300 data-disabled:cursor-default"
+    onClick={onClick}
+    disabled={isDisabled}
+  >
+    {children}
   </Button>
 )
 
-const InfoItem = (p: { name: string; value: string }) => (
-  <HStack justify="space-between">
-    <IText color={colors.gray[600]}>{p.name}</IText>
-    <IText color={colors.gray[400]}>{p.value}</IText>
-  </HStack>
+const InfoItem = (p: React.PropsWithChildren<{ name: string }>) => (
+  <div className="flex justify-between text-xs">
+    <p className="text-gray-600">{p.name}</p>
+    <div className="text-gray-400">{p.children}</div>
+  </div>
 )
 
 const SaveGameMeta = () => {
@@ -54,132 +38,145 @@ const SaveGameMeta = () => {
   const saveName = useAPIStore(s => s.data.saveName)
   const gameVersion = useAPIStore(s => s.data.gameVersion)
   const inGameTimeText = useAPIStore(S.getInGameTimeText)
-
-  const gridStyle = useBreakpointValue({
-    base: {
-      gridTemplateColumns: '40% 40%',
-      templateColumns: 'repeat(2)',
-      w: '100%',
-      justifyContent: 'space-between',
-    },
-    sm: {
-      gridTemplateColumns: '40% 25%',
-      templateColumns: 'repeat(2)',
-      w: '100%',
-      justifyContent: 'space-between',
-    },
-    md: {
-      gridTemplateColumns: '42% 25%',
-      templateColumns: 'repeat(2)',
-      w: '50%',
-      justifyContent: 'space-between',
-    },
-  })
+  const savePathShort = currentSaveFile?.split('/').slice(-2).join('/')
 
   return currentSaveFile ? (
-    <Grid {...gridStyle}>
-      <GridItem>
-        <Tooltip {...TOOLTIP_PROPS} label={currentSaveFile} cursor="pointer">
-          <Box cursor="pointer">
-            <InfoItem name="Path" value={currentSaveFile.split('/').slice(-2).join('/')} />
-          </Box>
-        </Tooltip>
-      </GridItem>
-      <GridItem>
-        <InfoItem name="Save name" value={saveName} />
-      </GridItem>
-      <GridItem>
-        <InfoItem name="In-game time" value={inGameTimeText} />
-      </GridItem>
-      <GridItem>
-        <InfoItem name="Game version" value={gameVersion} />
-      </GridItem>
-    </Grid>
+    <div className="m-auto w-full lg:w-1/2 grid grid-cols-[50%_30%] sm:grid-cols-[40%_25%] justify-between order-last lg:order-0">
+      <InfoItem name="Path">
+        <div className="tooltip tooltip-right cursor-pointer" data-tip={currentSaveFile}>
+          <div>{savePathShort}</div>
+        </div>
+      </InfoItem>
+      <InfoItem name="Save name">{saveName}</InfoItem>
+      <InfoItem name="In-game time">{inGameTimeText}</InfoItem>
+      <InfoItem name="Game version">{gameVersion}</InfoItem>
+    </div>
   ) : (
     <></>
   )
 }
 
 export const Toolbar = () => {
-  const isLargerThanMedium = useIsLargerThanMedium()
   const { save, currentSaveFile } = useAPIStore(s => s)
   const load = useAPIStore(s => s.load)
-  const toast = useToaster()
+  const isWeb = useIsWeb()
 
-  // const [hasLoaded, setHasLoaded] = useState(false)
+  const [hasLoaded, setHasLoaded] = useState(false)
 
-  // useEffect(() => {
-  //   if (!hasLoaded) {
-  //     load('/savegame.file', saveBase64)
-  //     setHasLoaded(true)
-  //   }
-  // }, [hasLoaded, load, setHasLoaded])
+  const onFileChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    ev.preventDefault()
+
+    let filename = ''
+    const reader = new FileReader()
+
+    reader.addEventListener('load', readEvent => {
+      const data = readEvent?.target?.result
+
+      if (data) {
+        if (typeof data === 'string') {
+          const base64 = data.replace(/^data:application\/octet-stream;base64,/, '')
+          load(filename, base64)
+        } else {
+          toast.error('Invalid file format')
+        }
+      }
+    })
+
+    const { files } = ev.target
+
+    if (files && files.length > 0) {
+      const [file] = files
+      if (file) {
+        filename = file.name
+        reader.readAsDataURL(file)
+      }
+    }
+  }
+
+  const onOpenFile = async () => {
+    try {
+      // oxlint-disable-next-line new-cap
+      const [path, content, error] = (await ReadFile()) as [string, string, string]
+      if (error) {
+        toast.error(error)
+      } else if (path) {
+        load(path, content)
+      }
+    } catch (error) {
+      toast.error(getError(error).message)
+    }
+  }
+
+  const onSaveFile = async () => {
+    try {
+      save()
+
+      // oxlint-disable-next-line new-cap
+      const [filename, error] = (await SaveFile(
+        handler.toBase64(),
+        dirname(currentSaveFile ?? ''),
+        basename(currentSaveFile ?? ''),
+      )) as [string, string]
+      if (error) {
+        toast.error(error)
+      } else if (filename) {
+        toast.success('Save successful')
+      }
+    } catch (error) {
+      toast.error(getError(error as MayBeError).message)
+    }
+  }
+
+  useEffect(() => {
+    if (!!isWeb && !hasLoaded) {
+      // load('/xxx/yyy/savegame.file', saveBase64)
+      // setHasLoaded(true)
+    }
+  }, [hasLoaded, load, isWeb, setHasLoaded])
 
   return (
-    <VStack w="100%" py={1} px={2} bg="gray.50" rounded={4}>
-      <HStack justify="space-between" w="100%">
+    <div className="w-full py-1 px-2 bg-gray-50 rounded-sm">
+      <div className="flex flex-row flex-wrap justify-between justify-items-center w-full gap-1">
         <Hoverable>
           {({ isHovered }) => (
-            <Logo height={38} fill={isHovered ? colors.blue[400] : colors.gray[200]} />
+            <Logo
+              className={clsx('h-11 transition', isHovered ? 'fill-blue-400' : 'fill-gray-200')}
+            />
           )}
         </Hoverable>
 
-        {isLargerThanMedium && <SaveGameMeta />}
+        <SaveGameMeta />
 
-        <HStack justify="space-between" spacing={18}>
-          <IButton
-            onClick={async () => {
-              try {
-                // oxlint-disable-next-line new-cap
-                const [path, content, error] = (await ReadFile()) as [string, string, string]
-                if (error) {
-                  toast.error(error)
-                } else if (path) {
-                  load(path, content)
-                }
-              } catch (error) {
-                toast.error(getError(error).message)
-              }
-            }}
-          >
-            Open
-          </IButton>
-          <IButton
-            isDisabled={!currentSaveFile}
-            onClick={async () => {
-              try {
-                save()
-                // oxlint-disable-next-line new-cap
-                const [filename, error] = (await SaveFile(
-                  handler.toBase64(),
-                  dirname(currentSaveFile ?? ''),
-                  basename(currentSaveFile ?? ''),
-                )) as [string, string]
-                if (error) {
-                  toast.error(error)
-                } else if (filename) {
-                  toast.success('Save successful')
-                }
-              } catch (error) {
-                toast.error(getError(error as MayBeError).message)
-              }
-            }}
-          >
+        <div className="flex flex-row justify-between gap-4">
+          {isWeb ? (
+            <>
+              <input type="file" id="save-file" onChange={onFileChange} hidden />
+              <label
+                htmlFor="save-file"
+                className="flex justify-center items-center sm:text-lg  bg-gray-100 text-gray-900 font-semibold rounded-sm hover:bg-gray-200 cursor-pointer transition-colors h-11 w-24"
+              >
+                Open
+              </label>
+            </>
+          ) : (
+            <ToolbarButton onClick={onOpenFile}>Open</ToolbarButton>
+          )}
+          <ToolbarButton isDisabled={!currentSaveFile} onAction={onSaveFile}>
             Save
-          </IButton>
-          <IButton
-            onClick={() => {
-              // oxlint-disable-next-line new-cap
-              globalThis.runtime.Quit()
-            }}
-          >
-            Quit
-          </IButton>
-          SaveGameMeta
-        </HStack>
-      </HStack>
+          </ToolbarButton>
 
-      {!isLargerThanMedium && <SaveGameMeta />}
-    </VStack>
+          {!isWeb && (
+            <ToolbarButton
+              onAction={() => {
+                // oxlint-disable-next-line new-cap
+                globalThis.runtime.Quit()
+              }}
+            >
+              Quit
+            </ToolbarButton>
+          )}
+        </div>
+      </div>
+    </div>
   )
 }
