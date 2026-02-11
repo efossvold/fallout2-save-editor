@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast'
 import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
 // import saveBase64 from '../api/slot01-stats.base64'
 import type { MayBeError } from '../api/types/misc'
-import { getError } from '../api/utils'
+import { base64toBlob, getError } from '../api/utils'
 import type { ButtonProps } from '../types/types'
 
 import { useIsWeb } from './hooks'
@@ -108,22 +108,50 @@ export const Toolbar = () => {
   }
 
   const onSaveFile = async () => {
-    try {
-      save()
+    save()
 
-      // oxlint-disable-next-line new-cap
-      const [filename, error] = (await SaveFile(
-        handler.toBase64(),
-        dirname(currentSaveFile ?? ''),
-        basename(currentSaveFile ?? ''),
-      )) as [string, string]
-      if (error) {
-        toast.error(error)
-      } else if (filename) {
+    if (isWeb) {
+      try {
+        const mimeType = 'application/octet-stream'
+        const fileHandle = await globalThis.window.showSaveFilePicker({
+          suggestedName: currentSaveFile,
+          types: [
+            {
+              description: 'Text file',
+              accept: { [mimeType]: ['.DAT'] },
+            },
+          ],
+        })
+
+        const blob = base64toBlob(handler.toBase64(), mimeType)
+        const writable = await fileHandle.createWritable()
+
+        await writable.write(blob)
+        await writable.close()
+
         toast.success('Save successful')
+      } catch (error) {
+        const err = getError(error as MayBeError)
+        if (!err.name.startsWith('AbortError')) {
+          toast.error(getError(error as MayBeError).message)
+        }
       }
-    } catch (error) {
-      toast.error(getError(error as MayBeError).message)
+    } else {
+      try {
+        // oxlint-disable-next-line new-cap
+        const [filename, error] = (await SaveFile(
+          handler.toBase64(),
+          dirname(currentSaveFile ?? ''),
+          basename(currentSaveFile ?? ''),
+        )) as [string, string]
+        if (error) {
+          toast.error(error)
+        } else if (filename) {
+          toast.success('Save successful')
+        }
+      } catch (error) {
+        toast.error(getError(error as MayBeError).message)
+      }
     }
   }
 
@@ -150,9 +178,9 @@ export const Toolbar = () => {
         <div className="flex flex-row justify-between gap-4">
           {isWeb ? (
             <>
-              <input type="file" id="save-file" onChange={onFileChange} hidden />
+              <input type="file" id="open-file" onChange={onFileChange} hidden />
               <label
-                htmlFor="save-file"
+                htmlFor="open-file"
                 className="flex justify-center items-center sm:text-lg  bg-gray-100 text-gray-900 font-semibold rounded-sm hover:bg-gray-200 cursor-pointer transition-colors h-11 w-24"
               >
                 Open
@@ -161,13 +189,13 @@ export const Toolbar = () => {
           ) : (
             <ToolbarButton onClick={onOpenFile}>Open</ToolbarButton>
           )}
-          <ToolbarButton isDisabled={!currentSaveFile} onAction={onSaveFile}>
+          <ToolbarButton isDisabled={!currentSaveFile} onClick={onSaveFile}>
             Save
           </ToolbarButton>
 
           {!isWeb && (
             <ToolbarButton
-              onAction={() => {
+              onClick={() => {
                 // oxlint-disable-next-line new-cap
                 globalThis.runtime.Quit()
               }}

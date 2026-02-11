@@ -47,6 +47,7 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
           .map((digit, index) => (
             <div
               className="text-gray-50 text-[32px] sm:text-2xl font-falloutx leading-tight"
+              // oxlint-disable-next-line react/no-array-index-key
               key={index.toString()}
             >
               {digit}
