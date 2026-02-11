@@ -112,24 +112,19 @@ export const Toolbar = () => {
 
     if (isWeb) {
       try {
-        const mimeType = 'application/octet-stream'
-        const fileHandle = await globalThis.window.showSaveFilePicker({
-          suggestedName: currentSaveFile,
-          types: [
-            {
-              description: 'Text file',
-              accept: { [mimeType]: ['.DAT'] },
-            },
-          ],
-        })
+        const blob = base64toBlob(handler.toBase64(), 'application/octet-stream')
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
 
-        const blob = base64toBlob(handler.toBase64(), mimeType)
-        const writable = await fileHandle.createWritable()
+        a.href = url
+        a.download = currentSaveFile ?? 'SAVE.DAT'
+        document.body.appendChild(a)
+        a.click()
 
-        await writable.write(blob)
-        await writable.close()
-
-        toast.success('Save successful')
+        setTimeout(() => {
+          URL.revokeObjectURL(url)
+          document.body.removeChild(a)
+        }, 100)
       } catch (error) {
         const err = getError(error as MayBeError)
         if (!err.name.startsWith('AbortError')) {

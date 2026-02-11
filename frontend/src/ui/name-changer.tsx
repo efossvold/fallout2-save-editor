@@ -94,12 +94,16 @@ const NameChangerModal = (p: {
             />
 
             <div className="flex flex-row justify-end gap-4 mt-4">
-              <IButton onClick={onClose}>Close</IButton>
+              <IButton onClick={onClose} color="secondary" disabled={name.length <= 0}>
+                Close
+              </IButton>
               <IButton
+                color="primary"
                 onClick={() => {
                   setProp('characterName', name.slice(0, MAX_CHARACTER_NAME_LENGTH))
                   p.disclosure.onClose()
                 }}
+                disabled={name.length <= 0}
               >
                 Save
               </IButton>
