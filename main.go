@@ -20,7 +20,7 @@ func main() {
 		Title:  "F2SaveEditor",
 		Width:  980,
 		MinWidth: 520,
-		Height: 740,
+		Height: 757,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
