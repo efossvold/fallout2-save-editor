@@ -332,10 +332,14 @@ export const getRadiationResistanceDerived = createSelector([getState], s => {
   return calcValueFromTrait(s, 'baseRadiationResistance', RR)
 })
 
+export const getTaggedSkills = createSelector(
+  [getData],
+  s => [s.taggedSkill1, s.taggedSkill2, s.taggedSkill3, s.taggedSkill4] as const,
+)
+
 export const getSkillIsTagged = createSelector(
-  [getData, (_: StoreState, name: keyof SkillValues) => name],
-  (s, name) =>
-    [s.taggedSkill1, s.taggedSkill2, s.taggedSkill3, s.taggedSkill4].includes(SKILLS[name].id),
+  [getState, (_: StoreState, name: keyof SkillValues) => name],
+  (s, name) => getTaggedSkills(s).includes(SKILLS[name].id),
 )
 
 export const getSkills = createSelector([getData], s => {

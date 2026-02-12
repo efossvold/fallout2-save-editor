@@ -3,10 +3,10 @@ import { serve } from 'bun'
 const server = serve({
   routes: {
     '/path': {
-      GET(req) {
+      GET(_req) {
         return Response.json({ message: 'Hello World' })
       },
-      POST(req) {
+      POST(_req) {
         return Response.json({ message: 'Hello World' })
       },
     },

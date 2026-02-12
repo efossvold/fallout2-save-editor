@@ -120,10 +120,10 @@ export const createSaveData = (): SaveGameData => ({
   }, {} as KillValues),
 
   // F8 Tags
-  taggedSkill1: 0,
-  taggedSkill2: 0,
-  taggedSkill3: 0,
-  taggedSkill4: 0,
+  taggedSkill1: -1,
+  taggedSkill2: -1,
+  taggedSkill3: -1,
+  taggedSkill4: -1,
 
   /**
    * F9 Perks

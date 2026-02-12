@@ -138,7 +138,7 @@ const STATS = {
   taggedSkill1: 0,
   taggedSkill2: 14,
   taggedSkill3: 9,
-  taggedSkill4: 655_359,
+  taggedSkill4: -1,
   perkAwareness: 0,
   perkBonusHtHAttacks: 0,
   perkBonusHtHDamage: 0,

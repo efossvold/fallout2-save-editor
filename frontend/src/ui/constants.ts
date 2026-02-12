@@ -1,3 +1,6 @@
+import { SKILLS } from '../api/data/skills'
+import { entries } from '../api/utils'
+
 export const WIN_START_WIDTH = 990
 export const MIN_WIN_HEIGHT = 740
 
@@ -14,6 +17,9 @@ export const MIN_SKILL_VALUE = 0
 export const MAX_SKILL_VALUE = 300
 
 export const MAX_TRAITS = 2
+
+export const MAX_TAGGED_SKILLS = 4
+export const MAX_SKILL_ID = Math.max(...entries(SKILLS).map(([_, skill]) => skill.id))
 
 export const MAX_CHARACTER_NAME_LENGTH = 31
 

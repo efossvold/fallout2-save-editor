@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
-// import saveBase64 from '../api/slot01-stats.base64'
+import saveBase64 from '../api/slot01-stats.base64'
 import type { MayBeError } from '../api/types/misc'
 import { base64toBlob, getError } from '../api/utils'
 import type { ButtonProps } from '../types/types'
@@ -152,8 +152,8 @@ export const Toolbar = () => {
 
   useEffect(() => {
     if (!!isWeb && !hasLoaded) {
-      // load('/xxx/yyy/savegame.file', saveBase64)
-      // setHasLoaded(true)
+      load('/xxx/yyy/savegame.file', saveBase64)
+      setHasLoaded(true)
     }
   }, [hasLoaded, load, isWeb, setHasLoaded])
 

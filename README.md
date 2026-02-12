@@ -23,6 +23,7 @@ Editable stats:
 - [x] Mischellaneous (AC, AP, Carry Weight etc.)
 - [x] Reputation (karma + various reps such as champion, berserker, childkiller etc.)
 - [x] Kills (amount of kills per critter)
+- [x] Tag/untag skills
 
 Supported platforms:
 
@@ -31,8 +32,7 @@ Supported platforms:
 
 ## Todo
 
-- [ ] Add inventory/item editing
-- [ ] Tag/untag skills
+- ~~[ ] Add inventory/item editing~~
 
 ## Disclaimer
 

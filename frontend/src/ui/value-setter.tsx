@@ -1,6 +1,7 @@
 import { Button } from '@headlessui/react'
 import { clsx } from 'clsx'
 import { toast } from 'react-hot-toast'
+import { cn } from 'tailwind-variants'
 
 import { useHelpTextStore } from './help-text/store'
 import { useHoverColor } from './hooks'
@@ -15,6 +16,7 @@ interface Props {
   helperTitle?: string
   helperText: string
   unit?: string
+  onClick?: (ev: React.SyntheticEvent) => void
   onIncrease: () => void
   onDecrease: () => void
   color?: string
@@ -40,6 +42,7 @@ export const ValueSetter = ({
   helperTitle,
   helperText,
   unit = '',
+  onClick,
   onIncrease,
   onDecrease,
   color,
@@ -116,7 +119,14 @@ export const ValueSetter = ({
     >
       {({ isHovered }) => (
         <div className="flex justify-between">
-          <p className={getColor(isHovered)}>{name}</p>
+          <p
+            role="button"
+            className={cn(getColor(isHovered), onClick ? 'cursor-pointer' : 'cursor-default')}
+            onClick={onClick}
+            onKeyUp={onClick}
+          >
+            {name}.
+          </p>
           <div className="flex flex-row items-center gap-0.5">
             {showControls && (
               <Hoverable>

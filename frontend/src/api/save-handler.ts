@@ -208,12 +208,19 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     const offset = getOffset(sectionName)
     for (const [key, spec] of U.entries(map[sectionName].keys)) {
       // @ts-expect-error shite
-      //
       const value = data[key]
 
       console.assert(value !== undefined, `setSectionData: Not value found for '${key.toString()}'`)
 
       setValue(offset, spec, value as string | number)
+
+      if (sectionName === 'f8') {
+        console.log([data.taggedSkill1, data.taggedSkill2, data.taggedSkill3, data.taggedSkill4], {
+          offset,
+          spec,
+          value,
+        })
+      }
     }
   }
 

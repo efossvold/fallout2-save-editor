@@ -166,7 +166,7 @@ export const createMap = (): T.SaveMap => {
         taggedSkill1: m('', 0x00, 0x04),
         taggedSkill2: m('', 0x04, 0x04),
         taggedSkill3: m('', 0x08, 0x04),
-        taggedSkill4: m('', 0x0a, 0x04),
+        taggedSkill4: m('', 0x0c, 0x04),
       },
     },
     f9: {

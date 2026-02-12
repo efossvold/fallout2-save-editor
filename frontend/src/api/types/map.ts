@@ -54,11 +54,9 @@ export type MapF6SkillsSection = SkillValues
 
 export type MapF7Section = KillValues
 
-export type MapF8Section = PrefixedDictIndices<
-  '1' | '2' | '3' | '4',
-  number | undefined,
-  'taggedSkill'
->
+export type MapF8Section = PrefixedDictIndices<'1' | '2' | '3' | '4', number, 'taggedSkill'>
+
+export type TaggedSkillsKeys = keyof MapF8Section
 
 export type MapF9Section = PerkValues
 // Export type MapF9Section = PerkValues
