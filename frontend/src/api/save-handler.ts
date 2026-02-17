@@ -1,4 +1,4 @@
-import { Buffer } from 'buffer'
+import { indexOf } from 'uint8array-extras'
 
 import { getCategory, ItemCategory, ITEMS } from './data/items'
 import * as M from './map'
@@ -13,7 +13,8 @@ interface SaveHandlerArgs {
 }
 
 export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
-  let buffer: Buffer | undefined
+  let buffer: Uint8Array | undefined
+  let dataView: DataView | undefined
   let saveData = createSaveData()
   let map = M.createMap()
   const isDebug = args?.isDebug ?? false
@@ -24,13 +25,11 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     }
   }
 
-  // Const gameStartDate = new Date(2241, 6, 25)
-
-  const getBuffer = (): Buffer => {
-    if (!buffer) {
-      throw new Error('Buffer not initialized.')
+  const getHandler = () => {
+    if (!buffer || !dataView) {
+      throw new Error('Buffer/DataView not initialized.')
     }
-    return buffer
+    return { buf: buffer, dv: dataView }
   }
 
   const getOffset = (sectionName: keyof MT.SaveMap, errMsg?: string): number => {
@@ -90,7 +89,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
       sectionOffset = getOffset(sectionOffset)
     }
 
-    buffer = getBuffer()
+    const handler = getHandler()
 
     const { kind, length } = entry
     const offset = sectionOffset + entry.offset
@@ -98,22 +97,28 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     switch (kind) {
       case 'float': {
         // Can only read 4 byte floats (2B.2B)
-        const n1 = buffer.readUInt8(offset)
-        const n2 = buffer.readUInt8(offset + 0x01)
-        const d1 = buffer.readUInt8(offset + 0x02)
-        const d2 = buffer.readUInt8(offset + 0x03)
+        const n1 = handler.buf[offset]
+        const n2 = handler.buf[offset + 0x01]
+        const d1 = handler.buf[offset + 0x02]
+        const d2 = handler.buf[offset + 0x03]
 
         return Number.parseFloat(`${n1}${n2}.${d1}${d2}`)
       }
 
       case 'int': {
-        return buffer.readIntBE(offset, length)
+        if (length === 1) {
+          return handler.dv.getInt8(offset)
+        }
+        if (length === 2) {
+          return handler.dv.getInt16(offset)
+        }
+        return handler.dv.getInt32(offset)
       }
 
       case 'string': {
         return Array.from({ length })
           .map((_, i) => {
-            const code = getBuffer().at(offset + i)
+            const code = getHandler().buf.at(offset + i)
             if (code === undefined) {
               console.error(`getValue (${entry.name}): Buffer out of range' `)
             }
@@ -134,7 +139,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     value: string | number,
   ): void => {
     logger('setValue', entry, value)
-    buffer = getBuffer()
+    const handler = getHandler()
     const { kind, length } = entry
     const offset = sectionOffset + entry.offset
 
@@ -148,18 +153,31 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
         const [n1 = '0', n2 = '0'] = String(integral).padStart(2, '0')
         const [d1 = '0', d2 = '0'] = String(fractional).padStart(2, '0')
 
-        buffer.writeUInt8(Number(n1), offset)
-        buffer.writeUInt8(Number(n2), offset + 0x01)
-        buffer.writeUInt8(Number(d1), offset + 0x02)
-        buffer.writeUInt8(Number(d2), offset + 0x03)
+        handler.dv.setUint8(Number(n1), offset)
+        handler.dv.setUint8(Number(n2), offset + 0x01)
+        handler.dv.setUint8(Number(d1), offset + 0x02)
+        handler.dv.setUint8(Number(d2), offset + 0x03)
 
         break
       }
       case 'int': {
-        if (Number(value) < 0) {
-          buffer.writeIntBE(Number(value), offset, length)
+        const num = Number(value)
+        if (num < 0) {
+          if (length === 1) {
+            handler.dv.setInt8(offset, num)
+          } else if (length === 2) {
+            handler.dv.setInt16(offset, num)
+          } else {
+            handler.dv.setInt32(offset, num)
+          }
         } else {
-          buffer.writeUIntBE(Number(value), offset, length)
+          if (length === 1) {
+            handler.dv.setUint8(offset, num)
+          } else if (length === 2) {
+            handler.dv.setUint16(offset, num)
+          } else {
+            handler.dv.setUint32(offset, num)
+          }
         }
 
         break
@@ -168,7 +186,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
         const strValue = String(value)
         for (let i = 0; i < length; i += 1) {
           const char = i < strValue.length ? strValue.at(i)?.charCodeAt(0) : 0
-          buffer.writeUInt8(char ?? 0, offset + i)
+          handler.dv.setUint8(offset + i, char ?? 0)
         }
 
         break
@@ -348,9 +366,11 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     },
 
     getInventoryItems() {
-      buffer = getBuffer()
+      const handler = getHandler()
       const numInventoryItems = this.getNumInventoryItems()
-      const itemsStart = buffer.indexOf(M.F5_MARKER) + 0x80
+      // const itemsStart = buffer.indexOf(M.F5_MARKER) + 0x80
+      const itemsStart = indexOf(handler.buf, new Uint8Array([0, 0, 70, 80])) + 0x80
+
       let currentOffset = itemsStart
       const items = []
 
@@ -377,7 +397,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
         return getSectionData('f17')
       }
 
-      buffer = getBuffer()
+      const handler = getHandler()
       map.f17.offset = map.f11.offset
 
       let offsetFound = false
@@ -394,7 +414,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
        * will each be within a certain range so using this search pattern is very
        * efficient to identifying the F17 offset.
        */
-      while (!offsetFound && searchOffset < buffer.byteLength - map.f17.size - 0x04) {
+      while (!offsetFound && searchOffset < handler.buf.byteLength - map.f17.size - 0x04) {
         prefs = getSectionData('f17', searchOffset)
 
         if (
@@ -455,15 +475,17 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
       setSectionData('f15', data)
       setSectionData('f17', data)
 
-      this.fromBase64(getBuffer().toString('base64'))
+      this.fromBase64(getHandler().buf.toBase64())
     },
 
     fromBase64(base64) {
-      buffer = Buffer.from(base64, 'base64')
+      buffer = Uint8Array.fromBase64(base64)
+      dataView = new DataView(buffer.buffer)
       saveData = createSaveData()
       map = M.createMap()
 
-      map.f5.offset = buffer.indexOf(M.F5_MARKER)
+      // map.f5.offset = buffer.findIndex(M.F5_MARKER)
+      map.f5.offset = indexOf(buffer, new Uint8Array([0, 0, 70, 80]))
 
       this.findF6Offset()
       this.findF7Offset()
@@ -489,7 +511,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     },
 
     toBase64() {
-      return getBuffer().toString('base64')
+      return getHandler().buf.toBase64()
     },
 
     getData() {

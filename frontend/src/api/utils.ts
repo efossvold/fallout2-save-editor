@@ -88,3 +88,34 @@ export const parseDate = (date: number | Date) => {
     minute: f({ minute: 'numeric' })?.value ?? '',
   }
 }
+
+export const indexOf = (array: Uint8Array, value: Uint8Array): number => {
+  const arrayLength = array.length
+  const valueLength = value.length
+
+  if (valueLength === 0) {
+    return -1
+  }
+
+  if (valueLength > arrayLength) {
+    return -1
+  }
+
+  const validOffsetLength = arrayLength - valueLength
+
+  for (let index = 0; index <= validOffsetLength; index++) {
+    let isMatch = true
+    for (let index2 = 0; index2 < valueLength; index2++) {
+      if (array[index + index2] !== value[index2]) {
+        isMatch = false
+        break
+      }
+    }
+
+    if (isMatch) {
+      return index
+    }
+  }
+
+  return -1
+}

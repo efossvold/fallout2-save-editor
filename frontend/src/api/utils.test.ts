@@ -62,4 +62,48 @@ describe('selectors', () => {
     expect(d.hour).toBe('18')
     expect(d.minute).toBe('14')
   })
+
+  describe('indexOf', () => {
+    it('indexOf - sequence found in the middle', () => {
+      const fixture = [0x12, 0x34, 0x56, 0x78, 0x90, 0xab, 0xcd, 0xef] //
+      const sequence = [0x78, 0x90]
+      expect(U.indexOf(new Uint8Array(fixture), new Uint8Array(sequence))).toBe(3)
+    })
+
+    it('indexOf - sequence found at the end', () => {
+      const fixture2 = [0x12, 0x34, 0x56, 0x78, 0x90, 0xab] //
+      const sequence2 = [0x90, 0xab] //
+      expect(U.indexOf(new Uint8Array(fixture2), new Uint8Array(sequence2))).toBe(4)
+    })
+
+    it('indexOf - sequence not found', () => {
+      const fixture = [0x12, 0x34, 0x56, 0x78, 0x90, 0xab, 0xcd, 0xef] //
+      expect(U.indexOf(new Uint8Array(fixture), new Uint8Array([0x00, 0x01]))).toBe(-1)
+    })
+
+    it('indexOf - sequence found at the beginning', () => {
+      const fixture = [0x12, 0x34, 0x56, 0x78, 0x90, 0xab, 0xcd, 0xef] //
+      const sequence3 = [0x12, 0x34]
+      expect(U.indexOf(new Uint8Array(fixture), new Uint8Array(sequence3))).toBe(0)
+    })
+
+    it('indexOf - sequence is the entire array', () => {
+      const fixture = [0x12, 0x34, 0x56, 0x78, 0x90, 0xab, 0xcd, 0xef] //
+      const sequence4 = [0x12, 0x34, 0x56, 0x78, 0x90, 0xab, 0xcd, 0xef] //
+      expect(U.indexOf(new Uint8Array(fixture), new Uint8Array(sequence4))).toBe(0)
+    })
+
+    it('indexOf - empty array as sequence', () => {
+      const fixture = [0x12, 0x34, 0x56, 0x78, 0x90, 0xab, 0xcd, 0xef] //
+      const emptyArray: [] = []
+      expect(U.indexOf(new Uint8Array(emptyArray), new Uint8Array([0x78, 0x90]))).toBe(-1)
+      expect(U.indexOf(new Uint8Array(fixture), new Uint8Array(emptyArray))).toBe(-1)
+    })
+
+    it('indexOf - single element found', () => {
+      const fixture = [0x12, 0x34, 0x56, 0x78, 0x90, 0xab, 0xcd, 0xef] //
+      const singleElement = [0x56]
+      expect(U.indexOf(new Uint8Array(fixture), new Uint8Array(singleElement))).toBe(2)
+    })
+  })
 })

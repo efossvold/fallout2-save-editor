@@ -250,7 +250,7 @@ const STATS: SaveGameData = {
   playerLevel: 23,
   playerXP: 273_593,
   trait1: 15,
-  trait2: -1,
+  trait2: 8,
   prefGameDifficulty: 1,
   prefCombatDifficulty: 1,
   prefViolenceLevel: 3,

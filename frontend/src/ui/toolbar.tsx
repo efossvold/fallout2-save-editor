@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
-import saveBase64 from '../api/slot01-stats.base64'
 import type { MayBeError } from '../api/types/misc'
 import { base64toBlob, getError } from '../api/utils'
 import type { ButtonProps } from '../types/types'
@@ -152,9 +151,20 @@ export const Toolbar = () => {
   }
 
   useEffect(() => {
-    if (!!isWeb && !hasLoaded) {
-      load('/xxx/yyy/savegame.file', saveBase64)
-      setHasLoaded(true)
+    const loadStats = async () => {
+      try {
+        const saveBase64 = await import('../api/slot01-stats.base64')
+        console.log(saveBase64.default.substring(0, 25))
+        load('/xxx/yyy/savegame.file', saveBase64.default)
+        setHasLoaded(true)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    if (import.meta.env.MODE === 'development' && !!isWeb && !hasLoaded) {
+      // oxlint-disable-next-line typescript/no-floating-promises
+      loadStats()
     }
   }, [hasLoaded, load, isWeb, setHasLoaded])
 
