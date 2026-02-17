@@ -1,37 +1,36 @@
-import { Button } from '@headlessui/react'
-import { clsx } from 'clsx'
-import { toast } from 'react-hot-toast'
-import { cn } from 'tailwind-variants'
+import { Button } from "@headlessui/react";
+import { clsx } from "clsx";
+import { toast } from "react-hot-toast";
 
-import { useHelpTextStore } from './help-text/store'
-import { useHoverColor } from './hooks'
-import { Hoverable } from './hoverable'
-import { caretLeft, caretRight } from './icons'
+import { useHelpTextStore } from "./help-text/store";
+import { useHoverColor } from "./hooks";
+import { Hoverable } from "./hoverable";
+import { caretLeft, caretRight } from "./icons";
 
 interface Props {
-  name: string
-  baseValue?: number
-  bonusValue?: number
-  valueText?: string
-  helperTitle?: string
-  helperText: string
-  unit?: string
-  onClick?: (ev: React.SyntheticEvent) => void
-  onIncrease: () => void
-  onDecrease: () => void
-  color?: string
-  hoverColor?: string
-  dimOnZero?: boolean
-  minValue?: number
-  minBaseValue?: number
-  maxBaseValue?: number
-  minBonusValue?: number
-  maxBonusValue?: number
-  isMinValue?: boolean
-  isMaxValue?: boolean
-  minValueMsg?: string | boolean
-  maxValueMsg?: string | boolean
-  showControls?: boolean
+  name: string;
+  baseValue?: number;
+  bonusValue?: number;
+  valueText?: string;
+  helperTitle?: string;
+  helperText: string;
+  unit?: string;
+  onClick?: (ev: React.SyntheticEvent) => void;
+  onIncrease: () => void;
+  onDecrease: () => void;
+  color?: string;
+  hoverColor?: string;
+  dimOnZero?: boolean;
+  minValue?: number;
+  minBaseValue?: number;
+  maxBaseValue?: number;
+  minBonusValue?: number;
+  maxBonusValue?: number;
+  isMinValue?: boolean;
+  isMaxValue?: boolean;
+  minValueMsg?: string | boolean;
+  maxValueMsg?: string | boolean;
+  showControls?: boolean;
 }
 
 export const ValueSetter = ({
@@ -41,7 +40,7 @@ export const ValueSetter = ({
   valueText,
   helperTitle,
   helperText,
-  unit = '',
+  unit = "",
   onClick,
   onIncrease,
   onDecrease,
@@ -55,25 +54,25 @@ export const ValueSetter = ({
   maxBonusValue,
   isMinValue,
   isMaxValue,
-  minValueMsg = 'Min level reached',
-  maxValueMsg = 'Max level reached',
+  minValueMsg = "Min level reached",
+  maxValueMsg = "Max level reached",
   showControls = true,
 }: Props) => {
-  const totalValue = baseValue + bonusValue
-  const getHoverColor = useHoverColor()
-  const setHelpText = useHelpTextStore(s => s.setHelpText)
+  const totalValue = baseValue + bonusValue;
+  const getHoverColor = useHoverColor();
+  const setHelpText = useHelpTextStore((s) => s.setHelpText);
 
   const getColor = (isHovered: boolean) => {
-    let defaultColor = clsx('text-green-600')
+    let defaultColor = clsx("text-green-600");
 
-    defaultColor = dimOnZero && totalValue < 1 ? clsx('text-green-900') : clsx('text-green-200')
+    defaultColor = dimOnZero && totalValue < 1 ? clsx("text-green-900") : clsx("text-green-200");
 
-    return getHoverColor(isHovered, color ?? defaultColor, hoverColor)
-  }
+    return getHoverColor(isHovered, color ?? defaultColor, hoverColor);
+  };
 
   const onIncreasePress = (ev: React.SyntheticEvent) => {
-    ev.preventDefault()
-    ev.stopPropagation()
+    ev.preventDefault();
+    ev.stopPropagation();
 
     if (
       (maxBaseValue && baseValue >= maxBaseValue) ||
@@ -81,19 +80,19 @@ export const ValueSetter = ({
       isMaxValue
     ) {
       if (maxValueMsg) {
-        toast(maxValueMsg as string)
+        toast(maxValueMsg as string);
       }
-      return
+      return;
     }
 
-    onIncrease()
-  }
+    onIncrease();
+  };
 
   const onDecreasePress = (ev: React.SyntheticEvent) => {
-    ev.preventDefault()
-    ev.stopPropagation()
+    ev.preventDefault();
+    ev.stopPropagation();
 
-    const totValue = baseValue + bonusValue
+    const totValue = baseValue + bonusValue;
 
     if (
       totValue <= minValue ||
@@ -103,13 +102,13 @@ export const ValueSetter = ({
       isMinValue
     ) {
       if (minValueMsg) {
-        toast(minValueMsg as string)
+        toast(minValueMsg as string);
       }
-      return
+      return;
     }
 
-    onDecrease()
-  }
+    onDecrease();
+  };
 
   return (
     <Hoverable
@@ -121,7 +120,7 @@ export const ValueSetter = ({
         <div className="flex justify-between">
           <p
             role="button"
-            className={cn(getColor(isHovered), onClick ? 'cursor-pointer' : 'cursor-default')}
+            className={clsx(getColor(isHovered), onClick ? "cursor-pointer" : "cursor-default")}
             onClick={onClick}
             onKeyUp={onClick}
           >
@@ -135,8 +134,8 @@ export const ValueSetter = ({
                     <Button
                       className={clsx(
                         caretLeft({ isHovered: isBtnHovered }),
-                        isHovered ? 'visible' : 'sm:invisible',
-                        'relative top-px',
+                        isHovered ? "visible" : "sm:invisible",
+                        "relative top-px",
                       )}
                       onClick={onDecreasePress}
                     />
@@ -153,8 +152,8 @@ export const ValueSetter = ({
                     <Button
                       className={clsx(
                         caretRight({ isHovered: isBtnHovered }),
-                        isHovered ? 'visible' : 'sm:invisible',
-                        'relative top-px',
+                        isHovered ? "visible" : "sm:invisible",
+                        "relative top-px",
                       )}
                       onClick={onIncreasePress}
                     />
@@ -166,5 +165,5 @@ export const ValueSetter = ({
         </div>
       )}
     </Hoverable>
-  )
-}
+  );
+};

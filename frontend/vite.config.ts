@@ -1,8 +1,8 @@
-import tailwindcss from '@tailwindcss/vite'
-import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 // import { analyzer,unstableRolldownAdapter } from 'vite-bundle-analyzer'
-import { defineConfig as defineTestConfig, mergeConfig } from 'vitest/config'
+import { defineConfig as defineTestConfig, mergeConfig } from "vitest/config";
 
 // https://vitejs.dev/config/
 const viteConfig = defineConfig({
@@ -11,20 +11,20 @@ const viteConfig = defineConfig({
     tailwindcss(),
     react({
       babel: {
-        plugins: ['babel-plugin-react-compiler'],
+        plugins: ["babel-plugin-react-compiler"],
       },
     }),
   ],
   build: {
-    target: 'baseline-widely-available',
+    target: "baseline-widely-available",
   },
   resolve: {
     tsconfigPaths: true,
   },
-})
+});
 
 const vitestConfig = defineTestConfig({
-  test: { environment: 'node', include: ['**/*.test.ts'] },
-})
+  test: { globals: true, environment: "node", include: ["**/*.test.ts"] },
+});
 
-export default mergeConfig(viteConfig, vitestConfig)
+export default mergeConfig(viteConfig, vitestConfig);

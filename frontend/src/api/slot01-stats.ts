@@ -1,9 +1,11 @@
-const STATS = {
-  gameVersion: 1.02,
+import type { SaveGameData } from "./types/map";
+
+const STATS: SaveGameData = {
+  gameVersion: "1.02",
   characterName:
-    'White Swan\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000',
+    "White Swan\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
   saveName:
-    '1\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000',
+    "1\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
   saveDay: 10,
   saveMonth: 10,
   saveYear: 2022,
@@ -249,9 +251,6 @@ const STATS = {
   playerXP: 273_593,
   trait1: 15,
   trait2: -1,
-  size: 0,
-  offset: 0,
-  keys: 0,
   prefGameDifficulty: 1,
   prefCombatDifficulty: 1,
   prefViolenceLevel: 3,
@@ -272,6 +271,13 @@ const STATS = {
   prefSpeechVolume: 0,
   prefBrightness: 1_066_863_104,
   prefMouseSensitivity: 1_075_838_976,
-}
+  combatStatus: -1,
+  combatUnknown1: 0,
+  combatUnknown2: 10,
+  combatNumNPCs: 10,
+  combatPlayerID: 1,
+  combatTurnOrder: 124,
+  combatUnknown3: 0,
+};
 
-export default STATS
+export default STATS;

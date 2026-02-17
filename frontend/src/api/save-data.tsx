@@ -1,29 +1,29 @@
-import { ATTR_PREFIX } from '../ui/constants'
+import { ATTR_PREFIX } from "../ui/constants";
 
-import { ATTRIBUTES } from './data/attributes'
-import { GVARS } from './data/gvar'
-import { KILLS } from './data/kills'
-import { PERKS } from './data/perks'
-import { SKILLS } from './data/skills'
-import { createMap } from './map'
-import type { BaseAttributesValues, BonusAttributesValues } from './types/attributes'
-import type { F17Preferences } from './types/f17-preferences'
-import type { GVARValues } from './types/gvar'
-import type { KillValues } from './types/kill'
-import type { SaveGameData } from './types/map'
-import type { PerkValues } from './types/perks'
-import type { SkillValues } from './types/skills'
-import { entries, prefixString } from './utils'
+import { ATTRIBUTES } from "./data/attributes";
+import { GVARS } from "./data/gvar";
+import { KILLS } from "./data/kills";
+import { PERKS } from "./data/perks";
+import { SKILLS } from "./data/skills";
+import { createMap } from "./map";
+import type { BaseAttributesValues, BonusAttributesValues } from "./types/attributes";
+import type { F17Preferences } from "./types/f17-preferences";
+import type { GVARValues } from "./types/gvar";
+import type { KillValues } from "./types/kill";
+import type { SaveGameData } from "./types/map";
+import type { PerkValues } from "./types/perks";
+import type { SkillValues } from "./types/skills";
+import { entries, prefixString } from "./utils";
 
-const map = createMap()
+const map = createMap();
 
-export type StatNames = keyof ReturnType<typeof createSaveData>
+export type StatNames = keyof ReturnType<typeof createSaveData>;
 
 export const createSaveData = (): SaveGameData => ({
   // Header
-  gameVersion: '',
-  characterName: '',
-  saveName: '',
+  gameVersion: "",
+  characterName: "",
+  saveName: "",
   saveDay: 0,
   saveMonth: 0,
   saveYear: 0,
@@ -31,8 +31,8 @@ export const createSaveData = (): SaveGameData => ({
 
   // F2 GVARs
   ...entries(GVARS).reduce<GVARValues>((acc, [key]) => {
-    acc[prefixString(key, ATTR_PREFIX.GVAR)] = 0
-    return acc
+    acc[prefixString(key, ATTR_PREFIX.GVAR)] = 0;
+    return acc;
   }, {} as GVARValues),
 
   // F5
@@ -99,24 +99,24 @@ export const createSaveData = (): SaveGameData => ({
   bonusGender: 0, // 0 = male, 1 = female
 
   ...entries(ATTRIBUTES).reduce<BaseAttributesValues>((acc, [key]) => {
-    acc[prefixString(key, ATTR_PREFIX.BASE_ATTR)] = 0
-    return acc
+    acc[prefixString(key, ATTR_PREFIX.BASE_ATTR)] = 0;
+    return acc;
   }, {} as BaseAttributesValues),
 
   ...entries(ATTRIBUTES).reduce<BonusAttributesValues>((acc, [key]) => {
-    acc[prefixString(key, ATTR_PREFIX.BONUS_ATTR)] = 0
-    return acc
+    acc[prefixString(key, ATTR_PREFIX.BONUS_ATTR)] = 0;
+    return acc;
   }, {} as BonusAttributesValues),
 
   ...entries(SKILLS).reduce<SkillValues>((acc, [key]) => {
-    acc[key] = 0
-    return acc
+    acc[key] = 0;
+    return acc;
   }, {} as SkillValues),
 
   // F7 Kills
   ...entries(KILLS).reduce<KillValues>((acc, [key]) => {
-    acc[prefixString(key, ATTR_PREFIX.KILL)] = 0
-    return acc
+    acc[prefixString(key, ATTR_PREFIX.KILL)] = 0;
+    return acc;
   }, {} as KillValues),
 
   // F8 Tags
@@ -129,9 +129,18 @@ export const createSaveData = (): SaveGameData => ({
    * F9 Perks
    */
   ...entries(PERKS).reduce<PerkValues>((acc, [key]) => {
-    acc[prefixString(key, ATTR_PREFIX.PERK)] = 0
-    return acc
+    acc[prefixString(key, ATTR_PREFIX.PERK)] = 0;
+    return acc;
   }, {} as PerkValues),
+
+  // F11 Combat
+  combatStatus: -1,
+  combatUnknown1: 0,
+  combatUnknown2: 10,
+  combatNumNPCs: 10,
+  combatPlayerID: 1,
+  combatTurnOrder: 124,
+  combatUnknown3: 0,
 
   // F13 Player/level/XP
   qtySkillPoints: 0,
@@ -146,7 +155,7 @@ export const createSaveData = (): SaveGameData => ({
    * F17 Preferences
    */
   ...entries(map.f17.keys).reduce<F17Preferences>((acc, [key]) => {
-    acc[key] = 0
-    return acc
+    acc[key] = 0;
+    return acc;
   }, {} as F17Preferences),
-})
+});
