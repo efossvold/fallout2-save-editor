@@ -1,5 +1,3 @@
-import { indexOf } from 'uint8array-extras'
-
 import { getCategory, ItemCategory, ITEMS } from './data/items'
 import * as M from './map'
 import { createSaveData } from './save-data'
@@ -368,8 +366,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     getInventoryItems() {
       const handler = getHandler()
       const numInventoryItems = this.getNumInventoryItems()
-      // const itemsStart = buffer.indexOf(M.F5_MARKER) + 0x80
-      const itemsStart = indexOf(handler.buf, new Uint8Array([0, 0, 70, 80])) + 0x80
+      const itemsStart = U.indexOf(handler.buf, new Uint8Array([0, 0, 70, 80])) + 0x80
 
       let currentOffset = itemsStart
       const items = []
@@ -485,7 +482,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
       map = M.createMap()
 
       // map.f5.offset = buffer.findIndex(M.F5_MARKER)
-      map.f5.offset = indexOf(buffer, new Uint8Array([0, 0, 70, 80]))
+      map.f5.offset = U.indexOf(buffer, new Uint8Array([0, 0, 70, 80]))
 
       this.findF6Offset()
       this.findF7Offset()

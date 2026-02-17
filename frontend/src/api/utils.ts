@@ -89,6 +89,10 @@ export const parseDate = (date: number | Date) => {
   }
 }
 
+/*
+ * Credit: Sindre Sorhos
+ * https://github.com/sindresorhus/uint8array-extras
+ */
 export const indexOf = (array: Uint8Array, value: Uint8Array): number => {
   const arrayLength = array.length
   const valueLength = value.length
