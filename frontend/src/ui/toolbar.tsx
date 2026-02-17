@@ -1,20 +1,20 @@
-import { Button } from "@headlessui/react";
-import React, { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
+import { Button } from '@headlessui/react'
+import { clsx } from 'clsx'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
-import { ReadFile, SaveFile } from "../../wailsjs/go/main/App";
-import saveBase64 from "../api/slot01-stats.base64";
-import type { MayBeError } from "../api/types/misc";
-import { base64toBlob, getError } from "../api/utils";
-import type { ButtonProps } from "../types/types";
+import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
+import saveBase64 from '../api/slot01-stats.base64'
+import type { MayBeError } from '../api/types/misc'
+import { base64toBlob, getError } from '../api/utils'
+import type { ButtonProps } from '../types/types'
 
-import { useIsWeb } from "./hooks";
-import { Hoverable } from "./hoverable";
-import { Logo } from "./logo";
-import * as S from "./selectors";
-import { useAPIStore, handler } from "./store";
-import { basename, dirname } from "./utils";
-import { clsx } from "clsx";
+import { useIsWeb } from './hooks'
+import { Hoverable } from './hoverable'
+import { Logo } from './logo'
+import * as S from './selectors'
+import { useAPIStore, handler } from './store'
+import { basename, dirname } from './utils'
 
 const ToolbarButton = ({ children, onClick, isDisabled }: ButtonProps) => (
   <Button
@@ -24,21 +24,21 @@ const ToolbarButton = ({ children, onClick, isDisabled }: ButtonProps) => (
   >
     {children}
   </Button>
-);
+)
 
 const InfoItem = (p: React.PropsWithChildren<{ name: string }>) => (
   <div className="flex justify-between text-xs">
     <p className="text-gray-600">{p.name}</p>
     <div className="text-gray-400">{p.children}</div>
   </div>
-);
+)
 
 const SaveGameMeta = () => {
-  const { currentSaveFile } = useAPIStore((s) => s);
-  const saveName = useAPIStore((s) => s.data.saveName);
-  const gameVersion = useAPIStore((s) => s.data.gameVersion);
-  const inGameTimeText = useAPIStore(S.getInGameTimeText);
-  const savePathShort = currentSaveFile?.split("/").slice(-2).join("/");
+  const { currentSaveFile } = useAPIStore(s => s)
+  const saveName = useAPIStore(s => s.data.saveName)
+  const gameVersion = useAPIStore(s => s.data.gameVersion)
+  const inGameTimeText = useAPIStore(S.getInGameTimeText)
+  const savePathShort = currentSaveFile?.split('/').slice(-2).join('/')
 
   return currentSaveFile ? (
     <div className="m-auto w-full lg:w-1/2 grid grid-cols-[50%_30%] sm:grid-cols-[40%_25%] justify-between order-last lg:order-0">
@@ -53,83 +53,83 @@ const SaveGameMeta = () => {
     </div>
   ) : (
     <></>
-  );
-};
+  )
+}
 
 export const Toolbar = () => {
-  const { save, currentSaveFile } = useAPIStore((s) => s);
-  const load = useAPIStore((s) => s.load);
-  const toggleDebugWindow = useAPIStore((s) => s.toggleDebugWindow);
-  const isWeb = useIsWeb();
+  const { save, currentSaveFile } = useAPIStore(s => s)
+  const load = useAPIStore(s => s.load)
+  const toggleDebugWindow = useAPIStore(s => s.toggleDebugWindow)
+  const isWeb = useIsWeb()
 
-  const [hasLoaded, setHasLoaded] = useState(false);
+  const [hasLoaded, setHasLoaded] = useState(false)
 
   const onFileChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    ev.preventDefault();
+    ev.preventDefault()
 
-    let filename = "";
-    const reader = new FileReader();
+    let filename = ''
+    const reader = new FileReader()
 
-    reader.addEventListener("load", (readEvent) => {
-      const data = readEvent.target?.result;
+    reader.addEventListener('load', readEvent => {
+      const data = readEvent.target?.result
 
       if (data) {
-        if (typeof data === "string") {
-          const base64 = data.replace(/^data:application\/octet-stream;base64,/, "");
-          load(filename, base64);
+        if (typeof data === 'string') {
+          const base64 = data.replace(/^data:application\/octet-stream;base64,/, '')
+          load(filename, base64)
         } else {
-          toast.error("Invalid file format");
+          toast.error('Invalid file format')
         }
       }
-    });
+    })
 
-    const { files } = ev.target;
+    const { files } = ev.target
 
     if (files && files.length > 0) {
-      const [file] = files;
+      const [file] = files
       if (file) {
-        filename = file.name;
-        reader.readAsDataURL(file);
+        filename = file.name
+        reader.readAsDataURL(file)
       }
     }
-  };
+  }
 
   const onOpenFile = async () => {
     try {
       // oxlint-disable-next-line new-cap
-      const [path, content, error] = (await ReadFile()) as [string, string, string];
+      const [path, content, error] = (await ReadFile()) as [string, string, string]
       if (error) {
-        toast.error(error);
+        toast.error(error)
       } else if (path) {
-        load(path, content);
+        load(path, content)
       }
     } catch (error) {
-      toast.error(getError(error).message);
+      toast.error(getError(error).message)
     }
-  };
+  }
 
   const onSaveFile = async () => {
-    save();
+    save()
 
     if (isWeb) {
       try {
-        const blob = base64toBlob(handler.toBase64(), "application/octet-stream");
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
+        const blob = base64toBlob(handler.toBase64(), 'application/octet-stream')
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
 
-        a.href = url;
-        a.download = currentSaveFile ?? "SAVE.DAT";
-        document.body.appendChild(a);
-        a.click();
+        a.href = url
+        a.download = currentSaveFile ?? 'SAVE.DAT'
+        document.body.appendChild(a)
+        a.click()
 
         setTimeout(() => {
-          URL.revokeObjectURL(url);
-          document.body.removeChild(a);
-        }, 100);
+          URL.revokeObjectURL(url)
+          document.body.removeChild(a)
+        }, 100)
       } catch (error) {
-        const err = getError(error as MayBeError);
-        if (!err.name.startsWith("AbortError")) {
-          toast.error(getError(error as MayBeError).message);
+        const err = getError(error as MayBeError)
+        if (!err.name.startsWith('AbortError')) {
+          toast.error(getError(error as MayBeError).message)
         }
       }
     } else {
@@ -137,26 +137,26 @@ export const Toolbar = () => {
         // oxlint-disable-next-line new-cap
         const [filename, error] = (await SaveFile(
           handler.toBase64(),
-          dirname(currentSaveFile ?? ""),
-          basename(currentSaveFile ?? ""),
-        )) as [string, string];
+          dirname(currentSaveFile ?? ''),
+          basename(currentSaveFile ?? ''),
+        )) as [string, string]
         if (error) {
-          toast.error(error);
+          toast.error(error)
         } else if (filename) {
-          toast.success("Save successful");
+          toast.success('Save successful')
         }
       } catch (error) {
-        toast.error(getError(error as MayBeError).message);
+        toast.error(getError(error as MayBeError).message)
       }
     }
-  };
+  }
 
   useEffect(() => {
     if (!!isWeb && !hasLoaded) {
-      load("/xxx/yyy/savegame.file", saveBase64);
-      setHasLoaded(true);
+      load('/xxx/yyy/savegame.file', saveBase64)
+      setHasLoaded(true)
     }
-  }, [hasLoaded, load, isWeb, setHasLoaded]);
+  }, [hasLoaded, load, isWeb, setHasLoaded])
 
   return (
     <div className="w-full py-1 px-2 bg-gray-50 rounded-sm">
@@ -164,7 +164,7 @@ export const Toolbar = () => {
         <Hoverable>
           {({ isHovered }) => (
             <Logo
-              className={clsx("h-11 transition", isHovered ? "fill-blue-400" : "fill-gray-200")}
+              className={clsx('h-11 transition', isHovered ? 'fill-blue-400' : 'fill-gray-200')}
             />
           )}
         </Hoverable>
@@ -197,7 +197,7 @@ export const Toolbar = () => {
             <ToolbarButton
               onClick={() => {
                 // oxlint-disable-next-line new-cap
-                globalThis.runtime.Quit();
+                globalThis.runtime.Quit()
               }}
             >
               Quit
@@ -206,5 +206,5 @@ export const Toolbar = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

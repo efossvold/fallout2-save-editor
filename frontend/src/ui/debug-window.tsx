@@ -1,22 +1,22 @@
-import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
+import { useEffect, useState } from 'react'
+import ReactDOM from 'react-dom'
 
-import { IButton } from "./components/buttons";
-import { useAPIStore } from "./store";
+import { IButton } from './components/buttons'
+import { useAPIStore } from './store'
 
 export const StoreDebuggerModal = () => {
-  const isOpen = useAPIStore((s) => s.showDebugWindow);
-  const [modalRoot, setModalRoot] = useState<HTMLElement | null>();
-  const toggleDebugWindow = useAPIStore((s) => s.toggleDebugWindow);
-  const data = useAPIStore((s) => s.data);
+  const isOpen = useAPIStore(s => s.showDebugWindow)
+  const [modalRoot, setModalRoot] = useState<HTMLElement | null>()
+  const toggleDebugWindow = useAPIStore(s => s.toggleDebugWindow)
+  const data = useAPIStore(s => s.data)
 
   useEffect(() => {
-    setModalRoot(document.getElementById("store-debugger"));
-  }, []);
+    setModalRoot(document.getElementById('store-debugger'))
+  }, [])
 
   if (!isOpen || !modalRoot) {
-    return;
+    return
   }
 
   return ReactDOM.createPortal(
@@ -49,5 +49,5 @@ export const StoreDebuggerModal = () => {
       </div>
     </Dialog>,
     modalRoot,
-  );
-};
+  )
+}

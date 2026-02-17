@@ -1,5 +1,5 @@
 // @ts-ignore
-import type { StoreState } from "../store";
+import type { StoreState } from '../store'
 
 export const STORE_STATE_FIXTURE: StoreState = {
   load: () => undefined,
@@ -10,11 +10,11 @@ export const STORE_STATE_FIXTURE: StoreState = {
   setCrippledLimb: () => undefined,
   adjustStatsFromPerk: () => undefined,
   data: {
-    gameVersion: "1.02",
+    gameVersion: '1.02',
     characterName:
-      "White Swan\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      'White Swan\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000',
     saveName:
-      "1\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      '1\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000',
     saveDay: 10,
     saveMonth: 10,
     saveYear: 2022,
@@ -288,5 +288,5 @@ export const STORE_STATE_FIXTURE: StoreState = {
     combatTurnOrder: 124,
     combatUnknown3: 0,
   },
-  currentSaveFile: "/xxx/yyy/savegame.file",
-};
+  currentSaveFile: '/xxx/yyy/savegame.file',
+}

@@ -1,19 +1,19 @@
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
-import { clsx } from "clsx";
-import { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
+import { clsx } from 'clsx'
+import { useEffect, useState } from 'react'
+import ReactDOM from 'react-dom'
 
-import type { UseDisclosureReturn } from "../types/types";
+import type { UseDisclosureReturn } from '../types/types'
 
-import { IButton } from "./components/buttons";
-import { IInput } from "./components/input";
-import { MAX_CHARACTER_NAME_LENGTH } from "./constants";
-import { useDisclosure } from "./hooks";
-import { Hoverable } from "./hoverable";
-import { useAPIStore } from "./store";
+import { IButton } from './components/buttons'
+import { IInput } from './components/input'
+import { MAX_CHARACTER_NAME_LENGTH } from './constants'
+import { useDisclosure } from './hooks'
+import { Hoverable } from './hoverable'
+import { useAPIStore } from './store'
 
 export const NameChanger = (p: { name: string }) => {
-  const disclosure = useDisclosure();
+  const disclosure = useDisclosure()
 
   return (
     <>
@@ -21,13 +21,13 @@ export const NameChanger = (p: { name: string }) => {
         {({ isHovered }) => (
           <div
             className={clsx(
-              "flex justify-between mr-2.5 cursor-pointer",
-              isHovered ? "text-gray-50" : "text-green-200",
+              'flex justify-between mr-2.5 cursor-pointer',
+              isHovered ? 'text-gray-50' : 'text-green-200',
             )}
           >
             <p>Name</p>
             <div className="flex justify-between">
-              <p className={clsx(isHovered ? "underline" : "no-underline")}>{p.name}</p>
+              <p className={clsx(isHovered ? 'underline' : 'no-underline')}>{p.name}</p>
               <NameChangerModal
                 initialValue={p.name}
                 disclosure={disclosure}
@@ -39,35 +39,35 @@ export const NameChanger = (p: { name: string }) => {
         )}
       </Hoverable>
     </>
-  );
-};
+  )
+}
 
 const NameChangerModal = (p: {
-  initialValue: string;
-  disclosure: UseDisclosureReturn;
-  isHovered: boolean;
+  initialValue: string
+  disclosure: UseDisclosureReturn
+  isHovered: boolean
 }) => {
-  const { isOpen, onClose } = p.disclosure;
-  const setProp = useAPIStore((s) => s.setProp);
-  const [name, setName] = useState("");
-  const [isInitialValueSet, setIsInitialValueSet] = useState(false);
-  const [modalRoot, setModalRoot] = useState<HTMLElement | null>();
+  const { isOpen, onClose } = p.disclosure
+  const setProp = useAPIStore(s => s.setProp)
+  const [name, setName] = useState('')
+  const [isInitialValueSet, setIsInitialValueSet] = useState(false)
+  const [modalRoot, setModalRoot] = useState<HTMLElement | null>()
 
   useEffect(() => {
-    setModalRoot(document.getElementById("name-changer"));
-  }, []);
+    setModalRoot(document.getElementById('name-changer'))
+  }, [])
 
   useEffect(() => {
     if (isOpen && !isInitialValueSet) {
-      setIsInitialValueSet(true);
-      setName(p.initialValue.replaceAll("\x00", ""));
+      setIsInitialValueSet(true)
+      setName(p.initialValue.replaceAll('\x00', ''))
     } else if (!isOpen) {
-      setIsInitialValueSet(false);
+      setIsInitialValueSet(false)
     }
-  }, [isInitialValueSet, isOpen, p.initialValue]);
+  }, [isInitialValueSet, isOpen, p.initialValue])
 
   if (!isOpen || !modalRoot) {
-    return;
+    return
   }
 
   return ReactDOM.createPortal(
@@ -87,8 +87,8 @@ const NameChangerModal = (p: {
             <IInput
               autoFocus
               value={name}
-              onChange={(ev) => {
-                setName(ev.target.value);
+              onChange={ev => {
+                setName(ev.target.value)
               }}
               maxLength={MAX_CHARACTER_NAME_LENGTH}
             />
@@ -100,8 +100,8 @@ const NameChangerModal = (p: {
               <IButton
                 color="primary"
                 onClick={() => {
-                  setProp("characterName", name.slice(0, MAX_CHARACTER_NAME_LENGTH));
-                  p.disclosure.onClose();
+                  setProp('characterName', name.slice(0, MAX_CHARACTER_NAME_LENGTH))
+                  p.disclosure.onClose()
                 }}
                 disabled={name.length <= 0}
               >
@@ -113,5 +113,5 @@ const NameChangerModal = (p: {
       </div>
     </Dialog>,
     modalRoot,
-  );
-};
+  )
+}

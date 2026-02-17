@@ -1,117 +1,117 @@
-import type { BaseAttributesValues, BonusAttributesValues } from "./attributes";
-import type { F6StatsBase, F6StatsBonus } from "./f6-stats";
-import type { F17Preferences } from "./f17-preferences";
-import type { GVARValues } from "./gvar";
-import type { KillValues } from "./kill";
-import type { PrefixedDictIndices } from "./misc";
-import type { PerkValues } from "./perks";
-import type { SkillValues } from "./skills";
+import type { BaseAttributesValues, BonusAttributesValues } from './attributes'
+import type { F6StatsBase, F6StatsBonus } from './f6-stats'
+import type { F17Preferences } from './f17-preferences'
+import type { GVARValues } from './gvar'
+import type { KillValues } from './kill'
+import type { PrefixedDictIndices } from './misc'
+import type { PerkValues } from './perks'
+import type { SkillValues } from './skills'
 
-export type MapValueTypes = "float" | "int" | "string";
+export type MapValueTypes = 'float' | 'int' | 'string'
 
 export interface MapKeyValueEntry {
-  name: string;
-  offset: number;
-  length: number;
-  kind: MapValueTypes;
+  name: string
+  offset: number
+  length: number
+  kind: MapValueTypes
 }
 
 export interface MapSection<T extends Record<string, any>> {
-  size: number;
-  offset: number;
-  keys: { [Key in keyof T]: MapKeyValueEntry };
+  size: number
+  offset: number
+  keys: { [Key in keyof T]: MapKeyValueEntry }
 }
 
 // oxlint-disable-next-line typescript/consistent-type-definitions
 export type MapHeaderSection = {
-  gameVersion: string;
-  characterName: string;
-  saveName: string;
-  saveDay: number;
-  saveMonth: number;
-  saveYear: number;
-  inGameTime: number;
-};
+  gameVersion: string
+  characterName: string
+  saveName: string
+  saveDay: number
+  saveMonth: number
+  saveYear: number
+  inGameTime: number
+}
 
-export type MapF2Section = GVARValues;
+export type MapF2Section = GVARValues
 
 // oxlint-disable-next-line typescript/consistent-type-definitions
 export type MapF5Section = {
-  currentHP: number;
-  radiation: number;
-  poison: number;
-  crippled: number;
-  numInventoryItems: number;
-};
+  currentHP: number
+  radiation: number
+  poison: number
+  crippled: number
+  numInventoryItems: number
+}
 
 export type MapF6Section = F6StatsBase &
   F6StatsBonus &
   BaseAttributesValues &
   BonusAttributesValues &
-  SkillValues;
+  SkillValues
 
-export type MapF6SkillsSection = SkillValues;
+export type MapF6SkillsSection = SkillValues
 
-export type MapF7Section = KillValues;
+export type MapF7Section = KillValues
 
-export type MapF8Section = PrefixedDictIndices<"1" | "2" | "3" | "4", number, "taggedSkill">;
+export type MapF8Section = PrefixedDictIndices<'1' | '2' | '3' | '4', number, 'taggedSkill'>
 
-export type TaggedSkillsKeys = keyof MapF8Section;
+export type TaggedSkillsKeys = keyof MapF8Section
 
-export type MapF9Section = PerkValues;
+export type MapF9Section = PerkValues
 // Export type MapF9Section = PerkValues
 
 // oxlint-disable-next-line typescript/consistent-type-definitions
 export type MapF11Section = {
-  combatStatus: number; // 02 - not in combat; 03 - in combat
-  combatUnknown1: number;
-  combatUnknown2: number;
-  combatNumNPCs: number;
-  combatPlayerID: number;
-  combatTurnOrder: number; // Size = 0x04 * numNPCs
-  combatUnknown3: number; // Size = 0x10 * numNPCs
-};
+  combatStatus: number // 02 - not in combat; 03 - in combat
+  combatUnknown1: number
+  combatUnknown2: number
+  combatNumNPCs: number
+  combatPlayerID: number
+  combatTurnOrder: number // Size = 0x04 * numNPCs
+  combatUnknown3: number // Size = 0x10 * numNPCs
+}
 
 // oxlint-disable-next-line typescript/consistent-type-definitions
 export type MapF13Section = {
-  qtySkillPoints: number;
-  playerLevel: number;
-  playerXP: number;
-};
+  qtySkillPoints: number
+  playerLevel: number
+  playerXP: number
+}
 
-export type MapF15Section = PrefixedDictIndices<"1" | "2", number | undefined, "trait">;
+export type MapF15Section = PrefixedDictIndices<'1' | '2', number | undefined, 'trait'>
 
-export type MapF17Section = F17Preferences;
+export type MapF17Section = F17Preferences
 
 export interface MapInventory {
-  qty: number;
-  id: string;
-  qtyContained: number;
-  meta: number;
-  ammoType: number;
+  qty: number
+  id: string
+  qtyContained: number
+  meta: number
+  ammoType: number
 }
 
 export interface SaveTypesMap {
-  header: MapHeaderSection;
-  f2: MapF2Section;
-  f5: MapF5Section;
-  f6: MapF6Section;
-  f7: MapF7Section;
-  f8: MapF8Section;
-  f9: MapF9Section;
-  f10: {};
-  f11: MapF11Section;
-  f13: MapF13Section;
-  f14: {};
-  f15: MapF15Section;
-  f16: {};
-  f17: MapF17Section;
+  header: MapHeaderSection
+  f2: MapF2Section
+  f5: MapF5Section
+  f6: MapF6Section
+  f7: MapF7Section
+  f8: MapF8Section
+  f9: MapF9Section
+  f10: {}
+  f11: MapF11Section
+  f13: MapF13Section
+  f14: {}
+  f15: MapF15Section
+  f16: {}
+  f17: MapF17Section
   // Inventory: MapInventory
 }
 
 export type SaveMap = {
-  [Key in keyof SaveTypesMap]: MapSection<SaveTypesMap[Key]>;
-};
+  [Key in keyof SaveTypesMap]: MapSection<SaveTypesMap[Key]>
+}
 
 export interface SaveGameData
   extends

@@ -22,8 +22,4 @@ export type F17PreferencesNames =
   | 'brightness'
   | 'mouseSensitivity'
 
-export type F17Preferences = PrefixedDictIndices<
-  F17PreferencesNames,
-  number,
-  'pref'
->
+export type F17Preferences = PrefixedDictIndices<F17PreferencesNames, number, 'pref'>

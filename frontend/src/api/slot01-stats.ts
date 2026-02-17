@@ -1,11 +1,11 @@
-import type { SaveGameData } from "./types/map";
+import type { SaveGameData } from './types/map'
 
 const STATS: SaveGameData = {
-  gameVersion: "1.02",
+  gameVersion: '1.02',
   characterName:
-    "White Swan\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    'White Swan\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000',
   saveName:
-    "1\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    '1\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000',
   saveDay: 10,
   saveMonth: 10,
   saveYear: 2022,
@@ -278,6 +278,6 @@ const STATS: SaveGameData = {
   combatPlayerID: 1,
   combatTurnOrder: 124,
   combatUnknown3: 0,
-};
+}
 
-export default STATS;
+export default STATS

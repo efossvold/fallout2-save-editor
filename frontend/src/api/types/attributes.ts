@@ -1,5 +1,6 @@
 import type { ATTR_PREFIX } from '../../ui/constants'
 import type { ATTRIBUTES } from '../data/attributes'
+
 import type { DictValues, PrefixedDictIndices } from './misc'
 
 export type AttributesNames =

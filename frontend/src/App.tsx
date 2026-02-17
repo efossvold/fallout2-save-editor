@@ -1,11 +1,11 @@
-import "./style/base.css";
-import "./style/fonts.css";
-import "./style/scrollbar.css";
+import './style/base.css'
+import './style/fonts.css'
+import './style/scrollbar.css'
 
-import { Toaster } from "react-hot-toast";
+import { Toaster } from 'react-hot-toast'
 
-import { Panels } from "./ui/panels";
-import { StoreDebuggerModal } from "./ui/debug-window";
+import { StoreDebuggerModal } from './ui/debug-window'
+import { Panels } from './ui/panels'
 
 const App = () => (
   <div className="relative w-full h-full">
@@ -18,10 +18,10 @@ const App = () => (
     <Toaster
       position="bottom-center"
       toastOptions={{
-        className: "bg-red-500",
+        className: 'bg-red-500',
       }}
     />
   </div>
-);
+)
 
-export default App;
+export default App

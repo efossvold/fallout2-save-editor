@@ -1,12 +1,7 @@
 import type { MakeOptional } from '../types/misc'
 import type { Perk } from '../types/perks'
 
-const n = ({
-  id,
-  name,
-  desc,
-  ranks = 1,
-}: MakeOptional<Perk, 'ranks'>): Perk => ({
+const n = ({ id, name, desc, ranks = 1 }: MakeOptional<Perk, 'ranks'>): Perk => ({
   id,
   name,
   desc,
