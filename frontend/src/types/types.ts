@@ -38,6 +38,7 @@ export interface BoxProps {
 
 export interface ButtonProps extends BoxProps {
   isDisabled?: boolean
+  isToggled?: boolean
 }
 
 export interface UseDisclosureReturn {

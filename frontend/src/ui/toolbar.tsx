@@ -2,6 +2,7 @@ import { Button } from '@headlessui/react'
 import { clsx } from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { cn } from 'tailwind-variants'
 
 import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
 import type { MayBeError } from '../api/types/misc'
@@ -15,9 +16,12 @@ import * as S from './selectors'
 import { useAPIStore, handler } from './store'
 import { basename, dirname } from './utils'
 
-const ToolbarButton = ({ children, onClick, isDisabled }: ButtonProps) => (
+const ToolbarButton = ({ children, onClick, isDisabled, isToggled }: ButtonProps) => (
   <Button
-    className="h-11 w-24 flex justify-center items-center sm:text-lg  bg-gray-100 text-gray-900 font-semibold rounded-sm hover:bg-gray-200 cursor-pointer transition-colors data-disabled:bg-gray-300 data-disabled:cursor-default"
+    className={cn(
+      'h-11 w-24 flex justify-center items-center sm:text-lg  bg-gray-100 text-gray-900 font-semibold rounded-sm hover:bg-gray-200 cursor-pointer transition-colors data-disabled:bg-gray-300 data-disabled:cursor-default',
+      isToggled ? 'bg-gray-600 text-gray-100 hover:bg-gray-400 hover:text-gray-50' : '',
+    )}
     onClick={onClick}
     disabled={isDisabled}
   >
@@ -60,6 +64,7 @@ export const Toolbar = () => {
   const load = useAPIStore(s => s.load)
   const toggleDebugWindow = useAPIStore(s => s.toggleDebugWindow)
   const isWeb = useIsWeb()
+  const showDebugWindow = useAPIStore(s => s.showDebugWindow)
 
   const [hasLoaded, setHasLoaded] = useState(false)
 
@@ -199,7 +204,11 @@ export const Toolbar = () => {
           </ToolbarButton>
 
           {isWeb ? (
-            <ToolbarButton isDisabled={!currentSaveFile} onClick={toggleDebugWindow}>
+            <ToolbarButton
+              isDisabled={!currentSaveFile}
+              isToggled={showDebugWindow}
+              onClick={toggleDebugWindow}
+            >
               Debug
             </ToolbarButton>
           ) : (
