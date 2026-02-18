@@ -4,10 +4,10 @@
   "private": true,
   "description": "Fallout 2 save game editor",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite-react-ssg dev",
     "test": "bun test",
     "test:watch": "bun test --watch",
-    "build": "vite build",
+    "build": "vite-react-ssg build",
     "lint": "oxlint --type-aware --type-check --fix --report-unused-disable-directives -f stylish",
     "lint:watch": "watchexec -w src -c -- bun run lint",
     "preview": "vite preview",
@@ -23,6 +23,7 @@
     "reselect": "^5.1.1",
     "tailwind-variants": "^3.2.2",
     "tailwindcss": "^4.1.18",
+    "vite-react-ssg": "^0.9.1-beta.1",
     "zustand": "^5.0.11"
   },
   "devDependencies": {

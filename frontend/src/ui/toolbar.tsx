@@ -154,11 +154,10 @@ export const Toolbar = () => {
     const loadStats = async () => {
       try {
         const saveBase64 = await import('../api/fixtures/slot01-stats.base64')
-        console.log(saveBase64.default.substring(0, 25))
         load('/xxx/yyy/savegame.file', saveBase64.default)
         setHasLoaded(true)
       } catch (error) {
-        console.error(error)
+        toast.error(getError(error).message)
       }
     }
 

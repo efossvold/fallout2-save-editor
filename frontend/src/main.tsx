@@ -1,14 +1,6 @@
-import React from 'react'
-import { createRoot } from 'react-dom/client'
+import { ViteReactSSG } from 'vite-react-ssg/single-page'
 
 import App from './app'
 
-const container = document.querySelector('#root')
-
-const root = createRoot(container!)
-
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+// oxlint-disable-next-line new-cap
+export const createRoot = ViteReactSSG(<App />)
