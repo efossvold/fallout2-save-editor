@@ -1,8 +1,8 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'bun:test'
 
+import stats from './fixtures/slot01-stats'
+import dataBase64 from './fixtures/slot01-stats.base64'
 import { saveHandler } from './save-handler'
-import stats from './slot01-stats'
-import dataBase64 from './slot01-stats.base64'
 import type { SaveHandler } from './types/save-handler'
 
 let handler: SaveHandler
@@ -12,17 +12,22 @@ describe('save-handler', () => {
     handler = saveHandler({ isDebug: false }).fromBase64(dataBase64)
   })
 
-  it('should parse a binary save file correctly', () => {
-    const data = handler.getData()
+  it('should parse a base64 save file correctly', () => {
+    expect(handler.getData()).toStrictEqual(stats)
+  })
 
-    expect(data).toStrictEqual(stats)
+  it('should parse a base64 1 save file correctly', () => {
+    handler = saveHandler({ isDebug: false }).fromBase64(dataBase64, { gameVersion: '1.04' })
+    expect(handler.getData()).toStrictEqual({ ...stats, gameVersion: '1.04' })
+  })
+
+  it('should export to base64 correctly', () => {
+    expect(handler.toBase64()).toBe(dataBase64)
   })
 
   it('should set string correctly', () => {
     handler.setSaveName('s01')
-    const data = handler.getData()
-
-    expect(data).toStrictEqual({
+    expect(handler.getData()).toStrictEqual({
       ...stats,
       saveName:
         's01\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000',
@@ -31,46 +36,38 @@ describe('save-handler', () => {
 
   it('should set integer correctly', () => {
     handler.setBaseAC(5)
-    const data = handler.getData()
-
-    expect(data).toStrictEqual({ ...stats, baseAC: 5 })
+    expect(handler.getData()).toStrictEqual({ ...stats, baseAC: 5 })
   })
 
-  it('should set float correctly (1.03)', () => {
-    handler.setGameVersion(1.03)
-    const data = handler.getData()
+  describe('setGameVersion', () => {
+    it('should set float correctly (1.03)', () => {
+      handler.setGameVersion('1.03')
+      expect(handler.getData()).toStrictEqual({ ...stats, gameVersion: '1.03' })
+    })
 
-    expect(data).toStrictEqual({ ...stats, gameVersion: 1.03 })
-  })
+    it('should set float correctly (11.03)', () => {
+      handler.setGameVersion(11.03)
+      expect(handler.getData()).toStrictEqual({ ...stats, gameVersion: '11.03' })
+    })
 
-  it('should set float correctly (11.03)', () => {
-    handler.setGameVersion(11.03)
-    const data = handler.getData()
+    it('should set float correctly (1)', () => {
+      handler.setGameVersion(1)
+      expect(handler.getData()).toStrictEqual({ ...stats, gameVersion: '1.00' })
+    })
 
-    expect(data).toStrictEqual({ ...stats, gameVersion: 11.03 })
-  })
+    it('should set float correctly (.03)', () => {
+      handler.setGameVersion(0.03)
+      expect(handler.getData()).toStrictEqual({ ...stats, gameVersion: '0.03' })
+    })
 
-  it('should set float correctly (1)', () => {
-    handler.setGameVersion(1)
-    const data = handler.getData()
+    it('should set float correctly (1234)', () => {
+      const consoleSpy = vi.spyOn(console, 'assert')
 
-    expect(data).toStrictEqual({ ...stats, gameVersion: 1 })
-  })
+      handler.setGameVersion(1234)
+      const data = handler.getData()
 
-  it('should set float correctly (.03)', () => {
-    handler.setGameVersion(0.03)
-    const data = handler.getData()
-
-    expect(data).toStrictEqual({ ...stats, gameVersion: 0.03 })
-  })
-
-  it('should set float correctly (1234)', () => {
-    const consoleSpy = vi.spyOn(console, 'assert')
-
-    handler.setGameVersion(1234)
-    const data = handler.getData()
-
-    expect(data).toStrictEqual({ ...stats, gameVersion: 12 })
-    expect(consoleSpy).toHaveBeenCalledWith(false, 'setValue: Invalid float: 1234')
+      expect(data).toStrictEqual({ ...stats, gameVersion: '12.00' })
+      expect(consoleSpy).toHaveBeenCalledWith(false, 'setValue: Invalid float: 1234')
+    })
   })
 })

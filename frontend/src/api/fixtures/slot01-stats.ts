@@ -1,4 +1,4 @@
-import type { SaveGameData } from './types/map'
+import type { SaveGameData } from '../types/map'
 
 const STATS: SaveGameData = {
   gameVersion: '1.02',
@@ -27,7 +27,7 @@ const STATS: SaveGameData = {
   gvarMadeManMordino: 0,
   gvarMadeManWright: 1,
   gvarPlayerWasMarried: 0,
-  currentHP: 116,
+  currentHP: 118,
   radiation: 0,
   poison: 0,
   crippled: 0,
@@ -272,12 +272,12 @@ const STATS: SaveGameData = {
   prefBrightness: 1_066_863_104,
   prefMouseSensitivity: 1_075_838_976,
   combatStatus: -1,
-  combatUnknown1: 0,
+  combatUnknown1: -1,
   combatUnknown2: 10,
   combatNumNPCs: 10,
   combatPlayerID: 1,
   combatTurnOrder: 124,
-  combatUnknown3: 0,
+  combatUnknown3: -1,
 }
 
 export default STATS

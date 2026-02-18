@@ -95,12 +95,12 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     switch (kind) {
       case 'float': {
         // Can only read 4 byte floats (2B.2B)
-        const n1 = handler.buf[offset]
-        const n2 = handler.buf[offset + 0x01]
-        const d1 = handler.buf[offset + 0x02]
-        const d2 = handler.buf[offset + 0x03]
+        const n1 = handler.dv.getInt8(offset)
+        const n2 = handler.dv.getInt8(offset + 0x01)
+        const d1 = handler.dv.getInt8(offset + 0x02)
+        const d2 = handler.dv.getInt8(offset + 0x03)
 
-        return Number.parseFloat(`${n1}${n2}.${d1}${d2}`)
+        return `${n1 < 1 ? '' : n1}${n2}.${d1}${d2}`
       }
 
       case 'int': {
@@ -110,7 +110,17 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
         if (length === 2) {
           return handler.dv.getInt16(offset)
         }
-        return handler.dv.getInt32(offset)
+        if (length === 4) {
+          return handler.dv.getInt32(offset)
+        } else {
+          // Only concerns F11/Combat - fail silently
+          if (length !== 16) {
+            console.error(
+              `getValue: Invalid integer length [${length}] for '${entry.name}' at offset ${entry.offset}`,
+            )
+          }
+          return -1
+        }
       }
 
       case 'string': {
@@ -151,10 +161,10 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
         const [n1 = '0', n2 = '0'] = String(integral).padStart(2, '0')
         const [d1 = '0', d2 = '0'] = String(fractional).padStart(2, '0')
 
-        handler.dv.setUint8(Number(n1), offset)
-        handler.dv.setUint8(Number(n2), offset + 0x01)
-        handler.dv.setUint8(Number(d1), offset + 0x02)
-        handler.dv.setUint8(Number(d2), offset + 0x03)
+        handler.dv.setUint8(offset, Number(n1))
+        handler.dv.setUint8(offset + 0x01, Number(n2))
+        handler.dv.setUint8(offset + 0x02, Number(d1))
+        handler.dv.setUint8(offset + 0x03, Number(d2))
 
         break
       }
@@ -173,8 +183,12 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
             handler.dv.setUint8(offset, num)
           } else if (length === 2) {
             handler.dv.setUint16(offset, num)
-          } else {
+          } else if (length === 4) {
             handler.dv.setUint32(offset, num)
+          } else {
+            console.error(
+              `setValue: Invalid integer length [${length}] for '${entry.name}' at offset ${entry.offset}`,
+            )
           }
         }
 
@@ -230,14 +244,6 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
       console.assert(value !== undefined, `setSectionData: Not value found for '${key.toString()}'`)
 
       setValue(offset, spec, value as string | number)
-
-      if (sectionName === 'f8') {
-        console.log([data.taggedSkill1, data.taggedSkill2, data.taggedSkill3, data.taggedSkill4], {
-          offset,
-          spec,
-          value,
-        })
-      }
     }
   }
 
@@ -475,13 +481,12 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
       this.fromBase64(getHandler().buf.toBase64())
     },
 
-    fromBase64(base64) {
+    fromBase64(base64, data) {
       buffer = Uint8Array.fromBase64(base64)
       dataView = new DataView(buffer.buffer)
       saveData = createSaveData()
       map = M.createMap()
 
-      // map.f5.offset = buffer.findIndex(M.F5_MARKER)
       map.f5.offset = U.indexOf(buffer, new Uint8Array([0, 0, 70, 80]))
 
       this.findF6Offset()
@@ -503,6 +508,13 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
       getSectionData('f13')
       getSectionData('f15')
       getSectionData('f17')
+
+      if (data) {
+        this.setData({
+          ...this.getData(),
+          ...data,
+        })
+      }
 
       return this
     },

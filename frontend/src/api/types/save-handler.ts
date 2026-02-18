@@ -21,7 +21,7 @@ export type SaveHandler = {
   findF11Offset(): number
   getInventoryItems(): InventoryItem[]
   getPreferences(): void
-  fromBase64(data: string): SaveHandler
+  fromBase64(base64: string, data?: Partial<M.SaveGameData>): SaveHandler
   setData(data: M.SaveGameData): void
   toBase64(): string
   getData(): M.SaveGameData

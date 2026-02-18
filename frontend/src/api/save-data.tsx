@@ -135,12 +135,12 @@ export const createSaveData = (): SaveGameData => ({
 
   // F11 Combat
   combatStatus: -1,
-  combatUnknown1: 0,
+  combatUnknown1: -1,
   combatUnknown2: 10,
   combatNumNPCs: 10,
   combatPlayerID: 1,
   combatTurnOrder: 124,
-  combatUnknown3: 0,
+  combatUnknown3: -1,
 
   // F13 Player/level/XP
   qtySkillPoints: 0,

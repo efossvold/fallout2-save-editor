@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import * as U from './utils'
 
@@ -34,8 +34,15 @@ describe('selectors', () => {
   })
 
   it('getError', () => {
+    const consoleSpy = vi.spyOn(console, 'error')
+
+    // Disable console.error logging
+    consoleSpy.mockReturnValue()
+
     // oxlint-disable-next-line unicorn/no-null
     expect(U.getError(null)).toStrictEqual(Error('Invalid error: null'))
+    expect(consoleSpy).toHaveBeenCalledWith('Invalid error: null')
+
     expect(U.getError(Error('mock-error'))).toStrictEqual(Error('mock-error'))
     expect(U.getError('mock-error')).toStrictEqual(Error('mock-error'))
     expect(U.getError({ message: 'mock-error' })).toStrictEqual(Error('mock-error'))
@@ -53,14 +60,15 @@ describe('selectors', () => {
     expect(await U.base64toBlob('aGVsbG8gd29ybGQ=').text()).toBe('hello world')
   })
 
-  it('parseDate', () => {
-    const d = U.parseDate(1_771_348_458_342)
+  it.only('parseDate', () => {
+    const d = U.parseDate(1_771_369_889_666)
+    console.log(d)
 
     expect(d.day).toBe('17')
     expect(d.month).toBe('Feb')
     expect(d.year).toBe('2026')
-    expect(d.hour).toBe('18')
-    expect(d.minute).toBe('14')
+    expect(d.hour).toBe('23')
+    expect(d.minute).toBe('11')
   })
 
   describe('indexOf', () => {

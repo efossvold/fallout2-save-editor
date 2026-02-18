@@ -153,7 +153,7 @@ export const Toolbar = () => {
   useEffect(() => {
     const loadStats = async () => {
       try {
-        const saveBase64 = await import('../api/slot01-stats.base64')
+        const saveBase64 = await import('../api/fixtures/slot01-stats.base64')
         console.log(saveBase64.default.substring(0, 25))
         load('/xxx/yyy/savegame.file', saveBase64.default)
         setHasLoaded(true)
