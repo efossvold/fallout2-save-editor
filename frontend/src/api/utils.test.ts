@@ -4,7 +4,7 @@ import * as U from './utils'
 
 describe('selectors', () => {
   it('bitToggle', () => {
-    expect(U.bitToggle(96, 6)).toBe(31)
+    expect(U.bitToggle(96, 6)).toBe(3)
     expect(U.bitToggle(96, 5)).toBe(64)
     expect(U.bitToggle(96, 4)).toBe(112)
     expect(U.bitToggle(96, 3)).toBe(104)
