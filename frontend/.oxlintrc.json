@@ -151,10 +151,13 @@
       "files": ["**/*.test.ts"],
       "rules": {
         "vitest/no-hooks": "off",
-        "vitest/prefer-expect-assertions": "off"
+        "vitest/prefer-expect-assertions": "off",
+        "vitest/no-focused-tests": "error",
+        "jest/no-focused-tests": "error"
       }
     }
   ],
+
   "ignorePatterns": [
     ".idea",
     ".vscode",

@@ -4,7 +4,7 @@ import * as U from './utils'
 
 describe('selectors', () => {
   it('bitToggle', () => {
-    expect(U.bitToggle(96, 6)).toBe(3)
+    expect(U.bitToggle(96, 6)).toBe(32)
     expect(U.bitToggle(96, 5)).toBe(64)
     expect(U.bitToggle(96, 4)).toBe(112)
     expect(U.bitToggle(96, 3)).toBe(104)
@@ -60,9 +60,8 @@ describe('selectors', () => {
     expect(await U.base64toBlob('aGVsbG8gd29ybGQ=').text()).toBe('hello world')
   })
 
-  it.only('parseDate', () => {
+  it('parseDate', () => {
     const d = U.parseDate(1_771_369_889_666)
-    console.log(d)
 
     expect(d.day).toBe('17')
     expect(d.month).toBe('Feb')
