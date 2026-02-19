@@ -16,7 +16,6 @@
   "dependencies": {
     "@headlessui/react": "^2.2.9",
     "clsx": "^2.1.1",
-    "http-server": "^14.1.1",
     "immer": "^11.1.4",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -39,11 +38,7 @@
     "oxfmt": "^0.32.0",
     "oxlint": "^1.48.0",
     "oxlint-tsgolint": "^0.14.0",
-    "simple-git-hooks": "^2.13.1",
     "vite": "8.0.0-beta.13",
     "watch-exec": "^1.2.2"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "bun run lint"
   }
 }
