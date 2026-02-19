@@ -39,6 +39,7 @@
     "oxfmt": "^0.32.0",
     "oxlint": "^1.48.0",
     "oxlint-tsgolint": "^0.14.0",
+    "simple-git-hooks": "^2.13.1",
     "vite": "8.0.0-beta.13",
     "watch-exec": "^1.2.2"
   },
