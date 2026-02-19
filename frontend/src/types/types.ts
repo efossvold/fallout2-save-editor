@@ -16,6 +16,8 @@ export type UnionToDict<Union extends string, Type, Prefix extends string> = {
   [Key in Union as `${Prefix}${Capitalize<Key>}`]: Type
 }
 
+export type Fn = <A, RT>(args: A) => RT
+
 export interface IError {
   message: string
 }

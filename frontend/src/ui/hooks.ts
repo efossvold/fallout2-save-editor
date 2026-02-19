@@ -1,6 +1,7 @@
 import { clsx } from 'clsx'
 import { useEffect, useRef, useState } from 'react'
 
+import { entries } from '../api/utils'
 import type { UseDisclosureReturn } from '../types/types'
 
 type GetColor = (
@@ -110,4 +111,67 @@ export const useDisclosure = (): UseDisclosureReturn => {
   const onToggle = () => setIsOpen(!isOpen)
 
   return { isOpen, onOpen, onClose, onToggle }
+}
+
+type UseChangedPropsChanges = { name: string; prev: string | number; current: string | number }[]
+// oxlint-disable-next-line func-style
+export function useChangedProps<T extends Dict<unknown>>(
+  props: T,
+  name = '',
+  log = false,
+): UseChangedPropsChanges {
+  const prev = useRef(props)
+  const [changed, setChanged] = useState<UseChangedPropsChanges>([])
+
+  useEffect(() => {
+    const changes = entries(props).reduce<UseChangedPropsChanges>((acc, [key, prop]) => {
+      if (prev.current[key] === prop) {
+        return acc
+      }
+      acc.push({
+        name: key as string,
+        prev: prev.current[key] as string | number,
+        current: prop as string | number,
+      })
+      return acc
+    }, [])
+
+    if (log && Object.keys(changes).length > 0) {
+      if (import.meta.env.MODE === 'development') {
+        console.log(`Props Changed ${name ? `[${name}]` : ''}`, changes)
+      }
+    }
+
+    prev.current = props
+    setChanged(changes)
+  }, [props, name, log])
+
+  return changed
+}
+
+// oxlint-disable-next-line func-style
+export function useDebouncedPrevValue<T>(value: T, delay = 500): [T, T] {
+  const prevValue = useRef(value)
+  const isPrevValueSet = useRef(false)
+  const [debouncedValue, setDebouncedValue] = useState(value)
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value)
+      isPrevValueSet.current = false
+    }, delay)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [value, delay])
+
+  useEffect(() => {
+    if (!isPrevValueSet.current) {
+      prevValue.current = value
+      isPrevValueSet.current = true
+    }
+  }, [value])
+
+  return [prevValue.current, debouncedValue]
 }
