@@ -88,6 +88,7 @@ export const useHover = <ElementType extends HTMLElement>(): [
   const handlePointerOver = (): void => setValue(true)
   const handlePointerOut = (): void => setValue(false)
 
+  // oxlint-disable-next-line typescript/consistent-return
   useEffect(() => {
     const node = ref.current
     if (node) {

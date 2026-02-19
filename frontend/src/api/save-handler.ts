@@ -78,9 +78,9 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     }, {} as SectionSetters)
   }
 
-  const getValue = <Entry extends MT.MapKeyValueEntry>(
+  const getValue = (
     sectionOffset: number | keyof MT.SaveMap,
-    entry: Entry,
+    entry: MT.MapKeyValueEntry,
   ): number | string => {
     // TODO: Remove (not used)
     if (typeof sectionOffset === 'string') {
@@ -141,9 +141,9 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     }
   }
 
-  const setValue = <Entry extends MT.MapKeyValueEntry>(
+  const setValue = (
     sectionOffset: number,
-    entry: Entry,
+    entry: MT.MapKeyValueEntry,
     value: string | number,
   ): void => {
     logger('setValue', entry, value)

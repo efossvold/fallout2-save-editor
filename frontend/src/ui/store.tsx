@@ -13,7 +13,7 @@ import { getPerk } from './selectors'
 
 export const handler = saveHandler({ isDebug: false })
 
-export interface StoreState {
+export type StoreState = Readonly<{
   data: M.SaveGameData
   currentSaveFile?: string
   showDebugWindow: boolean
@@ -22,13 +22,10 @@ export interface StoreState {
   load: (filename: string, base64: string) => void
   save: () => void
   getProp: <Prop extends keyof M.SaveGameData>(prop: Prop) => M.SaveGameData[Prop]
-  setProp: <Prop extends keyof M.SaveGameData, Type extends M.SaveGameData[Prop]>(
-    prop: Prop,
-    value: Type,
-  ) => void
+  setProp: <Prop extends keyof M.SaveGameData>(prop: Prop, value: M.SaveGameData[Prop]) => void
   setCrippledLimb: (bodyPart: keyof typeof Crippled, value: boolean) => void
   toggleDebugWindow: () => void
-}
+}>
 
 export const useAPIStore = create<StoreState>()(
   immer((set, get) => ({

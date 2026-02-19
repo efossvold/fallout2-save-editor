@@ -85,6 +85,8 @@
     "typescript/require-await": "error",
     "typescript/triple-slash-reference": "off",
     "typescript/no-unsafe-type-assertion": "off",
+    "@typescript-eslint/no-unnecessary-type-parameters": "off",
+    "@typescript-eslint/prefer-readonly-parameter-types": "off",
 
     /**
      * import
@@ -131,6 +133,8 @@
       "files": ["**/*.tsx"],
       "rules": {
         "import/no-nodejs-modules": "error",
+        "jsx-a11y/no-autofocus": "off",
+        "jsx-a11y/prefer-tag-over-role": "off",
         "react-perf/jsx-no-new-array-as-prop": "off",
         "react-perf/jsx-no-new-function-as-prop": "off",
         "react-perf/jsx-no-new-object-as-prop": "off",
@@ -138,8 +142,8 @@
         "react/jsx-max-depth": "off",
         "react/jsx-props-no-spreading": "off",
         "react/react-in-jsx-scope": "off",
-        "jsx-a11y/prefer-tag-over-role": "off",
-        "jsx-a11y/no-autofocus": "off"
+        "@typescript-eslint/consistent-return": "off",
+        "@typescript-eslint/strict-void-return": "off"
         // "unicorn/consistent-function-scoping": "off"
       }
     },
