@@ -7,7 +7,7 @@ import { Tabs } from './tabs'
 import { Toolbar } from './toolbar'
 
 export const Panels = () => (
-  <div className="flex flex-col gap-0.5">
+  <div id="panels" className="flex flex-col gap-0.5">
     <Toolbar />
 
     <div className="grid grid-cols-1 lg:grid-cols-[47%_1fr] gap-0.5">

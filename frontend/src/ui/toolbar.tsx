@@ -16,11 +16,12 @@ import * as S from './selectors'
 import { useAPIStore, handler } from './store'
 import { basename, dirname } from './utils'
 
-const ToolbarButton = ({ children, onClick, isDisabled, isToggled }: ButtonProps) => (
+const ToolbarButton = ({ children, onClick, isDisabled, isToggled, className }: ButtonProps) => (
   <Button
     className={cn(
       'h-11 w-24 flex justify-center items-center sm:text-lg  bg-gray-100 text-gray-900 font-semibold rounded-sm hover:bg-gray-200 cursor-pointer transition-colors data-disabled:bg-gray-300 data-disabled:cursor-default',
-      isToggled ? 'bg-gray-600 text-gray-100 hover:bg-gray-400 hover:text-gray-50' : '',
+      isToggled && 'bg-gray-600 text-gray-100 hover:bg-gray-400 hover:text-gray-50',
+      className,
     )}
     onClick={onClick}
     disabled={isDisabled}
@@ -208,6 +209,7 @@ export const Toolbar = () => {
               isDisabled={!currentSaveFile}
               isToggled={showDebugWindow}
               onClick={toggleDebugWindow}
+              className="hidden sm:block"
             >
               Debug
             </ToolbarButton>
