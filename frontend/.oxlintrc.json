@@ -83,9 +83,7 @@
     "typescript/prefer-nullish-coalescing": "error",
     "typescript/prefer-optional-chain": "error",
     "typescript/require-await": "error",
-    "typescript/triple-slash-reference": "off",
     "typescript/no-unsafe-type-assertion": "off",
-    "@typescript-eslint/no-unnecessary-type-parameters": "off",
     "@typescript-eslint/prefer-readonly-parameter-types": "off",
 
     /**
@@ -96,19 +94,13 @@
     "import/first": "error",
     "import/group-exports": "off",
     "import/no-cycle": ["warn", { "ignoreExternal": true }],
-    "import/no-named-as-default": "off",
     "import/no-named-export": "off",
     "import/no-namespace": "off",
     "import/no-nodejs-modules": "off",
-    "import/no-unassigned-import": "off",
+    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css"] }],
     "import/no-unused-modules": "warn",
     "import/order": "error",
     "import/prefer-default-export": "off",
-
-    /**
-     * unicorn
-     */
-    "require-module-specifiers": "off",
 
     /**
      * disable style-rules
@@ -116,35 +108,27 @@
     "capitalized-comments": "off",
     "id-length": "off",
     "init-declarations": "off",
-    "jest/require-hook": "off",
     "max-params": "off",
     "max-statements": "off",
     "no-duplicate-imports": ["error", { "allowSeparateTypeImports": true }],
-    "no-implicit-coercion": "off",
     "no-magic-numbers": "off",
     "no-ternary": "off",
     "sort-imports": "off",
-    "sort-keys": "off",
-    "typescript/consistent-indexed-object-style": "off",
-    "unicorn/number-literal-case": "off"
+    "sort-keys": "off"
   },
   "overrides": [
     {
       "files": ["**/*.tsx"],
       "rules": {
-        "import/no-nodejs-modules": "error",
         "jsx-a11y/no-autofocus": "off",
         "jsx-a11y/prefer-tag-over-role": "off",
-        "react-perf/jsx-no-new-array-as-prop": "off",
         "react-perf/jsx-no-new-function-as-prop": "off",
         "react-perf/jsx-no-new-object-as-prop": "off",
-        "react/jsx-handler-names": "off",
         "react/jsx-max-depth": "off",
         "react/jsx-props-no-spreading": "off",
         "react/react-in-jsx-scope": "off",
-        "@typescript-eslint/consistent-return": "off",
+        "@typescript-eslint/consistent-return": "off", // disable: buggy
         "@typescript-eslint/strict-void-return": "off"
-        // "unicorn/consistent-function-scoping": "off"
       }
     },
     {

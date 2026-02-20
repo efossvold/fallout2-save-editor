@@ -4,8 +4,8 @@ import type { ChangeEventHandler, MouseEventHandler } from 'react'
 
 export const FilterField = (p: {
   value: string
-  onChange: ChangeEventHandler<HTMLInputElement, HTMLInputElement>
-  onReset: MouseEventHandler<HTMLButtonElement>
+  handleChange: ChangeEventHandler<HTMLInputElement, HTMLInputElement>
+  handleReset: MouseEventHandler<HTMLButtonElement>
 }) => (
   <div className="relative">
     <Input
@@ -14,11 +14,11 @@ export const FilterField = (p: {
       )}
       placeholder="Filter"
       value={p.value}
-      onChange={p.onChange}
+      onChange={p.handleChange}
     />
     <Button
       className="absolute right-2 top-1.5 text-gray-400 hover:text-gray-50 cursor-pointer"
-      onClick={p.onReset}
+      onClick={p.handleReset}
     >
       x
     </Button>

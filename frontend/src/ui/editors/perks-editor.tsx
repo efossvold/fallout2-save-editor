@@ -32,7 +32,7 @@ export const PerksEditor = () => {
             return (
               <ValueSetter
                 key={key}
-                name={`${name} `.concat(ranks > 1 ? ` [${ranks}]` : '')}
+                name={`${name} ${ranks > 1 ? ` [${ranks}]` : ''}`}
                 baseValue={value}
                 maxBaseValue={ranks}
                 helperText={desc}

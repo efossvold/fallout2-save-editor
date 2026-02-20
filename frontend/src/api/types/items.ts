@@ -3,9 +3,7 @@ export interface Item {
   desc: string
 }
 
-export interface Items {
-  [id: string]: Item
-}
+export type Items = Record<string, Item>;
 
 export interface InventoryItem {
   id: string

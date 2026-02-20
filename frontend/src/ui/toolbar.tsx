@@ -99,7 +99,7 @@ export const Toolbar = () => {
     }
   }
 
-  const onOpenFile = async () => {
+  const handleOpenFile = async () => {
     try {
       // oxlint-disable-next-line new-cap
       const [path, content, error] = (await ReadFile()) as [string, string, string]
@@ -113,7 +113,7 @@ export const Toolbar = () => {
     }
   }
 
-  const onSaveFile = async () => {
+  const handleSaveFile = async () => {
     save()
 
     if (isWeb) {
@@ -167,7 +167,7 @@ export const Toolbar = () => {
       }
     }
 
-    if (import.meta.env.MODE === 'development' && !!isWeb && !hasLoaded) {
+    if (import.meta.env.MODE === 'development' && Boolean(isWeb) && !hasLoaded) {
       // oxlint-disable-next-line typescript/no-floating-promises
       loadStats()
     }
@@ -198,9 +198,9 @@ export const Toolbar = () => {
               </label>
             </>
           ) : (
-            <ToolbarButton onClick={onOpenFile}>Open</ToolbarButton>
+            <ToolbarButton onClick={handleOpenFile}>Open</ToolbarButton>
           )}
-          <ToolbarButton isDisabled={!currentSaveFile} onClick={onSaveFile}>
+          <ToolbarButton isDisabled={!currentSaveFile} onClick={handleSaveFile}>
             Save
           </ToolbarButton>
 

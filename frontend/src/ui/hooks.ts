@@ -115,9 +115,10 @@ export const useDisclosure = (): UseDisclosureReturn => {
 }
 
 type UseChangedPropsChanges = { name: string; prev: string | number; current: string | number }[]
+
 // oxlint-disable-next-line func-style
-export function useChangedProps<T extends Dict<unknown>>(
-  props: T,
+export function useChangedProps(
+  props: Dict<unknown>,
   name = '',
   log = false,
 ): UseChangedPropsChanges {
@@ -130,7 +131,7 @@ export function useChangedProps<T extends Dict<unknown>>(
         return acc
       }
       acc.push({
-        name: key as string,
+        name: key,
         prev: prev.current[key] as string | number,
         current: prop as string | number,
       })

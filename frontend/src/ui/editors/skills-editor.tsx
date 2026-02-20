@@ -64,7 +64,7 @@ export const SkillSetter = (p: { name: keyof SkillValues; value: number }) => {
       onDecrease={() => {
         setProp(p.name, p.value - 1)
       }}
-      color={isSkillTagged ? 'gray100' : undefined}
+      color={isSkillTagged ? 'text-gray-100' : undefined}
     />
   )
 }

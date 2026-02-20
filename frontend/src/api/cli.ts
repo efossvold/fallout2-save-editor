@@ -1,3 +1,4 @@
+// oxlint-disable jest/require-hook
 import { homedir } from 'node:os'
 
 import data from './fixtures/slot01-stats'

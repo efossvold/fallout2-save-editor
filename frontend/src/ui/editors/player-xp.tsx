@@ -61,14 +61,14 @@ export const PlayerXP = () => {
           const nextLevel = data.playerLevel + 1
           setProp('playerLevel', data.playerLevel + 1)
           if (nextLevel < 99) {
-            setProp('playerXP', +getLevelXP(data.playerLevel - 1))
+            setProp('playerXP', Number(getLevelXP(data.playerLevel - 1)))
           }
         }}
         onDecrease={() => {
           const nextLevel = data.playerLevel - 1
           setProp('playerLevel', data.playerLevel - 1)
           if (nextLevel < 99) {
-            setProp('playerXP', +getLevelXP(data.playerLevel - 1))
+            setProp('playerXP', Number(getLevelXP(data.playerLevel - 1)))
           }
         }}
         dimOnZero={false}

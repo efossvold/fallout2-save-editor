@@ -35,10 +35,10 @@ export const StoreDebuggerPanel = () => {
 
         <FilterField
           value={search}
-          onChange={ev => {
+          handleChange={ev => {
             setSearch(ev.target.value)
           }}
-          onReset={() => {
+          handleReset={() => {
             setSearch('')
           }}
         />
@@ -46,7 +46,7 @@ export const StoreDebuggerPanel = () => {
         <SimpleCheckbox
           label="Show changes only"
           value={showChangesOnly}
-          onChange={() => {
+          handleChange={() => {
             setShowChangesOnly(!showChangesOnly)
           }}
         />

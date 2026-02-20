@@ -12,36 +12,6 @@ import { useDisclosure } from './hooks'
 import { Hoverable } from './hoverable'
 import { useAPIStore } from './store'
 
-export const NameChanger = (p: { name: string }) => {
-  const disclosure = useDisclosure()
-
-  return (
-    <>
-      <Hoverable onClick={disclosure.onOpen}>
-        {({ isHovered }) => (
-          <div
-            className={clsx(
-              'flex justify-between mr-2.5 cursor-pointer',
-              isHovered ? 'text-gray-50' : 'text-green-200',
-            )}
-          >
-            <p>Name</p>
-            <div className="flex justify-between">
-              <p className={clsx(isHovered ? 'underline' : 'no-underline')}>{p.name}</p>
-              <NameChangerModal
-                initialValue={p.name}
-                disclosure={disclosure}
-                isHovered={isHovered}
-              />
-              <div className="w-2" />
-            </div>
-          </div>
-        )}
-      </Hoverable>
-    </>
-  )
-}
-
 const NameChangerModal = (p: {
   initialValue: string
   disclosure: UseDisclosureReturn
@@ -113,5 +83,36 @@ const NameChangerModal = (p: {
       </div>
     </Dialog>,
     modalRoot,
+  )
+}
+
+export const NameChanger = (p: { name: string }) => {
+  const disclosure = useDisclosure()
+
+  return (
+    <>
+      {/* oxlint-disable-next-line react/jsx-handler-names */}
+      <Hoverable onClick={disclosure.onOpen}>
+        {({ isHovered }) => (
+          <div
+            className={clsx(
+              'flex justify-between mr-2.5 cursor-pointer',
+              isHovered ? 'text-gray-50' : 'text-green-200',
+            )}
+          >
+            <p>Name</p>
+            <div className="flex justify-between">
+              <p className={clsx(isHovered ? 'underline' : 'no-underline')}>{p.name}</p>
+              <NameChangerModal
+                initialValue={p.name}
+                disclosure={disclosure}
+                isHovered={isHovered}
+              />
+              <div className="w-2" />
+            </div>
+          </div>
+        )}
+      </Hoverable>
+    </>
   )
 }

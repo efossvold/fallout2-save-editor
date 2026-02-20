@@ -1,3 +1,4 @@
+// oxlint-disable typescript/no-unnecessary-type-parameters
 import { getCategory, ItemCategory, ITEMS } from './data/items'
 import * as M from './map'
 import { createSaveData } from './save-data'
