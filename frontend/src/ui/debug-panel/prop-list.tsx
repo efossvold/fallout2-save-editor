@@ -1,11 +1,11 @@
 import { clsx } from 'clsx'
 
-import type { SaveGameData } from '../../api/types/map'
+import type { SaveGameData, SaveGameDataExtra } from '../../api/types/map'
 
 interface PropListProps {
   showChangesOnly: boolean
   filter: string
-  data: SaveGameData
+  data: SaveGameData | SaveGameDataExtra
 }
 
 export const PropList = (p: PropListProps) => (
@@ -22,11 +22,11 @@ export const PropList = (p: PropListProps) => (
           <div className="table-cell">
             <span className="text-gray-500">{name}</span>
             <span className="text-gray-900 ml-px mr-2">:</span>
-            {typeof value === 'number' ? (
-              <span className="text-red-400">{value}</span>
-            ) : (
-              <span className="text-green-600">"{value}"</span>
+            {typeof value === 'number' && <span className="text-red-400">{value}</span>}
+            {typeof value === 'boolean' && (
+              <span className="text-blue-400">{value ? 'true' : 'false'}</span>
             )}
+            {typeof value === 'string' && <span className="text-green-600">"{value}"</span>}
           </div>
         </div>
       )

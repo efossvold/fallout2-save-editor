@@ -178,9 +178,11 @@ export const Toolbar = () => {
       <div className="flex flex-row flex-wrap justify-between justify-items-center w-full gap-1">
         <Hoverable>
           {({ isHovered }) => (
-            <Logo
-              className={clsx('h-11 transition', isHovered ? 'fill-blue-400' : 'fill-gray-200')}
-            />
+            <a href="https://github.com/efossvold/fallout2-save-editor" target="_blank">
+              <Logo
+                className={clsx('h-11 transition', isHovered ? 'fill-blue-400' : 'fill-gray-200')}
+              />
+            </a>
           )}
         </Hoverable>
 

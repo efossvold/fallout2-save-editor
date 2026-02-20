@@ -30,7 +30,7 @@ export type StoreState = Readonly<{
 export const useAPIStore = create<StoreState>()(
   immer((set, get) => ({
     data: createSaveData(),
-    showDebugWindow: false,
+    showDebugWindow: import.meta.env.MODE === 'development',
 
     // Calculate permanent bonus/penalties from perks
     // Adjustments from these perks are permanently added

@@ -126,3 +126,25 @@ export interface SaveGameData
     MapF13Section,
     MapF15Section,
     MapF17Section {}
+
+export interface SaveGameDataExtra {
+  inGameTimeText: string
+  derivedAC: number
+  derivedAP: number
+  derivedCarryWeight: number
+  criticalChanceDerived: number
+  HealingRateDerived: number
+  derivedHP: number
+  totalHP: number
+  isCrippledDead: boolean
+  isCrippledEyes: boolean
+  isCrippledLeftLeg: boolean
+  isCrippledRightLeg: boolean
+  isCrippledLeftArm: boolean
+  isCrippledRightArm: boolean
+  derivedMeleeDmg: number
+  playerAge: number
+  derivedSequence: number
+  derivedPoisonResistance: number
+  derivedRadiationResistance: number
+}
