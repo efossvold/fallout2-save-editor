@@ -50,6 +50,7 @@
      */
     "arrow-body-style": "warn",
     "curly": "warn",
+    "no-non-null-assertion": "warn",
     "no-extra-boolean-cast": "warn",
     "no-nested-ternary": "error",
     "no-unneeded-ternary": "error",
@@ -114,7 +115,9 @@
     "no-magic-numbers": "off",
     "no-ternary": "off",
     "sort-imports": "off",
-    "sort-keys": "off"
+    "sort-keys": "off",
+    // conflicts with oxlint
+    "unicorn/number-literal-case": "off"
   },
   "overrides": [
     {

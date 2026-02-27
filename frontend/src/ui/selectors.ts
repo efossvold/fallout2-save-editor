@@ -92,7 +92,8 @@ export const calcValueFromPerk = createSelector(
 // Calculate bonus/penalties from traits
 // Adjustments from these traits are added
 // to bonus value of the stat. Adjustments here are
-// only for "live" view in editor, they are not saved.
+// only for "live" view in editor/game, they are not
+// saved to save game file.
 export const calcValueFromTrait = createSelector(
   [
     getState,

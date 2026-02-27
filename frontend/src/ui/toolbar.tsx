@@ -167,7 +167,7 @@ export const Toolbar = () => {
       }
     }
 
-    if (import.meta.env.MODE === 'development' && Boolean(isWeb) && !hasLoaded) {
+    if (!import.meta.env.PROD && Boolean(isWeb) && !hasLoaded) {
       // oxlint-disable-next-line typescript/no-floating-promises
       loadStats()
     }
@@ -206,7 +206,7 @@ export const Toolbar = () => {
             Save
           </ToolbarButton>
 
-          {isWeb ? (
+          {isWeb && !import.meta.env.PROD && (
             <ToolbarButton
               isDisabled={!currentSaveFile}
               isToggled={showDebugWindow}
@@ -215,7 +215,9 @@ export const Toolbar = () => {
             >
               Debug
             </ToolbarButton>
-          ) : (
+          )}
+
+          {isWeb === false && (
             <ToolbarButton
               onClick={() => {
                 // oxlint-disable-next-line new-cap

@@ -139,7 +139,7 @@ export function useChangedProps(
     }, [])
 
     if (log && Object.keys(changes).length > 0) {
-      if (import.meta.env.MODE === 'development') {
+      if (!import.meta.env.PROD) {
         console.log(`Props Changed ${name ? `[${name}]` : ''}`, changes)
       }
     }
