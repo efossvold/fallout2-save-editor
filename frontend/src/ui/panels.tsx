@@ -2,6 +2,7 @@ import { VERSION } from '../version'
 
 import * as E from './editors'
 import { HelpText } from './help-text'
+import { GithubIcon } from './icons'
 import { Panel } from './panel'
 import { Tabs } from './tabs'
 import { Toolbar } from './toolbar'
@@ -44,10 +45,15 @@ export const Panels = () => (
       <Panel>
         <Tabs />
       </Panel>
-      <Panel bg="bg-gradient-to-br from-beige-600 to-beige-400">
-        <div className="relative">
+      <Panel bg="px-4 bg-gradient-to-br from-beige-600 to-beige-400 min-h-55">
+        <div className="h-full flex flex-col justify-between">
           <HelpText />
-          <div className="absolute right-0 bottom-0 text-gray-50">v{VERSION}</div>
+          <div className="flex justify-between items-end text-gray-50">
+            <div>v{VERSION}</div>
+            <a href="https://github.com/efossvold/fallout2-save-editor" target="_blank">
+              <GithubIcon className="hover:fill-gray-700" />
+            </a>
+          </div>
         </div>
       </Panel>
     </div>

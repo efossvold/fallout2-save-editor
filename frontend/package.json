@@ -6,7 +6,7 @@
   "scripts": {
     "build": "vite-react-ssg build",
     "deploy": "bunx netlify-cli deploy",
-    "deploy:prod": "bunx netlify-cli deploy --prod",
+    "deploy:prod": "git hook run pre-commit && bunx netlify-cli deploy --prod",
     "dev": "vite-react-ssg dev",
     "fmt:check": "oxfmt --check",
     "fmt": "oxfmt",
