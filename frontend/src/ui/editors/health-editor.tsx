@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
@@ -21,10 +19,6 @@ export const HealthEditor = () => {
   const hasCrippledRightLeg = useAPIStore(s => S.getIsLimbCrippled(s, 'RIGHT_LEG'))
   const hasCrippledLeftLeg = useAPIStore(s => S.getIsLimbCrippled(s, 'LEFT_LEG'))
 
-  useEffect(() => {
-    setProp('currentHP', HPDerived + data.bonusHP)
-  }, [HPDerived, data.bonusHP, setProp])
-
   return (
     <>
       <PanelHeader title="HEALTH" />
@@ -38,9 +32,11 @@ export const HealthEditor = () => {
         minValueMsg="Trying to kill yourself before you've even started?"
         onIncrease={() => {
           setProp('bonusHP', data.bonusHP + 1)
+          setProp('currentHP', HPTotal + 1)
         }}
         onDecrease={() => {
           setProp('bonusHP', data.bonusHP - 1)
+          setProp('currentHP', HPTotal - 1)
         }}
       />
 

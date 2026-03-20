@@ -32,7 +32,6 @@ export type SaveHandler = {
   Setters<M.MapF5Section> &
   // Player stats (skills and attributes)
   Getters<M.MapF6Section> &
-  Setters<M.MapF6Section> &
   // Tag skills
   Getters<M.MapF8Section> &
   Setters<M.MapF8Section> &

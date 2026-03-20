@@ -1,4 +1,4 @@
-import type { PrefixedDictIndices } from './misc'
+import type { PrefixedDictIndices } from '~/types'
 
 export type F17PreferencesNames =
   | 'gameDifficulty'

@@ -1,6 +1,4 @@
-import type { Entries } from '../types/types'
-
-import type { Dict } from './types/misc'
+import type { Entries, Dict } from '~/types'
 
 export const bitTest = (num: number, bit: number): boolean => (num >> bit) % 2 !== 0
 export const bitSet = (num: number, bit: number): number => num | (1 << bit)
@@ -27,12 +25,7 @@ export const getError = (error: unknown, log = true): Error => {
   } else if (typeof error === 'string') {
     errObj = new Error(error)
   } else if (typeof error === 'object' && 'message' in error) {
-    // Object.prototype.hasOwnProperty('message')
-    if (typeof error.message === 'string') {
-      errObj = new Error(error.message)
-    } else {
-      errObj = new Error('MESSAGE_NOT_STRING')
-    }
+    errObj = new Error(typeof error.message === 'string' ? error.message : 'MESSAGE_NOT_STRING')
   } else {
     let errorMsg = ''
     try {

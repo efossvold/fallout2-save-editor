@@ -1,11 +1,3 @@
-import { ATTR_PREFIX } from '../ui/constants'
-
-import { ATTRIBUTES } from './data/attributes'
-import { GVARS } from './data/gvar'
-import { KILLS } from './data/kills'
-import { PERKS } from './data/perks'
-import { SKILLS } from './data/skills'
-import { createMap } from './map'
 import type { BaseAttributesValues, BonusAttributesValues } from './types/attributes'
 import type { F17Preferences } from './types/f17-preferences'
 import type { GVARValues } from './types/gvar'
@@ -13,6 +5,14 @@ import type { KillValues } from './types/kill'
 import type { SaveGameData } from './types/map'
 import type { PerkValues } from './types/perks'
 import type { SkillValues } from './types/skills'
+
+import { ATTR_PREFIX } from '../ui/constants'
+import { ATTRIBUTES } from './data/attributes'
+import { GVARS } from './data/gvar'
+import { KILLS } from './data/kills'
+import { PERKS } from './data/perks'
+import { SKILLS } from './data/skills'
+import { createMap } from './map'
 import { entries, prefixString } from './utils'
 
 const map = createMap()

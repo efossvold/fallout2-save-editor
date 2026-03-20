@@ -1,10 +1,11 @@
+import type { InventoryItem } from './types/items'
+import type * as MT from './types/map'
+import type { Getters, SaveHandler, Setters } from './types/save-handler'
+
 // oxlint-disable typescript/no-unnecessary-type-parameters
 import { getCategory, ItemCategory, ITEMS } from './data/items'
 import * as M from './map'
 import { createSaveData } from './save-data'
-import type { InventoryItem } from './types/items'
-import type * as MT from './types/map'
-import type { Getters, SaveHandler, Setters } from './types/save-handler'
 import * as U from './utils'
 
 interface SaveHandlerArgs {
@@ -159,8 +160,8 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
         console.assert(Number(value) < 99, `setValue: Invalid float: ${value}`)
 
         const [integral = '', fractional = ''] = value.toString().split('.')
-        const [n1 = '0', n2 = '0'] = String(integral).padStart(2, '0')
-        const [d1 = '0', d2 = '0'] = String(fractional).padStart(2, '0')
+        const [n1 = '0', n2 = '0'] = integral.padStart(2, '0')
+        const [d1 = '0', d2 = '0'] = fractional.padStart(2, '0')
 
         handler.dv.setUint8(offset, Number(n1))
         handler.dv.setUint8(offset + 0x01, Number(n2))
@@ -252,7 +253,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     // Number of fields * field size
     const itemSize = 0x58 + 0x04
     const itemId = getValue(offset, M.inventoryKeys.id).toString()
-    const item = ITEMS[itemId.toString()]
+    const item = ITEMS[itemId]
 
     if (!item) {
       throw new Error(`Found unknown item id (${itemId}). Editing this file will corrupt it.`)
@@ -488,7 +489,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
       saveData = createSaveData()
       map = M.createMap()
 
-      map.f5.offset = U.indexOf(buffer, new Uint8Array([0, 0, 70, 80]))
+      map.f5.offset = U.indexOf(buffer, new Uint8Array(M.F5_MARKER))
 
       this.findF6Offset()
       this.findF7Offset()

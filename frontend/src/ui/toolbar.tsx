@@ -1,16 +1,15 @@
 import { Button } from '@headlessui/react'
 import { clsx } from 'clsx'
-import React, { useEffect, useState } from 'react'
+import React, { use, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { cn } from 'tailwind-variants'
 
-import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
-import type { MayBeError } from '../api/types/misc'
-import { base64toBlob, getError } from '../api/utils'
-import type { ButtonProps } from '../types/types'
+import type { ButtonProps, MayBeError } from '~/types'
 
+import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
+import { base64toBlob, getError } from '../api/utils'
+import { DEFAULT_SAVE_FILENAME } from './constants'
 import { useIsWeb } from './hooks'
-import { Hoverable } from './hoverable'
 import { Logo } from './logo'
 import * as S from './selectors'
 import { useAPIStore, handler } from './store'
@@ -60,6 +59,26 @@ const SaveGameMeta = () => {
   )
 }
 
+const useLoadDevData = () => {
+  const load = useAPIStore(s => s.load)
+  const isWeb = useIsWeb()
+  const [hasLoaded, setHasLoaded] = useState(false)
+
+  const loadStats = async () => {
+    try {
+      const saveBase64 = await import('../api/fixtures/slot01-stats.base64')
+      load('/xxx/yyy/savegame.file', saveBase64.default)
+      setHasLoaded(true)
+    } catch (error) {
+      toast.error(getError(error).message)
+    }
+  }
+
+  if (!import.meta.env.PROD && Boolean(isWeb) && !hasLoaded) {
+    use(loadStats())
+  }
+}
+
 export const Toolbar = () => {
   const { save, currentSaveFile } = useAPIStore(s => s)
   const load = useAPIStore(s => s.load)
@@ -67,7 +86,7 @@ export const Toolbar = () => {
   const isWeb = useIsWeb()
   const showDebugWindow = useAPIStore(s => s.showDebugWindow)
 
-  const [hasLoaded, setHasLoaded] = useState(false)
+  useLoadDevData()
 
   const onFileChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     ev.preventDefault()
@@ -123,7 +142,7 @@ export const Toolbar = () => {
         const a = document.createElement('a')
 
         a.href = url
-        a.download = currentSaveFile ?? 'SAVE.DAT'
+        a.download = currentSaveFile ?? DEFAULT_SAVE_FILENAME
         document.body.appendChild(a)
         a.click()
 
@@ -156,35 +175,12 @@ export const Toolbar = () => {
     }
   }
 
-  useEffect(() => {
-    const loadStats = async () => {
-      try {
-        const saveBase64 = await import('../api/fixtures/slot01-stats.base64')
-        load('/xxx/yyy/savegame.file', saveBase64.default)
-        setHasLoaded(true)
-      } catch (error) {
-        toast.error(getError(error).message)
-      }
-    }
-
-    if (!import.meta.env.PROD && Boolean(isWeb) && !hasLoaded) {
-      // oxlint-disable-next-line typescript/no-floating-promises
-      loadStats()
-    }
-  }, [hasLoaded, load, isWeb, setHasLoaded])
-
   return (
     <div className="w-full py-1 px-2 bg-gray-50 rounded-sm">
       <div className="flex flex-row flex-wrap justify-between justify-items-center w-full gap-1">
-        <Hoverable>
-          {({ isHovered }) => (
-            <a href="https://github.com/efossvold/fallout2-save-editor" target="_blank">
-              <Logo
-                className={clsx('h-11 transition', isHovered ? 'fill-blue-400' : 'fill-gray-200')}
-              />
-            </a>
-          )}
-        </Hoverable>
+        <Logo
+          className={clsx('h-11 transition', currentSaveFile ? 'fill-blue-400' : 'fill-gray-200')}
+        />
 
         <SaveGameMeta />
 
@@ -208,7 +204,6 @@ export const Toolbar = () => {
 
           {isWeb && !import.meta.env.PROD && (
             <ToolbarButton
-              isDisabled={!currentSaveFile}
               isToggled={showDebugWindow}
               onClick={toggleDebugWindow}
               className="hidden sm:block"

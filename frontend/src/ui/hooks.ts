@@ -1,8 +1,10 @@
 import { clsx } from 'clsx'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+
+import type { UseDisclosureReturn, Dict } from '~/types'
 
 import { entries } from '../api/utils'
-import type { UseDisclosureReturn } from '../types/types'
+import { getWindow } from './utils'
 
 type GetColor = (
   isHovered: boolean,
@@ -13,15 +15,15 @@ type GetColor = (
 export const useLocation = () => {
   const [location, setLocation] = useState<Location | undefined>()
 
-  useEffect(() => {
-    setLocation(globalThis.window.location)
-  }, [setLocation])
+  useMountEffect(() => {
+    setLocation(getWindow()?.location)
+  })
 
   return location
 }
 
-/** Returns
- * undefined when location is not yet available,
+/**
+ * @returns undefined when location is not yet available,
  * true when app is viewed in browser
  * false when is local app
  */
@@ -33,6 +35,60 @@ export const useIsWeb = (): boolean | undefined => {
   }
 
   return !location.href.startsWith('wails://')
+}
+
+/**
+ * Custom hook to run a mount effect only once.
+ * @param {*} fn the callback function
+ * @returns the hook
+ */
+export const useMountEffect = (fn: () => any) => {
+  const mounted = useRef(false)
+
+  // oxlint-disable-next-line typescript/consistent-return
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true
+      return fn()
+    }
+    // oxlint-disable-next-line eslint-plugin-react-hooks/exhaustive-deps
+  }, [])
+}
+
+/**
+ * Return an array with a element ref and the height of the element
+ * The ref must be assigned to the element to be measured
+ * @example
+ * const [ref, height] = useHeightObserver()
+ * return (<div ref={ref}>Measure height of this element</div>
+ */
+export const useHeightObserver = ({ onChange }: { onChange?: (height: number) => void }) => {
+  const [height, setHeight] = useState(0)
+  const elementRef = useRef<HTMLDivElement>(null)
+
+  useLayoutEffect(() => {
+    if (!elementRef.current) {
+      return
+    }
+
+    const observer = new ResizeObserver(() => {
+      const newHeight = elementRef.current?.getBoundingClientRect().height ?? 0
+      setHeight(newHeight)
+
+      if (onChange) {
+        onChange(newHeight)
+      }
+    })
+
+    observer.observe(elementRef.current)
+
+    // oxlint-disable-next-line typescript/consistent-return
+    return () => {
+      observer.disconnect()
+    }
+  }, [elementRef, onChange])
+
+  return [elementRef, height] as const
 }
 
 const getColor: GetColor = (isHovered, notHoveredColor, hoveredColor) => {
@@ -48,7 +104,7 @@ const getColor: GetColor = (isHovered, notHoveredColor, hoveredColor) => {
 
 export const useHoverColor = () => getColor
 
-export interface Disclosure {
+interface Disclosure {
   isOpen: boolean
   onOpen: () => void
   onClose: () => void
@@ -94,6 +150,7 @@ export const useHover = <ElementType extends HTMLElement>(): [
     if (node) {
       node.addEventListener('pointerenter', handlePointerOver)
       node.addEventListener('pointerleave', handlePointerOut)
+
       return () => {
         node.removeEventListener('pointerenter', handlePointerOver)
         node.removeEventListener('pointerleave', handlePointerOut)
@@ -107,21 +164,26 @@ export const useHover = <ElementType extends HTMLElement>(): [
 export const useDisclosure = (): UseDisclosureReturn => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const onOpen = () => setIsOpen(true)
-  const onClose = () => setIsOpen(false)
-  const onToggle = () => setIsOpen(!isOpen)
+  const onOpen = () => {
+    setIsOpen(true)
+  }
+  const onClose = () => {
+    setIsOpen(false)
+  }
+  const onToggle = () => {
+    setIsOpen(!isOpen)
+  }
 
   return { isOpen, onOpen, onClose, onToggle }
 }
 
 type UseChangedPropsChanges = { name: string; prev: string | number; current: string | number }[]
 
-// oxlint-disable-next-line func-style
-export function useChangedProps(
+export const useChangedProps = (
   props: Dict<unknown>,
   name = '',
   log = false,
-): UseChangedPropsChanges {
+): UseChangedPropsChanges => {
   const prev = useRef(props)
   const [changed, setChanged] = useState<UseChangedPropsChanges>([])
 
@@ -151,8 +213,7 @@ export function useChangedProps(
   return changed
 }
 
-// oxlint-disable-next-line func-style
-export function useDebouncedPrevValue<T>(value: T, delay = 500): [T, T] {
+export const useDebouncedPrevValue = <T>(value: T, delay = 500): [T, T] => {
   const prevValue = useRef(value)
   const isPrevValueSet = useRef(false)
   const [debouncedValue, setDebouncedValue] = useState(value)
@@ -168,12 +229,10 @@ export function useDebouncedPrevValue<T>(value: T, delay = 500): [T, T] {
     }
   }, [value, delay])
 
-  useEffect(() => {
-    if (!isPrevValueSet.current) {
-      prevValue.current = value
-      isPrevValueSet.current = true
-    }
-  }, [value])
+  if (!isPrevValueSet.current) {
+    prevValue.current = value
+    isPrevValueSet.current = true
+  }
 
   return [prevValue.current, debouncedValue]
 }

@@ -1,7 +1,6 @@
 import './style/base.css'
 import './style/fonts.css'
 import './style/scrollbar.css'
-
 import { Toaster } from 'react-hot-toast'
 
 import { StoreDebuggerPanel } from './ui/debug-panel'

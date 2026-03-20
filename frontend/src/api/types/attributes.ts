@@ -1,16 +1,16 @@
+import type { PrefixedDictIndices, DictValues } from '~/types'
+
 import type { ATTR_PREFIX } from '../../ui/constants'
 import type { ATTRIBUTES } from '../data/attributes'
 
-import type { DictValues, PrefixedDictIndices } from './misc'
-
-export type AttributesNames =
-  | 'strength'
-  | 'perception'
-  | 'endurance'
-  | 'charisma'
-  | 'intelligence'
-  | 'agility'
-  | 'luck'
+// export type AttributesNames =
+//   | 'strength'
+//   | 'perception'
+//   | 'endurance'
+//   | 'charisma'
+//   | 'intelligence'
+//   | 'agility'
+//   | 'luck'
 
 export interface Attribute {
   id: number

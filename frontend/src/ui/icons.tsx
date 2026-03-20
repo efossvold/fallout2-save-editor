@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
 
-import type { ClassName } from '../types/types'
+import type { ClassName } from '~/types'
 
 interface CaretProps {
   isHovered?: boolean
@@ -91,8 +91,8 @@ export const GithubIcon = (p: { className?: ClassName }) => (
     strokeWidth="0"
     viewBox="0 0 16 16"
     focusable="false"
-    height="1.75em"
-    width="1.75em"
+    height="1.5em"
+    width="1.5em"
   >
     <path
       fillRule="evenodd"

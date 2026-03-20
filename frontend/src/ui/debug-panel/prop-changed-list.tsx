@@ -1,6 +1,7 @@
 import { clsx } from 'clsx'
 
 import type { SaveGameData, SaveGameDataExtra } from '../../api/types/map'
+
 import { useChangedProps, useDebouncedPrevValue } from '../hooks'
 
 interface PropChangedProps {

@@ -1,9 +1,9 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { clsx } from 'clsx'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-import type { UseDisclosureReturn } from '../types/types'
+import type { UseDisclosureReturn } from '~/types'
 
 import { IButton } from './components/buttons'
 import { IInput } from './components/input'
@@ -11,6 +11,7 @@ import { MAX_CHARACTER_NAME_LENGTH } from './constants'
 import { useDisclosure } from './hooks'
 import { Hoverable } from './hoverable'
 import { useAPIStore } from './store'
+import { getDocument } from './utils'
 
 const NameChangerModal = (p: {
   initialValue: string
@@ -21,23 +22,16 @@ const NameChangerModal = (p: {
   const setProp = useAPIStore(s => s.setProp)
   const [name, setName] = useState('')
   const [isInitialValueSet, setIsInitialValueSet] = useState(false)
-  const [modalRoot, setModalRoot] = useState<HTMLElement | null>()
 
-  useEffect(() => {
-    setModalRoot(document.getElementById('name-changer'))
-  }, [])
-
-  useEffect(() => {
-    if (isOpen && !isInitialValueSet) {
-      setIsInitialValueSet(true)
-      setName(p.initialValue.replaceAll('\x00', ''))
-    } else if (!isOpen) {
-      setIsInitialValueSet(false)
-    }
-  }, [isInitialValueSet, isOpen, p.initialValue])
+  const modalRoot = getDocument()?.getElementById('name-changer')
 
   if (!isOpen || !modalRoot) {
     return
+  }
+
+  if (!isInitialValueSet) {
+    setName(p.initialValue.replaceAll('\x00', ''))
+    setIsInitialValueSet(true)
   }
 
   return ReactDOM.createPortal(

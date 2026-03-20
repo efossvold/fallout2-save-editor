@@ -1,6 +1,6 @@
 # Fallout 2 Save Game Editor
 
-Basic save game editor for Fallout 2 for MacOS (Windows support might be added later).
+Basic save game editor for Fallout 2.
 
 ![Image from Gyazo](https://i.gyazo.com/df7d324e1d3594cb25311675f768e4a4.png)
 
@@ -29,14 +29,12 @@ Supported platforms:
 
 - [x] MacOS - Tested on MacOS Monterey (12.6.1) and Ventura (13.0)
 - [x] Windows 10/11 (amd64 + arm64)
-
-## Todo
-
-- ~~[ ] Add inventory/item editing~~
+- [x] [Web](https://fallout2-savegame-editor.netlify.app)
+- [ ] Linux (might be added later)
 
 ## Disclaimer
 
-This editor is not in any way extensively tested. The author is not responsible for data lost or corrupted. Use on your own responsibility.
+This editor is not in any way extensively tested. The author is not responsible for lost or corrupted data. Use on your own responsibility.
 
 <b>When clicking "Save" no backup is created. Therefore, always manually create a backup.</b>
 

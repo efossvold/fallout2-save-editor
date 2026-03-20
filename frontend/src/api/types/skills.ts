@@ -1,8 +1,8 @@
-import type { SKILLS } from '../data/skills'
+import type { DictValues, UnionToDict } from '~/types'
 
+import type { SKILLS } from '../data/skills'
 import type { AttributesValues } from './attributes'
 import type { MapKeyValueEntry } from './map'
-import type { DictValues, UnionToDict } from './misc'
 
 export type SkillNames =
   | 'smallGuns'

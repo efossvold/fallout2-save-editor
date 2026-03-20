@@ -1,10 +1,10 @@
+import type { PropsWithChildren } from 'react'
+
 import { Button } from '@headlessui/react'
 import { clsx } from 'clsx'
-import type { PropsWithChildren } from 'react'
 
 import * as E from '../editors'
 import { Hoverable } from '../hoverable'
-
 import { useTabsStore } from './store'
 
 const TabButton = (p: PropsWithChildren<{ index: number }>) => {

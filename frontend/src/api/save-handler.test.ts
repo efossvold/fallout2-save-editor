@@ -1,9 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from 'bun:test'
 
+import type { SaveHandler } from './types/save-handler'
+
 import stats from './fixtures/slot01-stats'
 import dataBase64 from './fixtures/slot01-stats.base64'
 import { saveHandler } from './save-handler'
-import type { SaveHandler } from './types/save-handler'
 
 let handler: SaveHandler
 
@@ -35,8 +36,8 @@ describe('save-handler', () => {
   })
 
   it('should set integer correctly', () => {
-    handler.setBaseAC(5)
-    expect(handler.getData()).toStrictEqual({ ...stats, baseAC: 5 })
+    handler.setCurrentHP(5)
+    expect(handler.getData()).toStrictEqual({ ...stats, currentHP: 5 })
   })
 
   describe('setGameVersion', () => {

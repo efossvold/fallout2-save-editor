@@ -1,6 +1,8 @@
 // oxlint-disable jest/require-hook
 import { homedir } from 'node:os'
 
+import { DEFAULT_SAVE_FILENAME } from '~/ui/constants'
+
 import data from './fixtures/slot01-stats'
 import dataBase64 from './fixtures/slot01-stats.base64'
 import { saveHandler } from './save-handler'
@@ -10,7 +12,7 @@ import { saveHandler } from './save-handler'
 // export const FALLOUT2_DIR = '/Users/currentUser/Games/fallout2-ce'
 export const FALLOUT2_DIR = `${homedir()}/Spill/fallout2-ce`
 export const SAVE_GAME_DIR = `${FALLOUT2_DIR}/DATA/SAVEGAME.backup/SLOT01`
-export const SAVE_GAME_FILE = `${SAVE_GAME_DIR}/SAVE.DAT`
+export const SAVE_GAME_FILE = `${SAVE_GAME_DIR}/${DEFAULT_SAVE_FILENAME}`
 
 const handler = saveHandler()
 

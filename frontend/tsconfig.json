@@ -2,7 +2,6 @@
   "compilerOptions": {
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": false,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -14,16 +13,15 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
-    "noUncheckedSideEffectImports": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "paths": { "~/*": ["./src/*"] },
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": true,
     "strictNullChecks": true,
+    "types": ["bun", "react", "react-dom"],
     "useDefineForClassFields": true,
     "verbatimModuleSyntax": true
-    // "types": ["bun-types","node","react","react-dom"]
   },
-  "include": ["src", "types.d.ts", "vite.config.ts"]
+  "include": ["src", "types.d.ts", "*.config.ts"]
 }

@@ -1,8 +1,8 @@
+import type { DictValues, PrefixedDictIndices } from '~/types'
+
 import type { ATTR_PREFIX } from '../../ui/constants'
 import type { KILLS } from '../data/kills'
-
 import type { MapKeyValueEntry } from './map'
-import type { DictValues, PrefixedDictIndices } from './misc'
 
 export interface Kill {
   id: number
