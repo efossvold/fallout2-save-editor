@@ -1,5 +1,6 @@
+import type { MakeOptional } from '~/types'
+
 import type { GVAR } from '../types/gvar'
-import type { MakeOptional } from '../types/misc'
 
 const n = ({ id, name, desc, maxValue = 1 }: MakeOptional<GVAR, 'maxValue'>): GVAR => ({
   id,

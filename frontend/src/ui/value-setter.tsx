@@ -145,6 +145,7 @@ export const ValueSetter = ({
             )}
 
             <p className={getColor(isHovered)}>{valueText ?? `${totalValue}${unit}`}</p>
+
             {showControls && (
               <Hoverable>
                 {({ isHovered: isBtnHovered }) => (

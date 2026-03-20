@@ -1,8 +1,9 @@
 import { toast } from 'react-hot-toast'
 
-import { SKILLS } from '../../api/data/skills'
 import type { TaggedSkillsKeys } from '../../api/types/map'
 import type { SkillValues } from '../../api/types/skills'
+
+import { SKILLS } from '../../api/data/skills'
 import { entries } from '../../api/utils'
 import { MAX_SKILL_ID, MAX_SKILL_VALUE, MAX_TAGGED_SKILLS, MIN_SKILL_VALUE } from '../constants'
 import { PanelHeader } from '../panel'
@@ -10,7 +11,7 @@ import * as S from '../selectors'
 import { useAPIStore } from '../store'
 import { ValueSetter } from '../value-setter'
 
-export const SkillSetter = (p: { name: keyof SkillValues; value: number }) => {
+const SkillSetter = (p: { name: keyof SkillValues; value: number }) => {
   const setProp = useAPIStore(s => s.setProp)
   const skillTotal = useAPIStore(s => S.getSkillTotal(s, p.name))
   const isSkillTagged = useAPIStore(s => S.getSkillIsTagged(s, p.name))

@@ -1,6 +1,7 @@
 [tools]
 go = "1.23"
 node = "24"
+bun = "latest"
 
 [env]
 _.path = ["{{config_root}}/frontend/node_modules/.bin"]

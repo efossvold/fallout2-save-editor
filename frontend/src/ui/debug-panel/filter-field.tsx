@@ -1,6 +1,7 @@
+import type { ChangeEventHandler, MouseEventHandler } from 'react'
+
 import { Button, Input } from '@headlessui/react'
 import { clsx } from 'clsx'
-import type { ChangeEventHandler, MouseEventHandler } from 'react'
 
 export const FilterField = (p: {
   value: string

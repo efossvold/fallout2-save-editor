@@ -1,12 +1,6 @@
 import { SKILLS } from '../api/data/skills'
 import { entries } from '../api/utils'
 
-export const WIN_START_WIDTH = 990
-export const MIN_WIN_HEIGHT = 740
-
-export const SECTION_SPACING = 0.5
-export const LINE_HEIGHT = 0
-
 export const MIN_LEVEL = 1
 export const MAX_LEVEL = 99
 
@@ -23,7 +17,7 @@ export const MAX_SKILL_ID = Math.max(...entries(SKILLS).map(([_, skill]) => skil
 
 export const MAX_CHARACTER_NAME_LENGTH = 31
 
-export const SAVE_FILENAME = 'SAVE.DAT'
+export const DEFAULT_SAVE_FILENAME = 'SAVE.DAT'
 
 // Fallout 1 starts at December 5th 2161
 // Fallout 2 starts at June 25th 2241

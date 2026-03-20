@@ -1,13 +1,13 @@
 import { clsx } from 'clsx'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+
+import type { SaveGameDataExtra } from '../../api/types/map'
 
 import { ATTRIBUTES } from '../../api/data/attributes'
 import { SKILLS } from '../../api/data/skills'
-import type { SaveGameDataExtra } from '../../api/types/map'
 import * as U from '../../api/utils'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
-
 import { FilterField } from './filter-field'
 import { PropChangedList } from './prop-changed-list'
 import { PropList } from './prop-list'
@@ -57,14 +57,7 @@ export const StoreDebuggerPanel = () => {
   const showDebugWindow = useAPIStore(s => s.showDebugWindow)
   const [showChangesOnly, setShowChangesOnly] = useState(false)
   const [search, setSearch] = useState('')
-  const [appHeight, setAppHeight] = useState<number>()
-
-  useEffect(() => {
-    const height = document.querySelector('#panels')?.getClientRects()[0]?.height
-    if (height !== appHeight) {
-      setAppHeight(height)
-    }
-  }, [appHeight, setAppHeight])
+  const panelsHeight = useAPIStore(s => s.panelsHeight)
 
   return (
     <div
@@ -72,7 +65,7 @@ export const StoreDebuggerPanel = () => {
         'my-1 overflow-hidden transition-[width]',
         showDebugWindow ? 'w-[320px]' : 'w-0',
       )}
-      style={{ maxHeight: appHeight ? `${appHeight}px` : 'auto' }}
+      style={{ maxHeight: panelsHeight ? `${panelsHeight}px` : 'auto' }}
     >
       <div className="py-1 p-2 mr-0.5 gap-1 rounded-sm bg-gray-50 h-full flex flex-col text-xs ">
         <h1 className="text-gray-700 text-base">Data</h1>

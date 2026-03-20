@@ -1,12 +1,5 @@
 import { createSelector } from 'reselect'
 
-import { ATTRIBUTES, BASE_ATTRIBUTES_NAMES } from '../api/data/attributes'
-import { Crippled } from '../api/data/crippled'
-import { GVARS } from '../api/data/gvar'
-import { KILLS } from '../api/data/kills'
-import { PERKS } from '../api/data/perks'
-import { SKILLS, SKILL_COST } from '../api/data/skills'
-import { TRAITS } from '../api/data/traits'
 import type { StatNames } from '../api/save-data'
 import type { AttributesValues } from '../api/types/attributes'
 import type { GVARValues } from '../api/types/gvar'
@@ -15,10 +8,17 @@ import type { SaveGameData } from '../api/types/map'
 import type { PerkValues } from '../api/types/perks'
 import type { SkillValues } from '../api/types/skills'
 import type { TraitNames, TraitValues } from '../api/types/traits'
-import * as U from '../api/utils'
-
-import { ATTR_PREFIX, GAME_START_DATE } from './constants'
 import type { StoreState } from './store'
+
+import { ATTRIBUTES, BASE_ATTRIBUTES_NAMES } from '../api/data/attributes'
+import { Crippled } from '../api/data/crippled'
+import { GVARS } from '../api/data/gvar'
+import { KILLS } from '../api/data/kills'
+import { PERKS } from '../api/data/perks'
+import { SKILLS, SKILL_COST } from '../api/data/skills'
+import { TRAITS } from '../api/data/traits'
+import * as U from '../api/utils'
+import { ATTR_PREFIX, GAME_START_DATE } from './constants'
 
 const getState = (s: StoreState): StoreState => s
 const getData = (s: StoreState): SaveGameData => s.data
@@ -27,7 +27,7 @@ const getData = (s: StoreState): SaveGameData => s.data
 // Adjustments from these perks are added
 // to bonus value of the stat. Adjustments here are
 // only for "live" view in editor, they are not saved.
-export const calcValueFromPerk = createSelector(
+const calcValueFromPerk = createSelector(
   [getState, (_: StoreState, name: StatNames) => name],
   (s, name) => {
     // [Perk name, Affected stat, value of adjustment]
@@ -94,7 +94,7 @@ export const calcValueFromPerk = createSelector(
 // to bonus value of the stat. Adjustments here are
 // only for "live" view in editor/game, they are not
 // saved to save game file.
-export const calcValueFromTrait = createSelector(
+const calcValueFromTrait = createSelector(
   [
     getState,
     (_: StoreState, name: StatNames) => name,
@@ -439,12 +439,12 @@ export const getSkillTotal = createSelector(
   },
 )
 
-export const getSkillsTotal = createSelector([getState], s =>
-  U.keysOf(SKILLS).reduce<SkillValues>((acc, key) => {
-    acc[key] = getSkillTotal(s, key)
-    return acc
-  }, {} as SkillValues),
-)
+// export const getSkillsTotal = createSelector([getState], s =>
+//   U.keysOf(SKILLS).reduce<SkillValues>((acc, key) => {
+//     acc[key] = getSkillTotal(s, key)
+//     return acc
+//   }, {} as SkillValues),
+// )
 
 export const getTraits = createSelector([getData], s => {
   const selectedTraits = new Set([s.trait1, s.trait2])

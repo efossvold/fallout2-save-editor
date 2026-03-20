@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
 
-import type { ClassName } from '../types/types'
+import type { ClassName } from '~/types'
 
 import { useHelpTextStore } from './help-text/store'
 import { useHoverColor } from './hooks'

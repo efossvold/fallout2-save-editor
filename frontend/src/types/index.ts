@@ -1,5 +1,3 @@
-import type React from 'react'
-
 export type Dict<T> = Record<string, T>
 
 export type DictValues<D extends Record<string, unknown>, T> = {
@@ -21,6 +19,7 @@ export type Fn = () => void
 export interface IError {
   message: string
 }
+
 export type MayBeError = Error | string | IError
 
 export type ClassName = React.HTMLProps<HTMLElement>['className']
@@ -45,9 +44,9 @@ export interface ButtonProps extends BoxProps {
 
 export interface UseDisclosureReturn {
   isOpen: boolean
-  onOpen: () => void
-  onClose: () => void
-  onToggle: () => void
+  onOpen: Fn
+  onClose: Fn
+  onToggle: Fn
 }
 
 export type Entries<T> = {

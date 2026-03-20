@@ -1,5 +1,6 @@
-import { ATTR_PREFIX } from '../../ui/constants'
 import type { Attribute } from '../types/attributes'
+
+import { ATTR_PREFIX } from '../../ui/constants'
 import { keysOf, prefixString } from '../utils'
 
 const n = (attr: Attribute): Attribute => attr

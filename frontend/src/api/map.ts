@@ -1,17 +1,17 @@
-import { ATTR_PREFIX } from '../ui/constants'
-
-import { GVARS } from './data/gvar'
-import { KILLS } from './data/kills'
-import { PERKS } from './data/perks'
-import { SKILLS } from './data/skills'
 import type { GVARMap } from './types/gvar'
 import type { KillMap } from './types/kill'
 import type * as T from './types/map'
 import type { PerksMap } from './types/perks'
 import type { SkillMap } from './types/skills'
+
+import { ATTR_PREFIX } from '../ui/constants'
+import { GVARS } from './data/gvar'
+import { KILLS } from './data/kills'
+import { PERKS } from './data/perks'
+import { SKILLS } from './data/skills'
 import { entries, prefixString } from './utils'
 
-export const m = (
+const m = (
   name: string,
   offset: number,
   length: number,
@@ -23,7 +23,7 @@ export const m = (
   kind,
 })
 
-export const F5_MARKER = '\u0000\u0000\u0046\u0050'
+export const F5_MARKER = [0, 0, 70, 80] // '\u0000\u0000\u0046\u0050'
 
 export const INVENTORY_ALWAYS_ZERO = [
   m('', 0x0c, 0x04),

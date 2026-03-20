@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'bun:test'
+import { it, describe, expect } from 'bun:test'
 
 import { STORE_STATE_FIXTURE as STORE_STATE } from './fixtures/state-fixture'
 import * as S from './selectors'

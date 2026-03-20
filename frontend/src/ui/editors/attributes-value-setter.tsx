@@ -1,6 +1,7 @@
 import { toast } from 'react-hot-toast'
 
 import type { AttributesValues } from '../../api/types/attributes'
+
 import { prefixString } from '../../api/utils'
 import { ATTR_PREFIX, MAX_ATTRIBUTE_VALUE, MIN_ATTRIBUTE_VAULE } from '../constants'
 import { Hoverable } from '../hoverable'

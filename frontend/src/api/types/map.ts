@@ -1,9 +1,10 @@
+import type { PrefixedDictIndices } from '~/types'
+
 import type { BaseAttributesValues, BonusAttributesValues } from './attributes'
 import type { F6StatsBase, F6StatsBonus } from './f6-stats'
 import type { F17Preferences } from './f17-preferences'
 import type { GVARValues } from './gvar'
 import type { KillValues } from './kill'
-import type { PrefixedDictIndices } from './misc'
 import type { PerkValues } from './perks'
 import type { SkillValues } from './skills'
 
@@ -50,8 +51,6 @@ export type MapF6Section = F6StatsBase &
   BonusAttributesValues &
   SkillValues
 
-export type MapF6SkillsSection = SkillValues
-
 export type MapF7Section = KillValues
 
 export type MapF8Section = PrefixedDictIndices<'1' | '2' | '3' | '4', number, 'taggedSkill'>
@@ -83,13 +82,13 @@ export type MapF15Section = PrefixedDictIndices<'1' | '2', number | undefined, '
 
 export type MapF17Section = F17Preferences
 
-export interface MapInventory {
-  qty: number
-  id: string
-  qtyContained: number
-  meta: number
-  ammoType: number
-}
+// export interface MapInventory {
+//   qty: number
+//   id: string
+//   qtyContained: number
+//   meta: number
+//   ammoType: number
+// }
 
 export interface SaveTypesMap {
   header: MapHeaderSection

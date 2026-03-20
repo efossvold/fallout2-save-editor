@@ -1,4 +1,5 @@
-import type { MakeOptional } from '../types/misc'
+import type { MakeOptional } from '~/types'
+
 import type { Perk } from '../types/perks'
 
 const n = ({ id, name, desc, ranks = 1 }: MakeOptional<Perk, 'ranks'>): Perk => ({

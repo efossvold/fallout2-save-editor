@@ -8,7 +8,7 @@ export enum ItemCategory {
   MISC,
 }
 
-export const WEAPONS: readonly Item[] = [
+const WEAPONS: readonly Item[] = [
   { id: '9', desc: '10mm SMG' },
   { id: '8', desc: '10mm Pistol' },
   { id: '6', desc: 'Sledgehammer' },
@@ -121,7 +121,7 @@ export const WEAPONS: readonly Item[] = [
   { id: '531', desc: 'End Boss Plasma Gun' },
 ]
 
-export const AMMO: readonly Item[] = [
+const AMMO: readonly Item[] = [
   { id: '14', desc: 'Explosive Rocket' },
   { id: '29', desc: '10mm JHP' },
   { id: '30', desc: '10mm AP' },
@@ -149,7 +149,7 @@ export const AMMO: readonly Item[] = [
   { id: '382', desc: 'Flamethrower Fuel MKII' },
 ]
 
-export const ARMOR: readonly Item[] = [
+const ARMOR: readonly Item[] = [
   { id: '2', desc: 'Metal Armor' },
   { id: '1', desc: 'Leather Armor' },
   { id: '3', desc: 'Power Armor' },
@@ -168,7 +168,7 @@ export const ARMOR: readonly Item[] = [
   { id: '524', desc: "Bridgekeeper's Robes" },
 ]
 
-export const DRUGS: readonly Item[] = [
+const DRUGS: readonly Item[] = [
   { id: '40', desc: 'Stimpak' },
   { id: '48', desc: 'RadAway' },
   { id: '49', desc: 'Antidote' },
@@ -199,7 +199,7 @@ export const DRUGS: readonly Item[] = [
   { id: '525', desc: 'Hypo' },
 ]
 
-export const MISC: readonly Item[] = [
+const MISC: readonly Item[] = [
   { id: '41', desc: 'Money' },
   { id: '47', desc: 'First Aid Kit' },
   { id: '50', desc: 'Reserved (do not use)' },

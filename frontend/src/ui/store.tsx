@@ -1,14 +1,14 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
-import { Crippled } from '../api/data/crippled'
-import { createSaveData } from '../api/save-data'
 import type { StatNames } from '../api/save-data'
-import { saveHandler } from '../api/save-handler'
 import type * as M from '../api/types/map'
 import type { PerkValues } from '../api/types/perks'
-import * as U from '../api/utils'
 
+import { Crippled } from '../api/data/crippled'
+import { createSaveData } from '../api/save-data'
+import { saveHandler } from '../api/save-handler'
+import * as U from '../api/utils'
 import { getPerk } from './selectors'
 
 export const handler = saveHandler({ isDebug: false })
@@ -17,6 +17,7 @@ export type StoreState = Readonly<{
   data: M.SaveGameData
   currentSaveFile?: string
   showDebugWindow: boolean
+  panelsHeight: number // height of <Panels />. Used set <DebugPanel /> to same height
 
   adjustStatsFromPerk: (name: keyof PerkValues, level: number) => void
   load: (filename: string, base64: string) => void
@@ -24,6 +25,7 @@ export type StoreState = Readonly<{
   getProp: <Prop extends keyof M.SaveGameData>(prop: Prop) => M.SaveGameData[Prop]
   setProp: <Prop extends keyof M.SaveGameData>(prop: Prop, value: M.SaveGameData[Prop]) => void
   setCrippledLimb: (bodyPart: keyof typeof Crippled, value: boolean) => void
+  setPanelsHeight: (height: number) => void
   toggleDebugWindow: () => void
 }>
 
@@ -31,6 +33,7 @@ export const useAPIStore = create<StoreState>()(
   immer((set, get) => ({
     data: createSaveData(),
     showDebugWindow: !import.meta.env.PROD,
+    panelsHeight: 733,
 
     // Calculate permanent bonus/penalties from perks
     // Adjustments from these perks are permanently added
@@ -96,6 +99,11 @@ export const useAPIStore = create<StoreState>()(
       set(state => {
         const fn = isCrippled ? U.bitSet : U.bitClear
         state.data.crippled = fn(get().data.crippled, Crippled[bodyPart])
+      }),
+
+    setPanelsHeight: height =>
+      set(state => {
+        state.panelsHeight = height
       }),
 
     toggleDebugWindow: () =>

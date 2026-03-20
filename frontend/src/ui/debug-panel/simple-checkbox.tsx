@@ -1,5 +1,6 @@
-import { Button } from '@headlessui/react'
 import type { MouseEventHandler } from 'react'
+
+import { Button } from '@headlessui/react'
 
 import { Checkbox as CheckboxUnchecked, CheckboxChecked } from '../icons'
 

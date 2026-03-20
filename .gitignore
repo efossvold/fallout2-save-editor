@@ -25,5 +25,8 @@ node_modules
 tsBuildInfoFile
 tsconfig.tsbuildinfo
 
+# build
+dist
+
 # Local Netlify folder
 .netlify

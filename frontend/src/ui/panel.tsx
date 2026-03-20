@@ -1,5 +1,6 @@
-import { clsx } from 'clsx'
 import type { PropsWithChildren } from 'react'
+
+import { clsx } from 'clsx'
 
 interface PanelHeaderProps {
   title: string

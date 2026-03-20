@@ -5,3 +5,9 @@ export const dirname = (path: string): string => {
   parts.pop()
   return parts.join('/')
 }
+
+export const isClient = () => typeof globalThis.window !== 'undefined'
+
+export const getWindow = () => (isClient() ? globalThis.window : undefined)
+
+export const getDocument = () => (isClient() ? globalThis.document : undefined)

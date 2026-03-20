@@ -2,7 +2,6 @@ import { ATTRIBUTES } from '../../api/data/attributes'
 import { captializeFirstLetter, entries } from '../../api/utils'
 import { useHelpTextStore } from '../help-text/store'
 import { Hoverable } from '../hoverable'
-
 import { AttrValueSetter } from './attributes-value-setter'
 
 export const AttributesEditor = () => {
