@@ -1,3 +1,5 @@
+import type { RefObject } from 'react'
+
 import { clsx } from 'clsx'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
@@ -45,12 +47,13 @@ export const useIsWeb = (): boolean | undefined => {
 export const useMountEffect = (fn: () => any) => {
   const mounted = useRef(false)
 
-  // oxlint-disable-next-line typescript/consistent-return
-  useEffect(() => {
+  useEffect(function setMounted() {
     if (!mounted.current) {
       mounted.current = true
       return fn()
     }
+
+    return undefined
     // oxlint-disable-next-line eslint-plugin-react-hooks/exhaustive-deps
   }, [])
 }
@@ -68,7 +71,7 @@ export const useHeightObserver = ({ onChange }: { onChange?: (height: number) =>
 
   useLayoutEffect(() => {
     if (!elementRef.current) {
-      return
+      return undefined
     }
 
     const observer = new ResizeObserver(() => {
@@ -82,7 +85,6 @@ export const useHeightObserver = ({ onChange }: { onChange?: (height: number) =>
 
     observer.observe(elementRef.current)
 
-    // oxlint-disable-next-line typescript/consistent-return
     return () => {
       observer.disconnect()
     }
@@ -144,9 +146,9 @@ export const useHover = <ElementType extends HTMLElement>(): [
   const handlePointerOver = (): void => setValue(true)
   const handlePointerOut = (): void => setValue(false)
 
-  // oxlint-disable-next-line typescript/consistent-return
   useEffect(() => {
     const node = ref.current
+
     if (node) {
       node.addEventListener('pointerenter', handlePointerOver)
       node.addEventListener('pointerleave', handlePointerOut)
@@ -156,6 +158,8 @@ export const useHover = <ElementType extends HTMLElement>(): [
         node.removeEventListener('pointerleave', handlePointerOut)
       }
     }
+
+    return undefined
   }, [])
 
   return [ref, value]
@@ -213,7 +217,7 @@ export const useChangedProps = (
   return changed
 }
 
-export const useDebouncedPrevValue = <T>(value: T, delay = 500): [T, T] => {
+export const useDebouncedPrevValue = <T>(value: T, delay = 500): [RefObject<T>, T] => {
   const prevValue = useRef(value)
   const isPrevValueSet = useRef(false)
   const [debouncedValue, setDebouncedValue] = useState(value)
@@ -229,10 +233,12 @@ export const useDebouncedPrevValue = <T>(value: T, delay = 500): [T, T] => {
     }
   }, [value, delay])
 
-  if (!isPrevValueSet.current) {
-    prevValue.current = value
-    isPrevValueSet.current = true
-  }
+  useEffect(() => {
+    if (!isPrevValueSet.current) {
+      prevValue.current = value
+      isPrevValueSet.current = true
+    }
+  }, [value])
 
-  return [prevValue.current, debouncedValue]
+  return [prevValue, debouncedValue]
 }

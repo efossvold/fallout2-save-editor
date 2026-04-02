@@ -2,10 +2,17 @@ import type { MakeOptional } from '~/types'
 
 import type { GVAR } from '../types/gvar'
 
-const n = ({ id, name, desc, maxValue = 1 }: MakeOptional<GVAR, 'maxValue'>): GVAR => ({
+const n = ({
   id,
   name,
   desc,
+  minValue = 0,
+  maxValue = 1,
+}: MakeOptional<GVAR, 'minValue' | 'maxValue'>): GVAR => ({
+  id,
+  name,
+  desc,
+  minValue,
   maxValue,
 })
 
@@ -14,13 +21,13 @@ export const GVARS = {
     id: 0,
     name: 'Karma (Reputation)',
     desc: 'This is a ranged stat that represents your general reputation. The higher the number, the better known and respected you are. If your rep is negative, you are hated by some for your evil actions.',
-    maxValue: undefined,
+    minValue: -9999,
+    maxValue: 9999,
   }),
   childkiller: n({
     id: 1,
     name: 'Childkiller',
     desc: 'You have killed children, the youth of the wasteland. This is considered to be a really bad thing. You evil, evil person.',
-    maxValue: undefined,
   }),
   champion: n({
     id: 2,

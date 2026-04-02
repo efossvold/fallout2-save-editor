@@ -11,7 +11,7 @@ export const TraitsEditor = () => {
   const setProp = useAPIStore(s => s.setProp)
   const traits = useAPIStore(S.getSelectedTraits)
 
-  const maxTraitId = entries(TRAITS).reduce<number>((acc, [_key, t]) => Math.max(t.id, acc), 0)
+  const maxTraitId = entries(TRAITS).reduce((acc, [_key, t]) => Math.max(t.id, acc), 0)
 
   const isValidTraitId = (id: number) => id >= 0 && id <= maxTraitId
 

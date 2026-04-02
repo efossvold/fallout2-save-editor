@@ -26,7 +26,7 @@ const NameChangerModal = (p: {
   const modalRoot = getDocument()?.getElementById('name-changer')
 
   if (!isOpen || !modalRoot) {
-    return
+    return undefined
   }
 
   if (!isInitialValueSet) {

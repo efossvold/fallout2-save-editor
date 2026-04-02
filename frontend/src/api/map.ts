@@ -54,7 +54,7 @@ export const createMap = (): T.SaveMap => {
     f2: {
       size: -1,
       offset: 0x75_67,
-      keys: entries(GVARS).reduce<GVARMap>((acc, [key, value]) => {
+      keys: entries(GVARS).reduce((acc, [key, value]) => {
         acc[prefixString(key, ATTR_PREFIX.GVAR)] = m(value.name, value.id * 0x04, 0x04)
         return acc
       }, {} as GVARMap),
@@ -145,7 +145,7 @@ export const createMap = (): T.SaveMap => {
         bonusAttrAgility: m('', 0xa8, 0x04),
         bonusAttrLuck: m('', 0xac, 0x04),
 
-        ...entries(SKILLS).reduce<SkillMap>((acc, [key, value]) => {
+        ...entries(SKILLS).reduce((acc, [key, value]) => {
           acc[key] = m(value.name, 0x01_20 + value.id * 0x04, 0x04)
           return acc
         }, {} as SkillMap),
@@ -154,7 +154,7 @@ export const createMap = (): T.SaveMap => {
     f7: {
       size: 0x4c,
       offset: -1,
-      keys: entries(KILLS).reduce<KillMap>((acc, [key, value]) => {
+      keys: entries(KILLS).reduce((acc, [key, value]) => {
         acc[prefixString(key, ATTR_PREFIX.KILL)] = m(value.name, value.id * 0x04, 0x04)
         return acc
       }, {} as KillMap),
@@ -172,7 +172,7 @@ export const createMap = (): T.SaveMap => {
     f9: {
       size: 0x02_c8,
       offset: -1,
-      keys: entries(PERKS).reduce<PerksMap>((acc, [key, value]) => {
+      keys: entries(PERKS).reduce((acc, [key, value]) => {
         acc[prefixString(key, ATTR_PREFIX.PERK)] = m(value.name, value.id * 0x04, 0x04)
         return acc
       }, {} as PerksMap),

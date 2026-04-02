@@ -17,7 +17,7 @@ export type StoreState = Readonly<{
   data: M.SaveGameData
   currentSaveFile?: string
   showDebugWindow: boolean
-  panelsHeight: number // height of <Panels />. Used set <DebugPanel /> to same height
+  panelsHeight: number // Height of <Panels />. Used set <DebugPanel /> to same height
 
   adjustStatsFromPerk: (name: keyof PerkValues, level: number) => void
   load: (filename: string, base64: string) => void

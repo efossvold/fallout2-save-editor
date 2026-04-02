@@ -8,7 +8,8 @@ export interface GVAR {
   id: number
   name: string
   desc: string
-  maxValue?: number
+  minValue: number
+  maxValue: number
 }
 
 export type GVARValues = PrefixedDictIndices<keyof typeof GVARS, number, ATTR_PREFIX.GVAR>

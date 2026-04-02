@@ -50,7 +50,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     prefix = '',
   ): SectionGetters => {
     const section = map[sectionName]
-    return Object.entries(section.keys).reduce<SectionGetters>((getters, [key, _entry]) => {
+    return Object.entries(section.keys).reduce((getters, [key, _entry]) => {
       // @ts-expect-error literal cannot be used to index type unknown
       getters[`get${prefix}${U.captializeFirstLetter(key)}`] = () =>
         getValue(
@@ -71,7 +71,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     prefix = '',
   ): SectionSetters => {
     const section = map[sectionName]
-    return U.entries(section.keys).reduce<SectionSetters>((setters, [key, _entry]) => {
+    return U.entries(section.keys).reduce((setters, [key, _entry]) => {
       // @ts-expect-error key is string and cannot be used to index element
       setters[`set${prefix}${U.captializeFirstLetter(key)}`] = (value: string | number) => {
         setValue(getOffset(sectionName), section.keys[key], value)

@@ -23,7 +23,7 @@ const ToolbarButton = ({ children, onClick, isDisabled, isToggled, className }: 
       className,
     )}
     onClick={onClick}
-    disabled={isDisabled}
+    disabled={isDisabled ?? false}
   >
     {children}
   </Button>

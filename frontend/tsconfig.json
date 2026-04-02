@@ -1,27 +1,33 @@
 {
   "compilerOptions": {
     "allowJs": false,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": [ "DOM", "DOM.Iterable", "ESNext" ],
+    "paths": { "~/*": [ "./src/*" ] },
+    "types": [ "bun", "react", "react-dom" ],
+    "useDefineForClassFields": true,
+
+    // Bundler mode
+    "allowImportingTsExtensions": true,
     "moduleResolution": "bundler",
     "noEmit": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "paths": { "~/*": ["./src/*"] },
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strictNullChecks": true,
-    "types": ["bun", "react", "react-dom"],
-    "useDefineForClassFields": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+
+    // Best practices (strict)
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": false, // Covered by no-unused-vars with tailored configuration
+    "noUnusedParameters": true,
   },
-  "include": ["src", "types.d.ts", "*.config.ts"]
+  "include": [ "src", "types.d.ts", "*.config.ts" ]
 }

@@ -30,7 +30,7 @@ export const createSaveData = (): SaveGameData => ({
   inGameTime: 0,
 
   // F2 GVARs
-  ...entries(GVARS).reduce<GVARValues>((acc, [key]) => {
+  ...entries(GVARS).reduce((acc, [key]) => {
     acc[prefixString(key, ATTR_PREFIX.GVAR)] = 0
     return acc
   }, {} as GVARValues),
@@ -98,23 +98,23 @@ export const createSaveData = (): SaveGameData => ({
   bonusAge: 0,
   bonusGender: 0, // 0 = male, 1 = female
 
-  ...entries(ATTRIBUTES).reduce<BaseAttributesValues>((acc, [key]) => {
+  ...entries(ATTRIBUTES).reduce((acc, [key]) => {
     acc[prefixString(key, ATTR_PREFIX.BASE_ATTR)] = 0
     return acc
   }, {} as BaseAttributesValues),
 
-  ...entries(ATTRIBUTES).reduce<BonusAttributesValues>((acc, [key]) => {
+  ...entries(ATTRIBUTES).reduce((acc, [key]) => {
     acc[prefixString(key, ATTR_PREFIX.BONUS_ATTR)] = 0
     return acc
   }, {} as BonusAttributesValues),
 
-  ...entries(SKILLS).reduce<SkillValues>((acc, [key]) => {
+  ...entries(SKILLS).reduce((acc, [key]) => {
     acc[key] = 0
     return acc
   }, {} as SkillValues),
 
   // F7 Kills
-  ...entries(KILLS).reduce<KillValues>((acc, [key]) => {
+  ...entries(KILLS).reduce((acc, [key]) => {
     acc[prefixString(key, ATTR_PREFIX.KILL)] = 0
     return acc
   }, {} as KillValues),
@@ -128,7 +128,7 @@ export const createSaveData = (): SaveGameData => ({
   /**
    * F9 Perks
    */
-  ...entries(PERKS).reduce<PerkValues>((acc, [key]) => {
+  ...entries(PERKS).reduce((acc, [key]) => {
     acc[prefixString(key, ATTR_PREFIX.PERK)] = 0
     return acc
   }, {} as PerkValues),
@@ -154,7 +154,7 @@ export const createSaveData = (): SaveGameData => ({
   /**
    * F17 Preferences
    */
-  ...entries(map.f17.keys).reduce<F17Preferences>((acc, [key]) => {
+  ...entries(map.f17.keys).reduce((acc, [key]) => {
     acc[key] = 0
     return acc
   }, {} as F17Preferences),

@@ -10,7 +10,6 @@ export default defineConfig({
     // DevTools(),
     tailwindcss(),
     react(),
-    // @ts-ignore
     babel({ presets: [reactCompilerPreset()] }),
   ],
   build: {

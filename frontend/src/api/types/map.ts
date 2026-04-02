@@ -98,12 +98,12 @@ export interface SaveTypesMap {
   f7: MapF7Section
   f8: MapF8Section
   f9: MapF9Section
-  f10: {}
+  f10: {} // oxlint-disable-line typescript/no-empty-object-type
   f11: MapF11Section
   f13: MapF13Section
-  f14: {}
+  f14: {} // oxlint-disable-line typescript/no-empty-object-type
   f15: MapF15Section
-  f16: {}
+  f16: {} // oxlint-disable-line typescript/no-empty-object-type
   f17: MapF17Section
   // Inventory: MapInventory
 }

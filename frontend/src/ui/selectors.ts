@@ -25,8 +25,8 @@ const getData = (s: StoreState): SaveGameData => s.data
 
 // Calculate bonus/penalties from perks
 // Adjustments from these perks are added
-// to bonus value of the stat. Adjustments here are
-// only for "live" view in editor, they are not saved.
+// To bonus value of the stat. Adjustments here are
+// Only for "live" view in editor, they are not saved.
 const calcValueFromPerk = createSelector(
   [getState, (_: StoreState, name: StatNames) => name],
   (s, name) => {
@@ -91,9 +91,9 @@ const calcValueFromPerk = createSelector(
 
 // Calculate bonus/penalties from traits
 // Adjustments from these traits are added
-// to bonus value of the stat. Adjustments here are
-// only for "live" view in editor/game, they are not
-// saved to save game file.
+// To bonus value of the stat. Adjustments here are
+// Only for "live" view in editor/game, they are not
+// Saved to save game file.
 const calcValueFromTrait = createSelector(
   [
     getState,
@@ -179,7 +179,7 @@ export const getAPDerived = createSelector([getState], s => {
 })
 
 export const getAttributesTotal = createSelector([getState], s => {
-  const attrs = U.entries(ATTRIBUTES).reduce<AttributesValues>((acc, [key]) => {
+  const attrs = U.entries(ATTRIBUTES).reduce((acc, [key]) => {
     const baseValue = calcValueFromTrait(
       s,
       U.prefixString(key, ATTR_PREFIX.BASE_ATTR),
@@ -200,8 +200,8 @@ export const getAttributeTotal = createSelector(
 )
 
 export const getInGameTimeText = createSelector([getData], s => {
-  // inGameTime stores the time
-  // the number of seconds since July 25th 2241 00:00:00 multiplied by 10 (the number of 'ticks')
+  // InGameTime stores the time
+  // The number of seconds since July 25th 2241 00:00:00 multiplied by 10 (the number of 'ticks')
   // ! the number of seconds since December 5th 2161 00:00:00 multiplied by 10 (the number of 'ticks')
   // ! Fallout 1 starts at December 5th 2161
   const dt = U.parseDate(GAME_START_DATE.valueOf() + s.inGameTime * 100)
@@ -249,7 +249,7 @@ export const getHPDerived = createSelector([getState], s => {
 })
 
 export const getGVARs = createSelector([getData], s =>
-  U.entries(GVARS).reduce<GVARValues>((acc, [key]) => {
+  U.entries(GVARS).reduce((acc, [key]) => {
     const name = U.prefixString(key, ATTR_PREFIX.GVAR)
     acc[name] = s[name]
     return acc
@@ -264,7 +264,7 @@ export const getIsLimbCrippled = createSelector(
 )
 
 export const getKills = createSelector([getData], s =>
-  U.entries(KILLS).reduce<KillValues>((acc, [key]) => {
+  U.entries(KILLS).reduce((acc, [key]) => {
     const name = U.prefixString(key, ATTR_PREFIX.KILL)
     acc[name] = s[name]
     return acc
@@ -282,7 +282,7 @@ export const getMeleeDmgDerived = createSelector([getState], s => {
 })
 
 export const getPerks = createSelector([getData], s =>
-  U.entries(PERKS).reduce<PerkValues>((acc, [key]) => {
+  U.entries(PERKS).reduce((acc, [key]) => {
     const name = U.prefixString(key, ATTR_PREFIX.PERK)
     acc[name] = s[name]
     return acc
@@ -345,7 +345,7 @@ export const getSkillIsTagged = createSelector(
 )
 
 export const getSkills = createSelector([getData], s => {
-  const skills = U.entries(SKILLS).reduce<SkillValues>((acc, [id]) => {
+  const skills = U.entries(SKILLS).reduce((acc, [id]) => {
     acc[id] = s[id]
     return acc
   }, {} as SkillValues)
@@ -423,14 +423,14 @@ export const getSkillTotal = createSelector(
     while (!done) {
       if (isTagged) {
         if (startValue % 2 === 0) {
-          // skill is tagged, starting value is odd
+          // Skill is tagged, starting value is odd
           done = assignPoint(SKILL_COST.TAGGED_ODD)
         } else if (startValue % 2 === 1) {
-          // skill is tagged, starting value is even
+          // Skill is tagged, starting value is even
           done = assignPoint(SKILL_COST.TAGGED_EVEN)
         }
       } else {
-        // skill is untagged, starting value doesn't matter
+        // Skill is untagged, starting value doesn't matter
         done = assignPoint(SKILL_COST.UNTAGGED)
       }
     }
@@ -439,17 +439,17 @@ export const getSkillTotal = createSelector(
   },
 )
 
-// export const getSkillsTotal = createSelector([getState], s =>
+// Export const getSkillsTotal = createSelector([getState], s =>
 //   U.keysOf(SKILLS).reduce<SkillValues>((acc, key) => {
-//     acc[key] = getSkillTotal(s, key)
-//     return acc
+//     Acc[key] = getSkillTotal(s, key)
+//     Return acc
 //   }, {} as SkillValues),
 // )
 
 export const getTraits = createSelector([getData], s => {
   const selectedTraits = new Set([s.trait1, s.trait2])
 
-  const traits = U.entries(TRAITS).reduce<TraitValues>((acc, [id, value]) => {
+  const traits = U.entries(TRAITS).reduce((acc, [id, value]) => {
     acc[id] = selectedTraits.has(value.id)
     return acc
   }, {} as TraitValues)

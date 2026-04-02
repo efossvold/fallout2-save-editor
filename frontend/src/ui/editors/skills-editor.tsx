@@ -29,6 +29,7 @@ const SkillSetter = (p: { name: keyof SkillValues; value: number }) => {
       isMaxValue={skillTotal >= MAX_SKILL_VALUE}
       minValueMsg="Minimum level reached for this skill, why go lower?"
       maxValueMsg="Max level reached. Way to go! Or... Did you cheat?"
+      color={isSkillTagged ? 'text-gray-100' : 'text-green-200'}
       onClick={() => {
         // Tag/untag skill
         if (isSkillTagged) {
@@ -57,6 +58,7 @@ const SkillSetter = (p: { name: keyof SkillValues; value: number }) => {
             // .some() returns true is like "break" in for-loops, it exits the loop. Thus, when the tagged skill is set we quit the loop.
             return true
           }
+          return false
         })
       }}
       onIncrease={() => {
@@ -65,7 +67,6 @@ const SkillSetter = (p: { name: keyof SkillValues; value: number }) => {
       onDecrease={() => {
         setProp(p.name, p.value - 1)
       }}
-      color={isSkillTagged ? 'text-gray-100' : undefined}
     />
   )
 }

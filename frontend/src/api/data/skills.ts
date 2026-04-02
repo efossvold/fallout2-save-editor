@@ -14,8 +14,8 @@ const n = (skill: {
   baseValue: skill.val,
   multiplier: skill.m,
   associatedAttr1: skill.attr1,
-  associatedAttr2: skill.attr2,
   desc: skill.dsc,
+  ...(skill.attr2 && { associatedAttr2: skill.attr2 }),
 })
 
 export const SKILLS: SkillData = {

@@ -30,14 +30,12 @@ export default defineConfig({
   },
   settings: {
     'jsx-a11y': {
-      polymorphicPropName: undefined,
       components: {},
       attributes: {},
     },
     react: {
       formComponents: [],
       linkComponents: [],
-      version: undefined,
       componentWrapperFunctions: [],
     },
     vitest: {
@@ -51,12 +49,14 @@ export default defineConfig({
     es2024: true,
   },
   globals: {},
+  jsPlugins: [{ name: 'react-hooks-js', specifier: 'eslint-plugin-react-hooks' }],
   rules: {
     /**
-     * base javascript
+     * Base javascript
      */
     'arrow-body-style': 'warn',
     curly: 'warn',
+    'capitalized-comments': 'off',
     'no-non-null-assertion': 'warn',
     'no-extra-boolean-cast': 'warn',
     'no-nested-ternary': 'error',
@@ -71,24 +71,23 @@ export default defineConfig({
         destructuredArrayIgnorePattern: '^_',
       },
     ],
+    'no-duplicate-imports': ['error', { allowSeparateTypeImports: true }],
     'no-var': 'error',
-    'object-shorthand': 'warn',
-    'prefer-arrow-callback': 'warn',
     'prefer-destructuring': 'warn',
     'prefer-object-spread': 'warn',
     'prefer-spread': 'warn',
     'prefer-template': 'warn',
 
-    // typescript/require-await is superior
+    // Typescript/require-await is superior
     'require-await': 'off',
 
     /**
-     * base typescript
+     * Base typescript
      */
     'typescript/await-thenable': 'error',
     'typescript/consistent-type-exports': 'error',
     'typescript/consistent-type-imports': 'error',
-    'typescript/no-empty-object-type': 'off',
+    'typescript/no-empty-object-type': 'warn',
     'typescript/no-unnecessary-condition': 'error',
     'typescript/prefer-nullish-coalescing': 'error',
     'typescript/prefer-optional-chain': 'error',
@@ -97,7 +96,7 @@ export default defineConfig({
     '@typescript-eslint/prefer-readonly-parameter-types': 'off',
 
     /**
-     * import
+     * Import
      */
     'import/consistent-type-specifier-style': ['error'],
     'import/exports-last': 'off',
@@ -108,47 +107,65 @@ export default defineConfig({
     'import/no-namespace': 'off',
     'import/no-nodejs-modules': 'off',
     'import/no-unassigned-import': ['warn', { allow: ['**/*.css'] }],
-    'import/no-unused-modules': 'warn',
-    'import/order': 'error',
     'import/prefer-default-export': 'off',
 
-    /**
-     * disable style-rules
+    /*
+     * React-compiler rules
      */
-    'capitalized-comments': 'off',
+    'react-hooks-js/config': 'error',
+    'react-hooks-js/error-boundaries': 'error',
+    'react-hooks-js/component-hook-factories': 'error',
+    'react-hooks-js/gating': 'error',
+    'react-hooks-js/globals': 'error',
+    'react-hooks-js/immutability': 'error',
+    'react-hooks-js/preserve-manual-memoization': 'error',
+    'react-hooks-js/purity': 'error',
+    'react-hooks-js/refs': 'error',
+    'react-hooks-js/set-state-in-effect': 'error',
+    'react-hooks-js/set-state-in-render': 'error',
+    'react-hooks-js/static-components': 'error',
+    'react-hooks-js/unsupported-syntax': 'warn',
+    'react-hooks-js/use-memo': 'error',
+    'react-hooks-js/incompatible-library': 'warn',
+
+    /**
+     * Disable style-rules
+     */
     'id-length': 'off',
     'init-declarations': 'off',
     'max-params': 'off',
     'max-statements': 'off',
-    'no-duplicate-imports': ['error', { allowSeparateTypeImports: true }],
     'no-magic-numbers': 'off',
     'no-ternary': 'off',
     'sort-imports': 'off',
     'sort-keys': 'off',
 
-    // conflicts with oxlint
+    // Conflicts with oxlint
     'unicorn/number-literal-case': 'off',
   },
   overrides: [
     {
       files: ['**/*.tsx'],
       rules: {
+        'import/no-nodejs-modules': 'error',
         'jsx-a11y/no-autofocus': 'off',
         'jsx-a11y/prefer-tag-over-role': 'off',
-        'react-perf/jsx-no-new-function-as-prop': 'off',
-        'react-perf/jsx-no-new-object-as-prop': 'off',
         'react/jsx-max-depth': 'off',
         'react/jsx-props-no-spreading': 'off',
         'react/react-in-jsx-scope': 'off',
-        '@typescript-eslint/consistent-return': 'off', // disable: buggy
+        '@typescript-eslint/consistent-return': 'warn',
         '@typescript-eslint/strict-void-return': 'off',
+
+        // Disable - solved by react-compilter
+        'react-perf/jsx-no-new-function-as-prop': 'off',
+        'react-perf/jsx-no-new-object-as-prop': 'off',
       },
     },
     {
       files: ['**/*.test.ts'],
       rules: {
         'vitest/no-hooks': 'off',
-        'vitest/prefer-expect-assertions': 'off',
+        // 'vitest/prefer-expect-assertions': 'off',
         'vitest/no-focused-tests': 'error',
         'jest/no-focused-tests': 'error',
       },
