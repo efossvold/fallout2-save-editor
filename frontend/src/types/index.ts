@@ -42,13 +42,6 @@ export interface ButtonProps extends BoxProps {
   isToggled?: boolean
 }
 
-export interface UseDisclosureReturn {
-  isOpen: boolean
-  onOpen: Fn
-  onClose: Fn
-  onToggle: Fn
-}
-
 export type Entries<T> = {
   [K in keyof T]: [K, T[K]]
 }[keyof T][]

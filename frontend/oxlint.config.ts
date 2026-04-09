@@ -49,7 +49,13 @@ export default defineConfig({
     es2024: true,
   },
   globals: {},
-  jsPlugins: [{ name: 'react-hooks-js', specifier: 'eslint-plugin-react-hooks' }],
+  jsPlugins: [
+    { name: 'react-hooks-js', specifier: 'eslint-plugin-react-hooks' },
+    {
+      name: 'react-you-might-not-need-an-effect-js',
+      specifier: 'eslint-plugin-react-you-might-not-need-an-effect',
+    },
+  ],
   rules: {
     /**
      * Base javascript
@@ -128,6 +134,19 @@ export default defineConfig({
     'react-hooks-js/use-memo': 'error',
     'react-hooks-js/incompatible-library': 'warn',
 
+    /*
+     * React-compiler rules
+     */
+    'react-you-might-not-need-an-effect-js/no-derived-state': 'warn',
+    'react-you-might-not-need-an-effect-js/no-chain-state-updates': 'warn',
+    'react-you-might-not-need-an-effect-js/no-event-handler': 'warn',
+    'react-you-might-not-need-an-effect-js/no-adjust-state-on-prop-change': 'warn',
+    'react-you-might-not-need-an-effect-js/no-reset-all-state-on-prop-change': 'warn',
+    'react-you-might-not-need-an-effect-js/no-pass-live-state-to-parent': 'warn',
+    'react-you-might-not-need-an-effect-js/no-pass-data-to-parent': 'warn',
+    'react-you-might-not-need-an-effect-js/no-initialize-state': 'warn',
+    'react-you-might-not-need-an-effect-js/no-empty-effect': 'warn',
+
     /**
      * Disable style-rules
      */
@@ -148,7 +167,7 @@ export default defineConfig({
       files: ['**/*.tsx'],
       rules: {
         'import/no-nodejs-modules': 'error',
-        'jsx-a11y/no-autofocus': 'off',
+        'jsx-a11y/no-autofocus': 'warn',
         'jsx-a11y/prefer-tag-over-role': 'off',
         'react/jsx-max-depth': 'off',
         'react/jsx-props-no-spreading': 'off',
@@ -164,6 +183,7 @@ export default defineConfig({
     {
       files: ['**/*.test.ts'],
       rules: {
+        'prefer-importing-vitest-globals': 'off',
         'vitest/no-hooks': 'off',
         // 'vitest/prefer-expect-assertions': 'off',
         'vitest/no-focused-tests': 'error',

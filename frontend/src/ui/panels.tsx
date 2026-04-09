@@ -11,7 +11,7 @@ import { Toolbar } from './toolbar'
 export const Panels = () => {
   const setPanelsHeight = useAPIStore(s => s.setPanelsHeight)
 
-  const [ref] = useHeightObserver({
+  const ref = useHeightObserver({
     onChange: height => {
       setPanelsHeight(height)
     },

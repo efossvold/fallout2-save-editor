@@ -37,7 +37,7 @@ const InfoItem = (p: React.PropsWithChildren<{ name: string }>) => (
 )
 
 const SaveGameMeta = () => {
-  const { currentSaveFile } = useAPIStore(s => s)
+  const currentSaveFile = useAPIStore(s => s.currentSaveFile)
   const saveName = useAPIStore(s => s.data.saveName)
   const gameVersion = useAPIStore(s => s.data.gameVersion)
   const inGameTimeText = useAPIStore(S.getInGameTimeText)
@@ -80,7 +80,8 @@ const useLoadDevData = () => {
 }
 
 export const Toolbar = () => {
-  const { save, currentSaveFile } = useAPIStore(s => s)
+  const save = useAPIStore(s => s.save)
+  const currentSaveFile = useAPIStore(s => s.currentSaveFile)
   const load = useAPIStore(s => s.load)
   const toggleDebugWindow = useAPIStore(s => s.toggleDebugWindow)
   const isWeb = useIsWeb()
@@ -112,6 +113,7 @@ export const Toolbar = () => {
     if (files && files.length > 0) {
       const [file] = files
       if (file) {
+        // oxlint-disable-next-line no-useless-assignment
         filename = file.name
         reader.readAsDataURL(file)
       }
@@ -212,7 +214,7 @@ export const Toolbar = () => {
             </ToolbarButton>
           )}
 
-          {isWeb === false && (
+          {!isWeb && (
             <ToolbarButton
               onClick={() => {
                 // oxlint-disable-next-line new-cap

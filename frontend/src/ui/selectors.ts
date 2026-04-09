@@ -140,9 +140,7 @@ const calcValueFromTrait = createSelector(
     const adjustedValues: number[] = []
 
     for (const [traitName, attr, calc, overrule] of table) {
-      let attrMatch = false
-
-      attrMatch = Array.isArray(attr) ? attr.includes(name) : attr === name
+      const attrMatch = Array.isArray(attr) ? attr.includes(name) : attr === name
 
       if (attrMatch && getTrait(s, traitName)) {
         const adjustment = typeof calc === 'number' ? calc : calc(baseValue)

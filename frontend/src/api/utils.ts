@@ -27,7 +27,7 @@ export const getError = (error: unknown, log = true): Error => {
   } else if (typeof error === 'object' && 'message' in error) {
     errObj = new Error(typeof error.message === 'string' ? error.message : 'MESSAGE_NOT_STRING')
   } else {
-    let errorMsg = ''
+    let errorMsg
     try {
       errorMsg = JSON.stringify(error)
     } catch {

@@ -1,9 +1,9 @@
 import type { RefObject } from 'react'
 
 import { clsx } from 'clsx'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from 'react'
 
-import type { UseDisclosureReturn, Dict } from '~/types'
+import type { Dict, Fn } from '~/types'
 
 import { entries } from '../api/utils'
 import { getWindow } from './utils'
@@ -47,14 +47,15 @@ export const useIsWeb = (): boolean | undefined => {
 export const useMountEffect = (fn: () => any) => {
   const mounted = useRef(false)
 
-  useEffect(function setMounted() {
+  const onMount = useEffectEvent(function setMounted() {
     if (!mounted.current) {
       mounted.current = true
-      return fn()
+      fn()
     }
+  })
 
-    return undefined
-    // oxlint-disable-next-line eslint-plugin-react-hooks/exhaustive-deps
+  useEffect(() => {
+    onMount()
   }, [])
 }
 
@@ -66,7 +67,7 @@ export const useMountEffect = (fn: () => any) => {
  * return (<div ref={ref}>Measure height of this element</div>
  */
 export const useHeightObserver = ({ onChange }: { onChange?: (height: number) => void }) => {
-  const [height, setHeight] = useState(0)
+  const [, setHeight] = useState(0)
   const elementRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
@@ -90,7 +91,7 @@ export const useHeightObserver = ({ onChange }: { onChange?: (height: number) =>
     }
   }, [elementRef, onChange])
 
-  return [elementRef, height] as const
+  return elementRef
 }
 
 const getColor: GetColor = (isHovered, notHoveredColor, hoveredColor) => {
@@ -105,36 +106,6 @@ const getColor: GetColor = (isHovered, notHoveredColor, hoveredColor) => {
 }
 
 export const useHoverColor = () => getColor
-
-interface Disclosure {
-  isOpen: boolean
-  onOpen: () => void
-  onClose: () => void
-  onToggle: () => void
-}
-
-export const useDisclose = (initState?: boolean): Disclosure => {
-  const [isOpen, setIsOpen] = useState(initState ?? false)
-
-  const onOpen = (): void => {
-    setIsOpen(true)
-  }
-
-  const onClose = (): void => {
-    setIsOpen(false)
-  }
-
-  const onToggle = (): void => {
-    setIsOpen(!isOpen)
-  }
-
-  return {
-    isOpen,
-    onOpen,
-    onClose,
-    onToggle,
-  }
-}
 
 export const useHover = <ElementType extends HTMLElement>(): [
   React.RefObject<ElementType | null>,
@@ -163,6 +134,13 @@ export const useHover = <ElementType extends HTMLElement>(): [
   }, [])
 
   return [ref, value]
+}
+
+export interface UseDisclosureReturn {
+  isOpen: boolean
+  onOpen: Fn
+  onClose: Fn
+  onToggle: Fn
 }
 
 export const useDisclosure = (): UseDisclosureReturn => {
@@ -211,6 +189,8 @@ export const useChangedProps = (
     }
 
     prev.current = props
+
+    // oxlint-disable-next-line react-you-might-not-need-an-effect-js/no-derived-state
     setChanged(changes)
   }, [props, name, log])
 

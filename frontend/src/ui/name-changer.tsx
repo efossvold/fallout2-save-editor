@@ -3,7 +3,7 @@ import { clsx } from 'clsx'
 import { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-import type { UseDisclosureReturn } from '~/types'
+import type { UseDisclosureReturn } from './hooks'
 
 import { IButton } from './components/buttons'
 import { IInput } from './components/input'
@@ -49,6 +49,7 @@ const NameChangerModal = (p: {
             <DialogTitle as="h3">Character Name</DialogTitle>
 
             <IInput
+              // oxlint-disable-next-line jsx_a11y/no-autofocus
               autoFocus
               value={name}
               onChange={ev => {

@@ -63,9 +63,8 @@ export const ValueSetter = ({
   const setHelpText = useHelpTextStore(s => s.setHelpText)
 
   const getColor = (isHovered: boolean) => {
-    let defaultColor = clsx('text-green-600')
-
-    defaultColor = dimOnZero && totalValue < 1 ? clsx('text-green-900') : clsx('text-green-200')
+    const defaultColor =
+      dimOnZero && totalValue < 1 ? clsx('text-green-900') : clsx('text-green-200')
 
     return getHoverColor(isHovered, color ?? defaultColor, hoverColor)
   }
