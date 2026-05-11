@@ -145,7 +145,6 @@ export default defineConfig({
     'react-you-might-not-need-an-effect-js/no-pass-live-state-to-parent': 'warn',
     'react-you-might-not-need-an-effect-js/no-pass-data-to-parent': 'warn',
     'react-you-might-not-need-an-effect-js/no-initialize-state': 'warn',
-    'react-you-might-not-need-an-effect-js/no-empty-effect': 'warn',
 
     /**
      * Disable style-rules

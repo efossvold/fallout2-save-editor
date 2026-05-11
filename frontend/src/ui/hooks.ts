@@ -1,3 +1,4 @@
+// oxlint-disable react-you-might-not-need-an-effect-js/no-event-handler
 import type { RefObject } from 'react'
 
 import { clsx } from 'clsx'

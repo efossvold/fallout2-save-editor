@@ -60,6 +60,7 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
           {({ isHovered }) => (
             <div
               role="button"
+              tabIndex={0}
               className={caretUp({ isHovered })}
               onClick={onValueUp}
               onKeyUp={onValueUp}
@@ -70,6 +71,7 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
           {({ isHovered }) => (
             <div
               role="button"
+              tabIndex={0}
               className={caretDown({ isHovered })}
               onClick={onValueDown}
               onKeyUp={onValueDown}
