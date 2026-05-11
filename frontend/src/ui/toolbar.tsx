@@ -3,6 +3,7 @@ import { clsx } from 'clsx'
 import React, { use, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { cn } from 'tailwind-variants'
+import { useShallow } from 'zustand/react/shallow'
 
 import type { ButtonProps, MayBeError } from '~/types'
 
@@ -37,10 +38,14 @@ const InfoItem = (p: React.PropsWithChildren<{ name: string }>) => (
 )
 
 const SaveGameMeta = () => {
-  const currentSaveFile = useAPIStore(s => s.currentSaveFile)
-  const saveName = useAPIStore(s => s.data.saveName)
-  const gameVersion = useAPIStore(s => s.data.gameVersion)
-  const inGameTimeText = useAPIStore(S.getInGameTimeText)
+  const { currentSaveFile, saveName, gameVersion, inGameTimeText } = useAPIStore(
+    useShallow(s => ({
+      currentSaveFile: s.currentSaveFile,
+      saveName: s.data.saveName,
+      gameVersion: s.data.gameVersion,
+      inGameTimeText: S.getInGameTimeText(s),
+    })),
+  )
   const savePathShort = currentSaveFile?.split('/').slice(-2).join('/')
 
   return currentSaveFile ? (

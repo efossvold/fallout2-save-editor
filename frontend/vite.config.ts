@@ -3,6 +3,7 @@ import tailwindcss from '@tailwindcss/vite'
 // import { DevTools } from '@vitejs/devtools'
 import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+// import { analyzer, unstableRolldownAdapter } from 'vite-bundle-analyzer'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,6 +12,12 @@ export default defineConfig({
     tailwindcss(),
     react(),
     babel({ presets: [reactCompilerPreset()] }),
+    // unstableRolldownAdapter(
+    //   analyzer({
+    //     enabled: process.env.NODE_ENV === 'development',
+    //     analyzerPort: 8889,
+    //   }),
+    // ),
   ],
   build: {
     target: 'baseline-widely-available',
