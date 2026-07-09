@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { clsx } from 'cnfast'
 
 import type { ClassName } from '~/types'
 
@@ -36,7 +36,7 @@ export const ValueCheckbox = (p: Props) => {
       }}
     >
       {({ isHovered }) => (
-        <div className="flex justify-between items-center cursor-pointer">
+        <div className="flex cursor-pointer items-center justify-between">
           <p
             className={getColor(
               isHovered,

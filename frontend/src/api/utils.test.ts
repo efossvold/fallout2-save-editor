@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'bun:test'
 
 import * as U from './utils'
 
-describe('selectors', () => {
+describe('utils', () => {
   it('bitToggle', () => {
     expect(U.bitToggle(96, 6)).toBe(32)
     expect(U.bitToggle(96, 5)).toBe(64)

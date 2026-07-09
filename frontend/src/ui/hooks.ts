@@ -1,6 +1,6 @@
 import type { RefObject } from 'react'
 
-import { clsx } from 'clsx'
+import { clsx } from 'cnfast'
 import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from 'react'
 
 import type { Fn } from '~/types'

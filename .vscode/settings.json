@@ -1,0 +1,7 @@
+{
+  "oxc.configPath": "frontend/oxlint.config.ts",
+  "oxc.fmt.configPath": "frontend/oxfmt.config.ts",
+  "oxc.path.oxfmt": "frontend/node_modules/.bin/oxfmt",
+  "oxc.path.oxlint": "frontend/node_modules/.bin/oxlint",
+  "oxc.path.tsgolint": "frontend/node_modules/.bin/tsgolint",
+}

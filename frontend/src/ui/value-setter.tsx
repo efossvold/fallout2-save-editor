@@ -1,5 +1,5 @@
 import { Button } from '@headlessui/react'
-import { clsx } from 'clsx'
+import { clsx } from 'cnfast'
 import { toast } from 'react-hot-toast'
 
 import { useHelpTextStore } from './help-text/store'

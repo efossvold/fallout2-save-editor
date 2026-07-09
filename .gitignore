@@ -226,10 +226,6 @@ tmp
 # Just to gray out .git dir in vscode explorer
 .git
 
-# IDE
-.history
-.vscode
-
 # build
 dist
 build/bin

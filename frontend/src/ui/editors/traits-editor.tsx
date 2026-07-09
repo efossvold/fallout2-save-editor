@@ -23,7 +23,7 @@ export const TraitsEditor = () => {
   }
 
   return (
-    <div className="flex flex-row flex-wrap justify-between w-full">
+    <div className="flex w-full flex-row flex-wrap justify-between">
       {entries(TRAITS).map(([, trait]) => (
         <div key={trait.name} className="w-full md:w-[45%]">
           <ValueCheckbox

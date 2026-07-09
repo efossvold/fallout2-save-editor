@@ -1,11 +1,10 @@
 import { Button } from '@headlessui/react'
-import { clsx } from 'clsx'
+import { clsx, cn } from 'cnfast'
 import React, { use, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { cn } from 'tailwind-variants'
 import { useShallow } from 'zustand/react/shallow'
 
-import type { ButtonProps, MayBeError } from '~/types'
+import type { ButtonProps } from '~/types'
 
 import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
 import { base64toBlob, getError } from '../api/utils'
@@ -19,7 +18,7 @@ import { basename, dirname } from './utils'
 const ToolbarButton = ({ children, onClick, isDisabled, isToggled, className }: ButtonProps) => (
   <Button
     className={cn(
-      'h-11 w-24 flex justify-center items-center sm:text-lg  bg-gray-100 text-gray-900 font-semibold rounded-sm hover:bg-gray-200 cursor-pointer transition-colors data-disabled:bg-gray-300 data-disabled:cursor-default',
+      'flex h-11 w-24 cursor-pointer items-center justify-center rounded-sm bg-gray-100 font-semibold text-gray-900 transition-colors hover:bg-gray-200 data-disabled:cursor-default data-disabled:bg-gray-300 sm:text-lg',
       isToggled && 'bg-gray-600 text-gray-100 hover:bg-gray-400 hover:text-gray-50',
       className,
     )}
@@ -49,10 +48,28 @@ const SaveGameMeta = () => {
   const savePathShort = currentSaveFile?.split('/').slice(-2).join('/')
 
   return currentSaveFile ? (
-    <div className="m-auto w-full lg:w-1/2 grid grid-cols-[50%_30%] sm:grid-cols-[40%_25%] justify-between order-last lg:order-0">
+    <div className="order-last m-auto grid w-full grid-cols-[50%_30%] justify-between sm:grid-cols-[40%_25%] lg:order-0 lg:w-1/2">
       <InfoItem name="Path">
-        <div className="tooltip tooltip-right cursor-pointer" data-tip={currentSaveFile}>
-          <div>{savePathShort}</div>
+        <button
+          // @ts-expect-error
+          interestfor="tooltip-save-path"
+          id="save-path-btn"
+          className="cursor-pointer"
+          style={{
+            anchorName: '--tooltip-anchor',
+          }}
+        >
+          {savePathShort}
+        </button>
+        <div
+          id="tooltip-save-path"
+          popover="hint"
+          className="tooltip"
+          style={{
+            positionAnchor: '--tooltip-anchor',
+          }}
+        >
+          {currentSaveFile}
         </div>
       </InfoItem>
       <InfoItem name="Save name">{saveName}</InfoItem>
@@ -182,8 +199,8 @@ export const Toolbar = () => {
   }
 
   return (
-    <div className="w-full py-1 px-2 bg-gray-50 rounded-sm">
-      <div className="flex flex-row flex-wrap justify-between justify-items-center w-full gap-1">
+    <div className="w-full rounded-sm bg-gray-50 px-2 py-1">
+      <div className="flex w-full flex-row flex-wrap justify-between justify-items-center gap-1">
         <Logo
           className={clsx('h-11 transition', currentSaveFile ? 'fill-blue-400' : 'fill-gray-200')}
         />
@@ -196,7 +213,7 @@ export const Toolbar = () => {
               <input type="file" id="open-file" onChange={onFileChange} hidden />
               <label
                 htmlFor="open-file"
-                className="flex justify-center items-center sm:text-lg  bg-gray-100 text-gray-900 font-semibold rounded-sm hover:bg-gray-200 cursor-pointer transition-colors h-11 w-24"
+                className="flex h-11 w-24 cursor-pointer items-center justify-center rounded-sm bg-gray-100 font-semibold text-gray-900 transition-colors hover:bg-gray-200 sm:text-lg"
               >
                 Open
               </label>

@@ -1,11 +1,11 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { clsx } from 'clsx'
+import { clsx } from 'cnfast'
 import { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 import type { UseDisclosureReturn } from './hooks'
 
-import { IButton } from './components/buttons'
+import { ModalButton } from './components/buttons'
 import { IInput } from './components/input'
 import { MAX_CHARACTER_NAME_LENGTH } from './constants'
 import { useDisclosure } from './hooks'
@@ -44,7 +44,7 @@ const NameChangerModal = (p: {
         <div className="flex min-h-full items-center justify-center p-4">
           <DialogPanel
             transition
-            className="w-full max-w-lg sm:max-w-md rounded-lg bg-white text-gray-600 p-4 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 text-2xl sm:text-xl"
+            className="w-full max-w-lg rounded-lg bg-white p-4 text-2xl text-gray-600 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 sm:max-w-md sm:text-xl"
           >
             <DialogTitle as="h3">Character Name</DialogTitle>
 
@@ -58,12 +58,12 @@ const NameChangerModal = (p: {
               maxLength={MAX_CHARACTER_NAME_LENGTH}
             />
 
-            <div className="flex flex-row justify-end gap-4 mt-4">
-              <IButton onClick={onClose} color="secondary" disabled={name.length <= 0}>
+            <div className="mt-4 flex w-100 flex-row justify-end gap-4">
+              <ModalButton onClick={onClose} variant="primary" disabled={name.length <= 0}>
                 Close
-              </IButton>
-              <IButton
-                color="primary"
+              </ModalButton>
+              <ModalButton
+                variant="secondary"
                 onClick={() => {
                   setProp('characterName', name.slice(0, MAX_CHARACTER_NAME_LENGTH))
                   p.disclosure.onClose()
@@ -71,7 +71,7 @@ const NameChangerModal = (p: {
                 disabled={name.length <= 0}
               >
                 Save
-              </IButton>
+              </ModalButton>
             </div>
           </DialogPanel>
         </div>
@@ -91,7 +91,7 @@ export const NameChanger = (p: { name: string }) => {
         {({ isHovered }) => (
           <div
             className={clsx(
-              'flex justify-between mr-2.5 cursor-pointer',
+              'mr-2.5 flex cursor-pointer justify-between',
               isHovered ? 'text-gray-50' : 'text-green-200',
             )}
           >

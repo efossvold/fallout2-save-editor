@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { clsx } from 'cnfast'
 import { useState } from 'react'
 
 import type { SaveGameDataExtra } from '../../api/types/map'
@@ -67,8 +67,8 @@ export const StoreDebuggerPanel = () => {
       )}
       style={{ maxHeight: panelsHeight ? `${panelsHeight}px` : 'auto' }}
     >
-      <div className="py-1 p-2 mr-0.5 gap-1 rounded-sm bg-gray-50 h-full flex flex-col text-xs ">
-        <h1 className="text-gray-700 text-base">Data</h1>
+      <div className="mr-0.5 flex h-full flex-col gap-1 rounded-sm bg-gray-50 p-2 py-1 text-xs">
+        <h1 className="text-base text-gray-700">Data</h1>
 
         <FilterField
           value={search}

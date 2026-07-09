@@ -17,7 +17,7 @@ export const PerksEditor = () => {
   return (
     <>
       <PanelHeader title="PERKS" />
-      <div className="overflow-y-auto styled-scrollbar max-h-none sm:max-h-105">
+      <div className="styled-scrollbar max-h-none overflow-y-auto sm:max-h-105">
         <div className="flex flex-col">
           {perkKeysSorted.map(key => {
             const { name, ranks, desc } = PERKS[key]

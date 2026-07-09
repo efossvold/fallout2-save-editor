@@ -20,7 +20,7 @@ export const getError = (error: unknown, log = true): Error => {
 
   if (error === null) {
     errObj = new Error('Invalid error: null')
-  } else if (error instanceof Error) {
+  } else if (Error.isError(error)) {
     errObj = error
   } else if (typeof error === 'string') {
     errObj = new Error(error)

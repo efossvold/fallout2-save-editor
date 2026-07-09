@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { clsx } from 'cnfast'
 
 import type { SaveGameData, SaveGameDataExtra } from '../../api/types/map'
 
@@ -21,7 +21,7 @@ export const PropList = (p: PropListProps) => (
         <div key={name} className={isVisible ? 'table-row' : 'hidden'}>
           <div className="table-cell">
             <span className="text-gray-500">{name}</span>
-            <span className="text-gray-900 ml-px mr-2">:</span>
+            <span className="mr-2 ml-px text-gray-900">:</span>
             {typeof value === 'number' && <span className="text-red-400">{value}</span>}
             {typeof value === 'boolean' && (
               <span className="text-blue-400">{value ? 'true' : 'false'}</span>

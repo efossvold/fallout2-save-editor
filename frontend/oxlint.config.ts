@@ -1,4 +1,3 @@
-//
 import { defineConfig } from 'oxlint'
 
 export default defineConfig({
@@ -41,6 +40,10 @@ export default defineConfig({
     vitest: {
       typecheck: false,
     },
+    // oxlint-tailwindcss
+    tailwindcss: {
+      entryPoint: 'frontend/src/style/base.css',
+    },
   },
   env: {
     builtin: true,
@@ -54,6 +57,7 @@ export default defineConfig({
       name: 'react-you-might-not-need-an-effect-js',
       specifier: 'eslint-plugin-react-you-might-not-need-an-effect',
     },
+    'oxlint-tailwindcss',
   ],
   rules: {
     /**
@@ -158,6 +162,23 @@ export default defineConfig({
         // Disable - solved by react-compilter
         'react-perf/jsx-no-new-function-as-prop': 'off',
         'react-perf/jsx-no-new-object-as-prop': 'off',
+
+        // tailwind-plugin
+        // Correctness — catch real bugs
+        'tailwindcss/no-conflicting-classes': 'error',
+        'tailwindcss/no-deprecated-classes': 'error',
+        'tailwindcss/no-duplicate-classes': 'warn',
+        'tailwindcss/no-unknown-classes': 'warn',
+
+        // Modernization — keep classes in current canonical form
+        'tailwindcss/enforce-canonical': 'warn',
+        'tailwindcss/no-unnecessary-arbitrary-value': 'warn',
+
+        // Style and consistency
+        'tailwindcss/enforce-sort-order': 'warn',
+        'tailwindcss/consistent-variant-order': 'warn',
+        'tailwindcss/enforce-consistent-important-position': 'warn',
+        'tailwindcss/no-unnecessary-whitespace': 'warn',
       },
     },
     {

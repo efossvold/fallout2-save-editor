@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { clsx } from 'cnfast'
 import { useState } from 'react'
 
 import { entries } from '~/api/utils'
@@ -67,18 +67,18 @@ export const PropChangedList = (p: PropChangedProps) => {
           <div key={prop.name} className={isVisible ? 'table-row' : 'hidden'}>
             <div className="table-cell">
               <span className="text-gray-500">{prop.name}</span>
-              <span className="text-gray-900 ml-px mr-2">:</span>
+              <span className="mr-2 ml-px text-gray-900">:</span>
               {typeof prop.current === 'number' && (
                 <>
                   <span className="text-gray-200">{prop.prev}</span>
-                  <span className="mx-1  text-gray-500">→</span>
+                  <span className="mx-1 text-gray-500">→</span>
                   <span className="text-green-600">{prop.current}</span>
                 </>
               )}
               {typeof prop.current === 'boolean' && (
                 <>
                   <span className="text-gray-200">{prop.prev ? 'true' : 'false'}</span>
-                  <span className="mx-1  text-gray-500">→</span>
+                  <span className="mx-1 text-gray-500">→</span>
                   {/* oxlint-disable-next-line typescript/no-unnecessary-condition */}
                   <span className="text-blue-600">{prop.current ? 'true' : 'false'}</span>
                 </>
@@ -86,7 +86,7 @@ export const PropChangedList = (p: PropChangedProps) => {
               {typeof prop.current === 'string' && (
                 <>
                   <span className="text-gray-200">"{prop.prev}"</span>
-                  <span className="mx-1  text-gray-500">→</span>
+                  <span className="mx-1 text-gray-500">→</span>
                   <span className="text-green-600">"{prop.current}"</span>
                 </>
               )}

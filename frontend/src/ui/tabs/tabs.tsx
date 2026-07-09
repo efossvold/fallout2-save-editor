@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react'
 
 import { Button } from '@headlessui/react'
-import { clsx } from 'clsx'
+import { clsx } from 'cnfast'
 
 import * as E from '../editors'
 import { Hoverable } from '../hoverable'
@@ -33,12 +33,12 @@ export const Tabs = () => {
 
   return (
     <>
-      <div className="flex flex-row justify-between w-full">
+      <div className="flex w-full flex-row justify-between">
         <TabButton index={0}>TRAITS</TabButton>
         <TabButton index={1}>REPUTATION</TabButton>
         <TabButton index={2}>KILLS</TabButton>
       </div>
-      <div className="max-h-none sm:max-h-42 overflow-y-auto styled-scrollbar">
+      <div className="styled-scrollbar max-h-none overflow-y-auto sm:max-h-42">
         {tabIndex === 0 && <E.TraitsEditor />}
         {tabIndex === 1 && <E.GVAREditor />}
         {tabIndex === 2 && <E.KillsEditor />}

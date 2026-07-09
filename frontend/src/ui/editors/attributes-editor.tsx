@@ -18,9 +18,9 @@ export const AttributesEditor = () => {
           className="w-full"
         >
           {({ isHovered }) => (
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <div
-                className={`flex text-left relative text-2xl sm:text-xl ${isHovered ? 'text-gray-50' : 'text-gold-400'}`}
+                className={`relative flex text-left text-2xl sm:text-xl ${isHovered ? 'text-gray-50' : 'text-gold-400'}`}
               >
                 {attr.name}
               </div>
