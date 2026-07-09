@@ -117,14 +117,15 @@ export const ValueSetter = ({
     >
       {({ isHovered }) => (
         <div className="flex justify-between">
-          <p
+          <div
             role="button"
+            tabIndex={0}
             className={clsx(getColor(isHovered), onClick ? 'cursor-pointer' : 'cursor-default')}
             onClick={onClick}
             onKeyUp={onClick}
           >
             {name}.
-          </p>
+          </div>
           <div className="flex flex-row items-center gap-0.5">
             {showControls && (
               <Hoverable>

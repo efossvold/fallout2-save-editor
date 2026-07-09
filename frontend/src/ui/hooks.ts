@@ -1,12 +1,10 @@
-// oxlint-disable react-you-might-not-need-an-effect-js/no-event-handler
 import type { RefObject } from 'react'
 
 import { clsx } from 'clsx'
 import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from 'react'
 
-import type { Dict, Fn } from '~/types'
+import type { Fn } from '~/types'
 
-import { entries } from '../api/utils'
 import { getWindow } from './utils'
 
 type GetColor = (
@@ -48,7 +46,7 @@ export const useIsWeb = (): boolean | undefined => {
 export const useMountEffect = (fn: () => any) => {
   const mounted = useRef(false)
 
-  const onMount = useEffectEvent(function setMounted() {
+  const onMount = useEffectEvent(() => {
     if (!mounted.current) {
       mounted.current = true
       fn()
@@ -160,45 +158,7 @@ export const useDisclosure = (): UseDisclosureReturn => {
   return { isOpen, onOpen, onClose, onToggle }
 }
 
-type UseChangedPropsChanges = { name: string; prev: string | number; current: string | number }[]
-
-export const useChangedProps = (
-  props: Dict<unknown>,
-  name = '',
-  log = false,
-): UseChangedPropsChanges => {
-  const prev = useRef(props)
-  const [changed, setChanged] = useState<UseChangedPropsChanges>([])
-
-  useEffect(() => {
-    const changes = entries(props).reduce<UseChangedPropsChanges>((acc, [key, prop]) => {
-      if (prev.current[key] === prop) {
-        return acc
-      }
-      acc.push({
-        name: key,
-        prev: prev.current[key] as string | number,
-        current: prop as string | number,
-      })
-      return acc
-    }, [])
-
-    if (log && Object.keys(changes).length > 0) {
-      if (!import.meta.env.PROD) {
-        console.log(`Props Changed ${name ? `[${name}]` : ''}`, changes)
-      }
-    }
-
-    prev.current = props
-
-    // oxlint-disable-next-line react-you-might-not-need-an-effect-js/no-derived-state
-    setChanged(changes)
-  }, [props, name, log])
-
-  return changed
-}
-
-export const useDebouncedPrevValue = <T>(value: T, delay = 500): [RefObject<T>, T] => {
+export const useDebouncedValue = <T>(value: T, delay = 500): [RefObject<T>, T] => {
   const prevValue = useRef(value)
   const isPrevValueSet = useRef(false)
   const [debouncedValue, setDebouncedValue] = useState(value)

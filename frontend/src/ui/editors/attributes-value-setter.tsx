@@ -1,3 +1,4 @@
+// oxlint-disable jsx-a11y/control-has-associated-label
 import { toast } from 'react-hot-toast'
 
 import type { AttributesValues } from '../../api/types/attributes'

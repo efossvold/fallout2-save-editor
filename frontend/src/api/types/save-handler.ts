@@ -10,21 +10,20 @@ export type Setters<T extends Record<string, unknown>, Prefix extends string = '
 }
 
 export type SaveHandler = {
-  findF13Offset(): number
-  findF17Offset(): number
-  findF17Offset(): number
-  findF6Offset(): number
-  findF7Offset(): number
-  findF8Offset(): number
-  findF9Offset(): number
-  findF10Offset(): number
-  findF11Offset(): number
-  getInventoryItems(): InventoryItem[]
-  getPreferences(): void
-  fromBase64(base64: string, data?: Partial<M.SaveGameData>): SaveHandler
-  setData(data: M.SaveGameData): void
-  toBase64(): string
-  getData(): M.SaveGameData
+  findF13Offset: () => number
+  findF17Offset: () => number
+  findF6Offset: () => number
+  findF7Offset: () => number
+  findF8Offset: () => number
+  findF9Offset: () => number
+  findF10Offset: () => number
+  findF11Offset: () => number
+  getInventoryItems: () => InventoryItem[]
+  getPreferences: () => void
+  fromBase64: (base64: string, data?: Partial<M.SaveGameData>) => SaveHandler
+  setData: (data: M.SaveGameData) => void
+  toBase64: () => string
+  getData: () => M.SaveGameData
 } & Getters<M.MapHeaderSection> &
   Setters<M.MapHeaderSection> &
   // Player and inventory

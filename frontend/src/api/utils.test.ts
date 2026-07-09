@@ -40,16 +40,16 @@ describe('selectors', () => {
     consoleSpy.mockReturnValue()
 
     // oxlint-disable-next-line unicorn/no-null
-    expect(U.getError(null)).toStrictEqual(Error('Invalid error: null'))
+    expect(U.getError(null)).toStrictEqual(new Error('Invalid error: null'))
     expect(consoleSpy).toHaveBeenCalledWith('Invalid error: null')
 
-    expect(U.getError(Error('mock-error'))).toStrictEqual(Error('mock-error'))
-    expect(U.getError('mock-error')).toStrictEqual(Error('mock-error'))
-    expect(U.getError({ message: 'mock-error' })).toStrictEqual(Error('mock-error'))
+    expect(U.getError(new Error('mock-error'))).toStrictEqual(new Error('mock-error'))
+    expect(U.getError('mock-error')).toStrictEqual(new Error('mock-error'))
+    expect(U.getError({ message: 'mock-error' })).toStrictEqual(new Error('mock-error'))
     expect(U.getError({ hello: 'world' })).toStrictEqual(
-      Error('getError: Unknown error type: {"hello":"world"}'),
+      new Error('getError: Unknown error type: {"hello":"world"}'),
     )
-    expect(U.getError(1)).toStrictEqual(Error('getError: Unknown error type: 1'))
+    expect(U.getError(1)).toStrictEqual(new Error('getError: Unknown error type: 1'))
   })
 
   it('prefixString', () => {

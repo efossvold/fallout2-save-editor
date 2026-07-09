@@ -118,7 +118,6 @@ export const Toolbar = () => {
     if (files && files.length > 0) {
       const [file] = files
       if (file) {
-        // oxlint-disable-next-line no-useless-assignment
         filename = file.name
         reader.readAsDataURL(file)
       }
@@ -158,9 +157,9 @@ export const Toolbar = () => {
           document.body.removeChild(a)
         }, 100)
       } catch (error) {
-        const err = getError(error as MayBeError)
+        const err = getError(error)
         if (!err.name.startsWith('AbortError')) {
-          toast.error(getError(error as MayBeError).message)
+          toast.error(getError(error).message)
         }
       }
     } else {
@@ -177,7 +176,7 @@ export const Toolbar = () => {
           toast.success('Save successful')
         }
       } catch (error) {
-        toast.error(getError(error as MayBeError).message)
+        toast.error(getError(error).message)
       }
     }
   }

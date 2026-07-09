@@ -50,7 +50,6 @@ export default defineConfig({
   },
   globals: {},
   jsPlugins: [
-    { name: 'react-hooks-js', specifier: 'eslint-plugin-react-hooks' },
     {
       name: 'react-you-might-not-need-an-effect-js',
       specifier: 'eslint-plugin-react-you-might-not-need-an-effect',
@@ -116,26 +115,7 @@ export default defineConfig({
     'import/prefer-default-export': 'off',
 
     /*
-     * React-compiler rules
-     */
-    'react-hooks-js/config': 'error',
-    'react-hooks-js/error-boundaries': 'error',
-    'react-hooks-js/component-hook-factories': 'error',
-    'react-hooks-js/gating': 'error',
-    'react-hooks-js/globals': 'error',
-    'react-hooks-js/immutability': 'error',
-    'react-hooks-js/preserve-manual-memoization': 'error',
-    'react-hooks-js/purity': 'error',
-    'react-hooks-js/refs': 'error',
-    'react-hooks-js/set-state-in-effect': 'error',
-    'react-hooks-js/set-state-in-render': 'error',
-    'react-hooks-js/static-components': 'error',
-    'react-hooks-js/unsupported-syntax': 'warn',
-    'react-hooks-js/use-memo': 'error',
-    'react-hooks-js/incompatible-library': 'warn',
-
-    /*
-     * React-compiler rules
+     * React useEffect rules
      */
     'react-you-might-not-need-an-effect-js/no-derived-state': 'warn',
     'react-you-might-not-need-an-effect-js/no-chain-state-updates': 'warn',
@@ -165,14 +145,15 @@ export default defineConfig({
     {
       files: ['**/*.tsx'],
       rules: {
+        '@typescript-eslint/consistent-return': 'warn',
+        '@typescript-eslint/strict-void-return': 'off',
         'import/no-nodejs-modules': 'error',
         'jsx-a11y/no-autofocus': 'warn',
         'jsx-a11y/prefer-tag-over-role': 'off',
         'react/jsx-max-depth': 'off',
         'react/jsx-props-no-spreading': 'off',
         'react/react-in-jsx-scope': 'off',
-        '@typescript-eslint/consistent-return': 'warn',
-        '@typescript-eslint/strict-void-return': 'off',
+        'react/react-compiler': 'error',
 
         // Disable - solved by react-compilter
         'react-perf/jsx-no-new-function-as-prop': 'off',

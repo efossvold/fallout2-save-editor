@@ -1,8 +1,40 @@
 import { clsx } from 'clsx'
+import { useState } from 'react'
+
+import { entries } from '~/api/utils'
 
 import type { SaveGameData, SaveGameDataExtra } from '../../api/types/map'
 
-import { useChangedProps, useDebouncedPrevValue } from '../hooks'
+import { useDebouncedValue } from '../hooks'
+
+type UseChangedPropsChanges = { name: string; prev: string | number; current: string | number }[]
+
+const getChangedProps = (
+  props: Dict<unknown>,
+  prev: Dict<unknown>,
+  name = '',
+  log = false,
+): UseChangedPropsChanges => {
+  const changes = entries(props).reduce<UseChangedPropsChanges>((acc, [key, prop]) => {
+    if (prev[key] === prop) {
+      return acc
+    }
+    acc.push({
+      name: key,
+      prev: prev[key] as string | number,
+      current: prop as string | number,
+    })
+    return acc
+  }, [])
+
+  if (log && Object.keys(changes).length > 0) {
+    if (!import.meta.env.PROD) {
+      console.log(`Props Changed ${name ? `[${name}]` : ''}`, changes)
+    }
+  }
+
+  return changes
+}
 
 interface PropChangedProps {
   showChangesOnly: boolean
@@ -11,8 +43,16 @@ interface PropChangedProps {
 }
 
 export const PropChangedList = (p: PropChangedProps) => {
-  const [, changedData] = useDebouncedPrevValue(p.data)
-  const changedProps = useChangedProps(changedData as any, 'DebugPanel', true)
+  const [, data] = useDebouncedValue(p.data)
+  const [prevData, setPrevData] = useState(data)
+  const [changedProps, setChangedProps] = useState<UseChangedPropsChanges>([])
+
+  if (data !== prevData) {
+    const changes = getChangedProps(data as any, prevData as any, 'DebugPanel', false)
+
+    setPrevData(data)
+    setChangedProps(changes)
+  }
 
   return (
     <div className={clsx(p.showChangesOnly ? 'table' : 'hidden', 'mt-1')}>
