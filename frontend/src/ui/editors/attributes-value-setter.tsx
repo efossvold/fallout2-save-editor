@@ -40,15 +40,15 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
   }
 
   return (
-    <div className="flex flex-row items-center gap-2">
-      <div className="flex flex-row gap-2 rounded-sm bg-gray-800 px-2">
+    <div className="flex flex-row gap-2 items-center">
+      <div className="px-2 rounded-sm bg-gray-800 flex flex-row gap-2">
         {/* oxlint-disable-next-line unicorn/prefer-spread */}
         {`0${totalValue}`
           .slice(-2)
           .split('')
           .map((digit, index) => (
             <div
-              className="font-falloutx text-[32px] leading-tight text-gray-50 sm:text-2xl"
+              className="font-falloutx text-[32px] text-gray-50 leading-tight sm:text-2xl"
               // oxlint-disable-next-line react/no-array-index-key
               key={index.toString()}
             >
@@ -56,7 +56,7 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
             </div>
           ))}
       </div>
-      <div className="grid gap-2">
+      <div className="gap-2 grid">
         <Hoverable>
           {({ isHovered }) => (
             <div

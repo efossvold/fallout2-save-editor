@@ -12,7 +12,7 @@
 }
 @font-face {
   font-family: 'falloutx';
-  font-style: bold;
+  font-style: normal;
   font-weight: 500;
   src: url('../assets/fonts/falloutx.woff2') format('woff2');
 }

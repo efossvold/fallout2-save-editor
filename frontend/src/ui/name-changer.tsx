@@ -38,13 +38,13 @@ const NameChangerModal = (p: {
     <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none" onClose={onClose}>
       <DialogBackdrop
         transition
-        className="fixed inset-0 bg-gray-900/40 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+        className="data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in bg-gray-900/40 transition-opacity inset-0 fixed"
       />
-      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div className="flex min-h-full items-center justify-center p-4">
+      <div className="w-screen inset-0 fixed z-10 overflow-y-auto">
+        <div className="p-4 flex min-h-full items-center justify-center">
           <DialogPanel
             transition
-            className="w-full max-w-lg rounded-lg bg-white p-4 text-2xl text-gray-600 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 sm:max-w-md sm:text-xl"
+            className="data-closed:transform-[scale(95%)] data-closed:opacity-0 text-2xl text-gray-600 p-4 rounded-lg bg-white max-w-lg w-full duration-300 ease-out backdrop-blur-2xl sm:(text-xl max-w-md)"
           >
             <DialogTitle as="h3">Character Name</DialogTitle>
 
@@ -58,7 +58,7 @@ const NameChangerModal = (p: {
               maxLength={MAX_CHARACTER_NAME_LENGTH}
             />
 
-            <div className="mt-4 flex w-100 flex-row justify-end gap-4">
+            <div className="mt-4 flex flex-row gap-4 w-100 justify-end">
               <ModalButton onClick={onClose} variant="primary" disabled={name.length <= 0}>
                 Close
               </ModalButton>

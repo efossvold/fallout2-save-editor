@@ -126,7 +126,7 @@ export const ValueSetter = ({
           >
             {name}.
           </div>
-          <div className="flex flex-row items-center gap-0.5">
+          <div className="flex flex-row gap-0.5 items-center">
             {showControls && (
               <Hoverable>
                 {({ isHovered: isBtnHovered }) => (
@@ -135,7 +135,7 @@ export const ValueSetter = ({
                       className={clsx(
                         caretLeft({ isHovered: isBtnHovered }),
                         isHovered ? 'visible' : 'sm:invisible',
-                        'relative top-px',
+                        'top-px relative',
                       )}
                       onClick={onDecreasePress}
                     />
@@ -149,12 +149,12 @@ export const ValueSetter = ({
             {showControls && (
               <Hoverable>
                 {({ isHovered: isBtnHovered }) => (
-                  <div className="flex flex-row items-center gap-0.5">
+                  <div className="flex flex-row gap-0.5 items-center">
                     <Button
                       className={clsx(
                         caretRight({ isHovered: isBtnHovered }),
                         isHovered ? 'visible' : 'sm:invisible',
-                        'relative top-px',
+                        'top-px relative',
                       )}
                       onClick={onIncreasePress}
                     />

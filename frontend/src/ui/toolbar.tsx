@@ -19,7 +19,7 @@ const ToolbarButton = ({ children, onClick, isDisabled, isToggled, className }: 
   <Button
     className={cn(
       'flex h-11 w-24 cursor-pointer items-center justify-center rounded-sm bg-gray-100 font-semibold text-gray-900 transition-colors hover:bg-gray-200 data-disabled:cursor-default data-disabled:bg-gray-300 sm:text-lg',
-      isToggled && 'bg-gray-600 text-gray-100 hover:bg-gray-400 hover:text-gray-50',
+      isToggled && 'bg-gray-600 text-gray-100 hover:(bg-gray-400 text-gray-50)',
       className,
     )}
     onClick={onClick}
@@ -30,7 +30,7 @@ const ToolbarButton = ({ children, onClick, isDisabled, isToggled, className }: 
 )
 
 const InfoItem = (p: React.PropsWithChildren<{ name: string }>) => (
-  <div className="flex justify-between text-xs">
+  <div className="text-xs flex justify-between">
     <p className="text-gray-600">{p.name}</p>
     <div className="text-gray-400">{p.children}</div>
   </div>
@@ -48,7 +48,7 @@ const SaveGameMeta = () => {
   const savePathShort = currentSaveFile?.split('/').slice(-2).join('/')
 
   return currentSaveFile ? (
-    <div className="order-last m-auto grid w-full grid-cols-[50%_30%] justify-between sm:grid-cols-[40%_25%] lg:order-0 lg:w-1/2">
+    <div className="m-auto grid grid-cols-[50%_30%] w-full justify-between order-last sm:grid-cols-[40%_25%] lg:(w-1/2 order-0)">
       <InfoItem name="Path">
         <button
           // @ts-expect-error
@@ -199,21 +199,21 @@ export const Toolbar = () => {
   }
 
   return (
-    <div className="w-full rounded-sm bg-gray-50 px-2 py-1">
-      <div className="flex w-full flex-row flex-wrap justify-between justify-items-center gap-1">
+    <div className="px-2 py-1 rounded-sm bg-gray-50 w-full">
+      <div className="flex flex-row flex-wrap gap-1 w-full justify-between justify-items-center">
         <Logo
           className={clsx('h-11 transition', currentSaveFile ? 'fill-blue-400' : 'fill-gray-200')}
         />
 
         <SaveGameMeta />
 
-        <div className="flex flex-row justify-between gap-4">
+        <div className="flex flex-row gap-4 justify-between">
           {isWeb ? (
             <>
               <input type="file" id="open-file" onChange={onFileChange} hidden />
               <label
                 htmlFor="open-file"
-                className="flex h-11 w-24 cursor-pointer items-center justify-center rounded-sm bg-gray-100 font-semibold text-gray-900 transition-colors hover:bg-gray-200 sm:text-lg"
+                className="text-gray-900 font-semibold rounded-sm bg-gray-100 flex h-11 w-24 cursor-pointer transition-colors items-center justify-center sm:text-lg hover:bg-gray-200"
               >
                 Open
               </label>

@@ -11,14 +11,14 @@ export const FilterField = (p: {
   <div className="relative">
     <Input
       className={clsx(
-        'mt-1 mb-1 w-full rounded-sm bg-gray-100 px-3 py-1 text-gray-800 focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25',
+        'focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25 text-gray-800 mb-1 mt-1 px-3 py-1 rounded-sm bg-gray-100 w-full',
       )}
       placeholder="Filter"
       value={p.value}
       onChange={p.handleChange}
     />
     <Button
-      className="absolute top-1.5 right-2 cursor-pointer text-gray-400 hover:text-gray-50"
+      className="text-gray-400 cursor-pointer right-2 top-1.5 absolute hover:text-gray-50"
       onClick={p.handleReset}
     >
       x

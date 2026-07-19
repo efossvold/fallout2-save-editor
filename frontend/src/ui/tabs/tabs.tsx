@@ -33,7 +33,7 @@ export const Tabs = () => {
 
   return (
     <>
-      <div className="flex w-full flex-row justify-between">
+      <div className="flex flex-row w-full justify-between">
         <TabButton index={0}>TRAITS</TabButton>
         <TabButton index={1}>REPUTATION</TabButton>
         <TabButton index={2}>KILLS</TabButton>

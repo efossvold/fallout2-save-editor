@@ -5,9 +5,9 @@ export const HelpText = () => {
   const helpText = useHelpTextStore(s => s.helpText)
 
   return (
-    <div className="flex-1 pt-1 pb-2">
+    <div className="pb-2 pt-1 flex-1">
       <p className="text-xl text-gray-800">{title}</p>
-      {title ? <div className="mt-2 mb-2 w-full border border-gray-800" /> : <></>}
+      {title ? <div className="mb-2 mt-2 border border-gray-800 w-full" /> : <></>}
       <p className="text-base text-gray-800">{helpText}</p>
     </div>
   )

@@ -62,12 +62,12 @@ export const StoreDebuggerPanel = () => {
   return (
     <div
       className={clsx(
-        'my-1 overflow-hidden transition-[width]',
+        'my-1 transition-[width] overflow-hidden',
         showDebugWindow ? 'w-[320px]' : 'w-0',
       )}
       style={{ maxHeight: panelsHeight ? `${panelsHeight}px` : 'auto' }}
     >
-      <div className="mr-0.5 flex h-full flex-col gap-1 rounded-sm bg-gray-50 p-2 py-1 text-xs">
+      <div className="text-xs mr-0.5 p-2 py-1 rounded-sm bg-gray-50 flex flex-col gap-1 h-full">
         <h1 className="text-base text-gray-700">Data</h1>
 
         <FilterField
