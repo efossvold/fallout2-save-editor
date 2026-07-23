@@ -6,7 +6,7 @@ import type { AttributesValues } from '../../api/types/attributes'
 import { prefixString } from '../../api/utils'
 import { css, cx } from '../../styled-system/css'
 import { Grid } from '../../styled-system/jsx'
-import { flex } from '../../styled-system/patterns/flex'
+import { Flex } from '../components/flex'
 import { ATTR_PREFIX, MAX_ATTRIBUTE_VALUE, MIN_ATTRIBUTE_VAULE } from '../constants'
 import { caretDown, caretUp } from '../icons'
 import * as S from '../selectors'
@@ -42,8 +42,15 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
   }
 
   return (
-    <div className={flex({ gap: '2', alignItems: 'center' })}>
-      <div className={flex({ gap: '2', px: '2', rounded: 'sm', bg: 'gray.800' })}>
+    <Flex gap="2" alignItems="center">
+      <Flex
+        gap="2"
+        sx={css({
+          px: '2',
+          rounded: 'sm',
+          bg: 'gray.800',
+        })}
+      >
         {/* oxlint-disable-next-line unicorn/prefer-spread */}
         {`0${totalValue}`
           .slice(-2)
@@ -62,23 +69,23 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
               {digit}
             </div>
           ))}
-      </div>
+      </Flex>
       <Grid gap="2">
         <div
           role="button"
           tabIndex={0}
-          className={cx(css({ cursor: 'pointer' }), caretUp())}
+          className={cx(caretUp(), css({ cursor: 'pointer' }))}
           onClick={onValueUp}
           onKeyUp={onValueUp}
         />
         <div
           role="button"
           tabIndex={0}
-          className={cx(css({ cursor: 'pointer' }), caretDown())}
+          className={cx(caretDown(), css({ cursor: 'pointer' }))}
           onClick={onValueDown}
           onKeyUp={onValueDown}
         />
       </Grid>
-    </div>
+    </Flex>
   )
 }

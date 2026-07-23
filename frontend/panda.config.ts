@@ -76,38 +76,6 @@ export default defineConfig({
   },
   patterns: {
     extend: {
-      //   flex: {
-      //     properties: {
-      //       templateCols: { type: 'string' },
-      //       templateRows: { type: 'string' },
-      //       justify: {
-      //         type: 'enum',
-      //         value: [
-      //           'flex-start',
-      //           'flex-end',
-      //           'center',
-      //           'space-around',
-      //           'space-between',
-      //           'space-evenly',
-      //           'stretch',
-      //           'left',
-      //           'normal',
-      //           'right',
-      //         ],
-      //       },
-      //     },
-      //     transform(props) {
-      //       const { templateCols, templateRows, justify, ...rest } = props
-      //       return {
-      //         display: 'grid',
-      //         gridTemplateColumns: templateCols,
-      //         gridTemplateRows: templateRows,
-      //         justifyContent: justify,
-      //         ...rest,
-      //       }
-      //     },
-      //   },
-      // },
       grid: {
         defaultValues: {
           gap: '0',
@@ -117,6 +85,7 @@ export default defineConfig({
           templateRows: { type: 'string' },
           justify: {
             type: 'enum',
+            description: 'shite',
             value: [
               'flex-start',
               'flex-end',

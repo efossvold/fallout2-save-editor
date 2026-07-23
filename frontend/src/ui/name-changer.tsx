@@ -6,6 +6,7 @@ import { css } from '../styled-system/css'
 import { HStack } from '../styled-system/jsx'
 import { flex } from '../styled-system/patterns/flex'
 import { ModalButton } from './components/buttons'
+import { Flex } from './components/flex'
 import { InputField } from './components/input-field'
 import { MAX_CHARACTER_NAME_LENGTH } from './constants'
 import { useDisclosure } from './hooks/use-disclosure'
@@ -65,19 +66,12 @@ export const NameChanger = (p: { name: string }) => {
 
   return (
     <>
-      <div
-        className={flex({
-          justify: 'space-between',
-          mr: '2.5',
-          color: { base: 'green.200', _hover: 'gray.50' },
-        })}
+      <Flex
+        justify="space-between"
+        sx={css({ mr: '2.5', color: { base: 'green.200', _hover: 'gray.50' } })}
       >
         <p>Name</p>
-        <div
-          className={flex({
-            justify: 'space-between',
-          })}
-        >
+        <Flex justify="space-between">
           <button
             // oxlint-disable-next-line react/jsx-handler-names
             onClick={disclosure.onOpen}
@@ -89,8 +83,8 @@ export const NameChanger = (p: { name: string }) => {
           >
             {p.name}
           </button>
-        </div>
-      </div>
+        </Flex>
+      </Flex>
       <NameChangerModal initialValue={p.name} disclosure={disclosure} />
     </>
   )

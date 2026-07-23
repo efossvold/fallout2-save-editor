@@ -2,7 +2,7 @@ import type { PropsWithChildren } from 'react'
 
 import { cx } from '../../styled-system/css'
 import { css } from '../../styled-system/css/css'
-import { flex } from '../../styled-system/patterns/flex'
+import { Flex } from '../components/flex'
 import * as E from '../editors'
 import { useTabsStore } from './store'
 
@@ -36,11 +36,16 @@ export const Tabs = () => {
 
   return (
     <>
-      <div className={flex({ justify: 'space-between', w: 'full' })}>
+      <Flex
+        justify="space-between"
+        className={css({
+          w: 'full',
+        })}
+      >
         <TabButton index={0}>TRAITS</TabButton>
         <TabButton index={1}>REPUTATION</TabButton>
         <TabButton index={2}>KILLS</TabButton>
-      </div>
+      </Flex>
       <div
         className={cx(
           css({ maxHeight: { base: '0', sm: '[276px]' }, overflowY: 'auto' }),

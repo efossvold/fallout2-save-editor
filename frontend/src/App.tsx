@@ -2,14 +2,14 @@ import './style/index.css'
 import { Toaster } from 'react-hot-toast'
 
 import { css } from './styled-system/css'
-import { flex } from './styled-system/patterns/flex'
+import { Flex } from './ui/components/flex'
 import { StoreDebuggerPanel } from './ui/debug-panel'
 import { Panels } from './ui/panels'
 
 const App = () => (
   <>
     <div className={css({ bg: 'gray.300', h: 'screen', w: 'screen' })}>
-      <div className={flex({ justify: 'center' })}>
+      <Flex justify="center">
         <div
           className={css({
             px: '0.5',
@@ -24,7 +24,7 @@ const App = () => (
         </div>
 
         <StoreDebuggerPanel />
-      </div>
+      </Flex>
     </div>
 
     <Toaster

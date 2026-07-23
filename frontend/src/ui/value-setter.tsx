@@ -1,9 +1,9 @@
 import { toast } from 'react-hot-toast'
 
-import type { ColorsValue } from '../styled-system/types/system'
+import type { ColorToken } from '~/styled-system/tokens'
 
 import { css, cx } from '../styled-system/css'
-import { flex } from '../styled-system/patterns/flex'
+import { Flex } from './components/flex'
 import { useHelpTextStore } from './help-text/store'
 import { useHoverColor } from './hooks/use-hover-color'
 import { Hoverable } from './hoverable'
@@ -21,8 +21,8 @@ interface Props {
   onClick?: (ev: React.SyntheticEvent) => void
   onIncrease: () => void
   onDecrease: () => void
-  color?: ColorsValue
-  hoverColor?: ColorsValue
+  color?: ColorToken
+  hoverColor?: ColorToken
   dimOnZero?: boolean
   minValue?: number
   minBaseValue?: number
@@ -120,7 +120,7 @@ export const ValueSetter = ({
       className={css({ w: 'full' })}
     >
       {({ isHovered }) => (
-        <div className={flex({ justify: 'space-between' })}>
+        <Flex justify="space-between">
           <div
             role="button"
             tabIndex={0}
@@ -135,9 +135,9 @@ export const ValueSetter = ({
             {name}.
           </div>
 
-          <div className={flex({ justifyItems: 'center', gap: '0.5' })}>
+          <Flex justifyItems="center" gap="0.5">
             {showControls && (
-              <div className={flex({ justifyItems: 'center', alignItems: 'center' })}>
+              <Flex justifyItems="center" alignItems="center">
                 <button
                   aria-label={`Decrease ${name}`}
                   data-parent-hover={isHovered}
@@ -152,13 +152,13 @@ export const ValueSetter = ({
                   )}
                   onClick={onDecreasePress}
                 />
-              </div>
+              </Flex>
             )}
 
             <p style={{ color: getColor(isHovered) }}>{valueText ?? `${totalValue}${unit}`}</p>
 
             {showControls && (
-              <div className={flex({ justifyItems: 'center', alignItems: 'center', gap: '0.5' })}>
+              <Flex justifyItems="center" alignItems="center" gap="0.5">
                 <button
                   aria-label={`Increase ${name}`}
                   data-parent-hover={isHovered}
@@ -174,10 +174,10 @@ export const ValueSetter = ({
                   )}
                   onClick={onIncreasePress}
                 />
-              </div>
+              </Flex>
             )}
-          </div>
-        </div>
+          </Flex>
+        </Flex>
       )}
     </Hoverable>
   )

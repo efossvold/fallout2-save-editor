@@ -1,5 +1,5 @@
 import { css, cx } from '../styled-system/css'
-import { flex } from '../styled-system/patterns/flex'
+import { Flex } from './components/flex'
 import { useHelpTextStore } from './help-text/store'
 import { Hoverable } from './hoverable'
 import { Checkbox as CheckboxUnchecked, CheckboxChecked } from './icons'
@@ -34,9 +34,7 @@ export const ValueCheckbox = (p: Props) => {
       }}
     >
       {({ isHovered }) => (
-        <div
-          className={flex({ justify: 'space-between', alignItems: 'center', cursor: 'pointer' })}
-        >
+        <Flex justify="space-between" alignItems="center" sx={css({ cursor: 'pointer' })}>
           <p
             aria-checked={p.value}
             data-parent-hover={isHovered}
@@ -60,7 +58,7 @@ export const ValueCheckbox = (p: Props) => {
               p.className,
             )}
           />
-        </div>
+        </Flex>
       )}
     </Hoverable>
   )

@@ -1,12 +1,12 @@
 import type { PropsWithChildren } from 'react'
 
-import type { ColorsValue } from '../styled-system/types/system'
+import type { ColorToken } from '~/styled-system/tokens'
 
 import { css, cx } from '../styled-system/css'
 
 interface PanelHeaderProps {
   title: string
-  color?: ColorsValue
+  color?: ColorToken
 }
 
 export const PanelHeader = (p: PanelHeaderProps) => (

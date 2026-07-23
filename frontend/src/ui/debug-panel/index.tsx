@@ -6,7 +6,7 @@ import { ATTRIBUTES } from '../../api/data/attributes'
 import { SKILLS } from '../../api/data/skills'
 import * as U from '../../api/utils'
 import { css } from '../../styled-system/css'
-import { flex } from '../../styled-system/patterns/flex'
+import { Flex } from '../components/flex'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
 import { FilterField } from './filter-field'
@@ -73,9 +73,9 @@ export const StoreDebuggerPanel = () => {
         width: showDebugWindow ? '20rem' : '0',
       }}
     >
-      <div
-        className={flex({
-          direction: 'column',
+      <Flex
+        direction="column"
+        sx={css({
           py: '1',
           rounded: 'sm',
           bg: 'gray.50',
@@ -116,7 +116,7 @@ export const StoreDebuggerPanel = () => {
           <PropList data={dataExtra} filter={search} showChangesOnly={showChangesOnly} />
           <PropChangedList data={dataExtra} filter={search} showChangesOnly={showChangesOnly} />
         </div>
-      </div>
+      </Flex>
     </div>
   )
 }

@@ -1,12 +1,12 @@
-import type { ColorsValue } from '../../styled-system/types/system'
+import type { ColorToken } from '~/styled-system/tokens'
 
 import { getColorToken } from '../utils'
 
 const getColor = (
   isHovered: boolean,
-  notHoveredColor: ColorsValue | (() => ColorsValue),
-  hoveredColor?: ColorsValue,
-): ColorsValue => {
+  notHoveredColor: ColorToken | (() => ColorToken),
+  hoveredColor?: ColorToken,
+): ColorToken => {
   if (isHovered) {
     const defaultColor = getColorToken('gray.50')
     return hoveredColor ?? defaultColor

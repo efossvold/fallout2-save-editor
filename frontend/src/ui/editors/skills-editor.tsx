@@ -5,7 +5,7 @@ import type { SkillValues } from '../../api/types/skills'
 
 import { SKILLS } from '../../api/data/skills'
 import { entries } from '../../api/utils'
-import { flex } from '../../styled-system/patterns/flex'
+import { Flex } from '../components/flex'
 import { MAX_SKILL_ID, MAX_SKILL_VALUE, MAX_TAGGED_SKILLS, MIN_SKILL_VALUE } from '../constants'
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
@@ -79,11 +79,11 @@ export const SkillsEditor = () => {
   return (
     <>
       <PanelHeader title="SKILLS" />
-      <div className={flex({ direction: 'column' })}>
+      <Flex direction="column">
         {entries(skills).map(([name, value]) => (
           <SkillSetter key={name} name={name} value={value} />
         ))}
-      </div>
+      </Flex>
     </>
   )
 }

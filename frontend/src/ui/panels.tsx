@@ -1,7 +1,8 @@
-import { css, cx } from '../styled-system/css'
+import { css } from '../styled-system/css'
 import { Grid } from '../styled-system/jsx'
 import { flex } from '../styled-system/patterns/flex'
 import { VERSION } from '../version'
+import { Flex } from './components/flex'
 import * as E from './editors'
 import { HelpText } from './help-text'
 import { useHeightObserver } from './hooks/use-height-observer'
@@ -77,24 +78,9 @@ export const Panels = () => {
             minH: { base: '80', lg: '55' },
           })}
         >
-          <div
-            className={cx(
-              flex({ direction: 'column', justify: 'space-between' }),
-              css({ h: 'full' }),
-            )}
-          >
+          <Flex direction="column" justify="space-between" sx={css({ h: 'full' })}>
             <HelpText />
-            <div
-              className={cx(
-                flex({
-                  justify: 'space-between',
-                }),
-                css({
-                  color: 'gray.50',
-                  fill: 'gray.50',
-                }),
-              )}
-            >
+            <Flex justify="space-between" sx={css({ color: 'gray.50', fill: 'gray.50' })}>
               <div>v{VERSION}</div>
               <a href="https://github.com/efossvold/fallout2-save-editor" target="_blank">
                 <GithubIcon
@@ -103,8 +89,8 @@ export const Panels = () => {
                   })}
                 />
               </a>
-            </div>
-          </div>
+            </Flex>
+          </Flex>
         </Panel>
       </Grid>
     </div>

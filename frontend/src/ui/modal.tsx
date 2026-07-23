@@ -2,7 +2,7 @@ import { createPortal } from 'react-dom'
 
 import type { RecipeVariant } from '../styled-system/css'
 
-import { css, cva, cx } from '../styled-system/css'
+import { css, cva } from '../styled-system/css'
 import { useEventListener } from './hooks/use-add-event-listener'
 import { useDelayValue } from './hooks/use-delay-value'
 
@@ -46,7 +46,7 @@ interface ModalProps extends RecipeVariant<typeof modalStyle> {
   className?: string
 }
 
-export default function Modal({ isOpen, onClose, size, children, className = '' }: ModalProps) {
+export default function Modal({ isOpen, onClose, size, children }: ModalProps) {
   const shouldRender = useDelayValue(isOpen, 1000)
   const shouldAnimateFadeIn = useDelayValue(!isOpen, 1)
 
@@ -73,7 +73,7 @@ export default function Modal({ isOpen, onClose, size, children, className = '' 
     /* oxlint-disable jsx-a11y/no-static-element-interactions jsx-a11y/click-events-have-key-events jsx-a11y/no-noninteractive-element-interactions */
     <div className={backdropStyle} data-state={state} onClick={onClose}>
       <div
-        className={cx(modalStyle({ size }), className)}
+        className={modalStyle({ size })}
         data-state={state}
         role="dialog"
         aria-modal="true"

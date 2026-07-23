@@ -1,6 +1,6 @@
 import { GVARS } from '../../api/data/gvar'
 import { keysOf, prefixString } from '../../api/utils'
-import { flex } from '../../styled-system/patterns/flex'
+import { Flex } from '../components/flex'
 import { ATTR_PREFIX } from '../constants'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
@@ -12,7 +12,7 @@ export const GVAREditor = () => {
   const gvarKeysSorted = keysOf(GVARS).toSorted((a, b) => a.localeCompare(b))
 
   return (
-    <div className={flex({ direction: 'column' })}>
+    <Flex direction="column">
       {gvarKeysSorted.map(key => {
         const { name, maxValue, desc } = GVARS[key]
         const gvarKey = prefixString(key, ATTR_PREFIX.GVAR)
@@ -35,6 +35,6 @@ export const GVAREditor = () => {
           />
         )
       })}
-    </div>
+    </Flex>
   )
 }
