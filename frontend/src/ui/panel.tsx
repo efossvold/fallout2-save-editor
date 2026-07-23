@@ -1,20 +1,18 @@
 import type { PropsWithChildren } from 'react'
 
-import { clsx } from 'cnfast'
+import type { ColorsValue } from '../styled-system/types/system'
+
+import { css, cx } from '../styled-system/css'
 
 interface PanelHeaderProps {
   title: string
-  color?: string
+  color?: ColorsValue
 }
 
 export const PanelHeader = (p: PanelHeaderProps) => (
-  <p className={`${p.color ?? 'text-beige-500'} mb-0 uppercase`}>{p.title}</p>
+  <p className={css({ color: 'beige.500', mb: '0', textTransform: 'uppercase' })}>{p.title}</p>
 )
 
-export const Panel = ({
-  children,
-  bg,
-  className = '',
-}: PropsWithChildren<{ bg?: string; className?: string }>) => (
-  <div className={clsx(bg ?? 'bg-gray-900', className, 'p-2 rounded-sm')}>{children}</div>
+export const Panel = ({ children, className = '' }: PropsWithChildren<{ className?: string }>) => (
+  <div className={cx(css({ bg: 'gray.900', p: '2', rounded: 'sm' }), className)}>{children}</div>
 )

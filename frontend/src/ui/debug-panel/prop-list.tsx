@@ -1,6 +1,6 @@
-import { clsx } from 'cnfast'
-
 import type { SaveGameData, SaveGameDataExtra } from '../../api/types/map'
+
+import { css } from '../../styled-system/css'
 
 interface PropListProps {
   showChangesOnly: boolean
@@ -9,7 +9,12 @@ interface PropListProps {
 }
 
 export const PropList = (p: PropListProps) => (
-  <div className={clsx(p.showChangesOnly ? 'hidden' : 'table', 'mt-1')}>
+  <div
+    className={css({ mt: '1' })}
+    style={{
+      display: p.showChangesOnly ? 'none' : 'table',
+    }}
+  >
     {Object.entries(p.data).map(([name, value]) => {
       let isVisible = true
 
@@ -18,15 +23,19 @@ export const PropList = (p: PropListProps) => (
       }
 
       return (
-        <div key={name} className={isVisible ? 'table-row' : 'hidden'}>
-          <div className="table-cell">
-            <span className="text-gray-500">{name}</span>
-            <span className="text-gray-900 ml-px mr-2">:</span>
-            {typeof value === 'number' && <span className="text-red-400">{value}</span>}
-            {typeof value === 'boolean' && (
-              <span className="text-blue-400">{value ? 'true' : 'false'}</span>
+        <div key={name} style={{ display: isVisible ? 'table-row' : 'hidden' }}>
+          <div className={css({ display: 'table-cell' })}>
+            <span className={css({ color: 'gray.500' })}>{name}</span>
+            <span className={css({ color: 'gray.900', ml: '0.5', mr: '2' })}>:</span>
+            {typeof value === 'number' && (
+              <span className={css({ color: 'red.400' })}>{value}</span>
             )}
-            {typeof value === 'string' && <span className="text-green-600">"{value}"</span>}
+            {typeof value === 'boolean' && (
+              <span className={css({ color: 'blue.400' })}>{value ? 'true' : 'false'}</span>
+            )}
+            {typeof value === 'string' && (
+              <span className={css({ color: 'green.600' })}>"{value}"</span>
+            )}
           </div>
         </div>
       )

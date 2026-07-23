@@ -4,8 +4,10 @@ import { toast } from 'react-hot-toast'
 import type { AttributesValues } from '../../api/types/attributes'
 
 import { prefixString } from '../../api/utils'
+import { css, cx } from '../../styled-system/css'
+import { Grid } from '../../styled-system/jsx'
+import { flex } from '../../styled-system/patterns/flex'
 import { ATTR_PREFIX, MAX_ATTRIBUTE_VALUE, MIN_ATTRIBUTE_VAULE } from '../constants'
-import { Hoverable } from '../hoverable'
 import { caretDown, caretUp } from '../icons'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
@@ -40,15 +42,20 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
   }
 
   return (
-    <div className="flex flex-row gap-2 items-center">
-      <div className="px-2 rounded-sm bg-gray-800 flex flex-row gap-2">
+    <div className={flex({ gap: '2', alignItems: 'center' })}>
+      <div className={flex({ gap: '2', px: '2', rounded: 'sm', bg: 'gray.800' })}>
         {/* oxlint-disable-next-line unicorn/prefer-spread */}
         {`0${totalValue}`
           .slice(-2)
           .split('')
           .map((digit, index) => (
             <div
-              className="font-falloutx text-[32px] text-gray-50 leading-tight sm:text-2xl"
+              className={css({
+                color: 'gray.50',
+                fs: { base: '[32px]', sm: '2xl' },
+                lineHeight: 'tight',
+                fontFamily: 'falloutx',
+              })}
               // oxlint-disable-next-line react/no-array-index-key
               key={index.toString()}
             >
@@ -56,30 +63,22 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
             </div>
           ))}
       </div>
-      <div className="gap-2 grid">
-        <Hoverable>
-          {({ isHovered }) => (
-            <div
-              role="button"
-              tabIndex={0}
-              className={caretUp({ isHovered })}
-              onClick={onValueUp}
-              onKeyUp={onValueUp}
-            />
-          )}
-        </Hoverable>
-        <Hoverable>
-          {({ isHovered }) => (
-            <div
-              role="button"
-              tabIndex={0}
-              className={caretDown({ isHovered })}
-              onClick={onValueDown}
-              onKeyUp={onValueDown}
-            />
-          )}
-        </Hoverable>
-      </div>
+      <Grid gap="2">
+        <div
+          role="button"
+          tabIndex={0}
+          className={cx(css({ cursor: 'pointer' }), caretUp())}
+          onClick={onValueUp}
+          onKeyUp={onValueUp}
+        />
+        <div
+          role="button"
+          tabIndex={0}
+          className={cx(css({ cursor: 'pointer' }), caretDown())}
+          onClick={onValueDown}
+          onKeyUp={onValueDown}
+        />
+      </Grid>
     </div>
   )
 }

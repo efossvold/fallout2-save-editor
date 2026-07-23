@@ -1,60 +1,118 @@
-import type { ButtonProps } from '@headlessui/react'
+import type { BoxProps } from '~/types'
 
-import { Button } from '@headlessui/react'
-import { cn } from 'cnfast'
+import type { RecipeVariantProps } from '../../styled-system/css'
 
-interface ModalButtonProps extends ButtonProps {
-  variant?: 'primary' | 'secondary'
-}
+import { cva, cx } from '../../styled-system/css'
 
-export const ModalButton = ({ children, className, variant, ...rest }: ModalButtonProps) => (
-  <Button
-    className={cn(
-      'cursor-pointer rounded-md bg-gray-700 px-3 py-1.5 font-semibold text-white',
-      'focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25',
-      'data-hover:bg-gray-500',
-      'data-disabled:cursor-default data-disabled:bg-gray-300',
-      variant !== 'primary' ? 'bg-gray-600' : 'bg-gray-100 text-gray-900 data-hover:bg-gray-200',
-      className,
-    )}
+const buttonStyle = cva({
+  base: {
+    display: 'inline-flex',
+    cursor: 'pointer',
+    rounded: 'md',
+    px: '3',
+    py: '1.5',
+    fontWeight: 'semibold',
+    _hover: { bg: 'gray.500' },
+  },
+  variants: {
+    kind: {
+      primary: {
+        color: 'white',
+        bg: 'gray.600',
+      },
+      secondary: {
+        color: 'gray.900',
+        bg: 'gray.100',
+      },
+    },
+    isDisabled: {
+      true: {
+        bg: 'gray.300',
+        cursor: 'default',
+        _hover: {
+          bg: 'gray.300',
+          color: 'white',
+        },
+      },
+      false: {},
+    },
+  },
+  defaultVariants: {
+    kind: 'primary',
+  },
+})
+
+type ModalButtonProps = RecipeVariantProps<typeof buttonStyle> & BoxProps
+
+export const ModalButton = ({
+  children,
+  className = '',
+  kind = 'primary',
+  isDisabled = false,
+  ...rest
+}: ModalButtonProps) => (
+  <button
+    className={cx(buttonStyle({ kind, isDisabled }), className)}
+    disabled={isDisabled}
     {...rest}
   >
     {children}
-  </Button>
+  </button>
 )
 
-// import { tv } from 'tailwind-variants'
+const toolbarButtonStyle = cva({
+  base: {
+    display: 'inline-flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    rounded: 'sm',
+    w: '24',
+    h: '11',
+    fontWeight: 'semibold',
+    color: 'gray.900',
+    bg: 'gray.100',
+    transition: 'colors',
+    cursor: 'pointer',
+    _hover: {
+      color: 'gray.50',
+      bg: 'gray.400',
+    },
+    sm: { fs: 'lg' },
+  },
+  variants: {
+    isToggled: {
+      true: {
+        color: 'gray.100',
+        bg: 'gray.600',
+        _hover: { bg: 'gray.400', color: 'gray.50' },
+      },
+      false: {},
+    },
+    isDisabled: {
+      true: {
+        bg: 'gray.300',
+        cursor: 'default',
+        _hover: { bg: 'gray.300', color: 'gray.900' },
+      },
+      false: {},
+    },
+  },
+})
 
-// const btnStyle = tv({
-//   base: clsx(
-//     'cursor-pointer rounded-md bg-gray-700 px-3 py-1.5 font-semibold text-white',
-//     'focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25',
-//     'data-hover:bg-gray-500',
-//     'data-disabled:cursor-default data-disabled:bg-gray-300',
-//   ),
-//   variants: {
-//     color: {
-//       primary: 'bg-gray-600',
-//       secondary: 'bg-gray-100 text-gray-900 data-hover:bg-gray-200',
-//     },
-//     size: {
-//       sm: 'text-sm',
-//       md: 'text-base',
-//       lg: 'text-lg',
-//     },
-//   },
-//   defaultVariants: {
-//     color: 'primary',
-//   },
-// })
+type ToolbarButtonProps = RecipeVariantProps<typeof toolbarButtonStyle> & BoxProps
 
-// interface IButtonProps extends ButtonProps {
-//   size?: keyof (typeof btnStyle)['variants']['size']
-//   color?: keyof (typeof btnStyle)['variants']['color']
-// }
-
-// export const IButton = ({ children, className, size, color, ...rest }: IButtonProps) => (
-//   <Button className={clsx(btnStyle({ size, color }), className)} {...rest}>
-//     {children}
-//   </Button>
-// )
+export const ToolbarButton = ({
+  children,
+  className = '',
+  onClick,
+  isDisabled = false,
+  isToggled = false,
+}: ToolbarButtonProps) => (
+  <button
+    className={cx(toolbarButtonStyle({ isDisabled, isToggled }), className)}
+    onClick={onClick}
+    disabled={isDisabled}
+  >
+    {children}
+  </button>
+)

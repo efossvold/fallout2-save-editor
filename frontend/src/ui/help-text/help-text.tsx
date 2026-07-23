@@ -1,3 +1,4 @@
+import { css } from '../../styled-system/css'
 import { useHelpTextStore } from './store'
 
 export const HelpText = () => {
@@ -5,10 +6,14 @@ export const HelpText = () => {
   const helpText = useHelpTextStore(s => s.helpText)
 
   return (
-    <div className="pb-2 pt-1 flex-1">
-      <p className="text-xl text-gray-800">{title}</p>
-      {title ? <div className="mb-2 mt-2 border border-gray-800 w-full" /> : <></>}
-      <p className="text-base text-gray-800">{helpText}</p>
+    <div className={css({ flex: '1', pb: '2', pt: '1' })}>
+      <p className={css({ color: 'gray.800', fs: 'xl' })}>{title}</p>
+      {title ? (
+        <div className={css({ mb: '2', borderWidth: '1px', borderColor: 'gray.800', w: 'full' })} />
+      ) : (
+        <></>
+      )}
+      <p className={css({ fs: 'md', color: 'gray.800' })}>{helpText}</p>
     </div>
   )
 }

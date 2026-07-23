@@ -1,10 +1,10 @@
-import type { ClassName, BoxProps } from '~/types'
+import type { BoxProps } from '~/types'
 
-import { useHover } from './hooks'
+import { useHover } from './hooks/use-hover'
 
 interface HoverableProps extends Omit<BoxProps, 'children'> {
   children: React.ReactNode | ((state: { isHovered: boolean }) => React.ReactNode)
-  className?: ClassName
+  className?: string
   onHover?: (ev: React.PointerEvent<HTMLDivElement>) => any
   onUnhover?: (ev: React.SyntheticEvent) => any
 }

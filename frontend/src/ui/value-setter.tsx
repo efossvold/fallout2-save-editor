@@ -1,11 +1,14 @@
-import { Button } from '@headlessui/react'
-import { clsx } from 'cnfast'
 import { toast } from 'react-hot-toast'
 
+import type { ColorsValue } from '../styled-system/types/system'
+
+import { css, cx } from '../styled-system/css'
+import { flex } from '../styled-system/patterns/flex'
 import { useHelpTextStore } from './help-text/store'
-import { useHoverColor } from './hooks'
+import { useHoverColor } from './hooks/use-hover-color'
 import { Hoverable } from './hoverable'
 import { caretLeft, caretRight } from './icons'
+import { getColorToken } from './utils'
 
 interface Props {
   name: string
@@ -18,8 +21,8 @@ interface Props {
   onClick?: (ev: React.SyntheticEvent) => void
   onIncrease: () => void
   onDecrease: () => void
-  color?: string
-  hoverColor?: string
+  color?: ColorsValue
+  hoverColor?: ColorsValue
   dimOnZero?: boolean
   minValue?: number
   minBaseValue?: number
@@ -61,10 +64,11 @@ export const ValueSetter = ({
   const totalValue = baseValue + bonusValue
   const getHoverColor = useHoverColor()
   const setHelpText = useHelpTextStore(s => s.setHelpText)
+  const clearHelpText = useHelpTextStore(s => s.clearHelpText)
 
   const getColor = (isHovered: boolean) => {
     const defaultColor =
-      dimOnZero && totalValue < 1 ? clsx('text-green-900') : clsx('text-green-200')
+      dimOnZero && totalValue < 1 ? getColorToken('green.900') : getColorToken('green.200')
 
     return getHoverColor(isHovered, color ?? defaultColor, hoverColor)
   }
@@ -112,55 +116,65 @@ export const ValueSetter = ({
   return (
     <Hoverable
       onHover={() => setHelpText(helperTitle ?? name, helperText)}
-      // onUnhover={() => clearHelpText()}
-      className="w-full"
+      onUnhover={() => clearHelpText()}
+      className={css({ w: 'full' })}
     >
       {({ isHovered }) => (
-        <div className="flex justify-between">
+        <div className={flex({ justify: 'space-between' })}>
           <div
             role="button"
             tabIndex={0}
-            className={clsx(getColor(isHovered), onClick ? 'cursor-pointer' : 'cursor-default')}
+            data-hover={isHovered}
+            data-onclick={Boolean(onClick)}
+            data-highlight={dimOnZero && totalValue < 1}
+            style={{ color: getColor(isHovered) }}
+            className={css({ '&[data-onclick=true]': { cursor: 'pointer' } })}
             onClick={onClick}
             onKeyUp={onClick}
           >
             {name}.
           </div>
-          <div className="flex flex-row gap-0.5 items-center">
+
+          <div className={flex({ justifyItems: 'center', gap: '0.5' })}>
             {showControls && (
-              <Hoverable>
-                {({ isHovered: isBtnHovered }) => (
-                  <div className="flex items-center">
-                    <Button
-                      className={clsx(
-                        caretLeft({ isHovered: isBtnHovered }),
-                        isHovered ? 'visible' : 'sm:invisible',
-                        'top-px relative',
-                      )}
-                      onClick={onDecreasePress}
-                    />
-                  </div>
-                )}
-              </Hoverable>
+              <div className={flex({ justifyItems: 'center', alignItems: 'center' })}>
+                <button
+                  aria-label={`Decrease ${name}`}
+                  data-parent-hover={isHovered}
+                  className={cx(
+                    caretLeft(),
+                    css({
+                      pos: 'relative',
+                      top: { base: '0.25', sm: '0' },
+                      visibility: { base: 'visible', sm: 'hidden' },
+                      _parentHover: { visibility: 'visible' },
+                    }),
+                  )}
+                  onClick={onDecreasePress}
+                />
+              </div>
             )}
 
-            <p className={getColor(isHovered)}>{valueText ?? `${totalValue}${unit}`}</p>
+            <p style={{ color: getColor(isHovered) }}>{valueText ?? `${totalValue}${unit}`}</p>
 
             {showControls && (
-              <Hoverable>
-                {({ isHovered: isBtnHovered }) => (
-                  <div className="flex flex-row gap-0.5 items-center">
-                    <Button
-                      className={clsx(
-                        caretRight({ isHovered: isBtnHovered }),
-                        isHovered ? 'visible' : 'sm:invisible',
-                        'top-px relative',
-                      )}
-                      onClick={onIncreasePress}
-                    />
-                  </div>
-                )}
-              </Hoverable>
+              <div className={flex({ justifyItems: 'center', alignItems: 'center', gap: '0.5' })}>
+                <button
+                  aria-label={`Increase ${name}`}
+                  data-parent-hover={isHovered}
+                  className={cx(
+                    caretRight(),
+                    css({
+                      pos: 'relative',
+                      top: { base: '0.25', sm: '0' },
+                      visibility: { base: 'visible', sm: 'hidden' },
+                      cursor: 'pointer',
+                      _parentHover: { visibility: 'visible' },
+                    }),
+                  )}
+                  onClick={onIncreasePress}
+                />
+              </div>
             )}
           </div>
         </div>

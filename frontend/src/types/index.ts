@@ -22,11 +22,9 @@ export interface IError {
 
 export type MayBeError = Error | string | IError
 
-export type ClassName = React.HTMLProps<HTMLElement>['className']
-
 export interface BoxProps {
   children?: React.ReactNode
-  className?: ClassName
+  className?: string
   onClick?: React.MouseEventHandler<HTMLElement>
   onKeyUp?: React.KeyboardEventHandler<HTMLElement>
   onKeyDown?: React.KeyboardEventHandler<HTMLElement>
@@ -35,11 +33,6 @@ export interface BoxProps {
   onAction?: (
     ev: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement> | undefined,
   ) => void
-}
-
-export interface ButtonProps extends BoxProps {
-  isDisabled?: boolean
-  isToggled?: boolean
 }
 
 export type Entries<T> = {

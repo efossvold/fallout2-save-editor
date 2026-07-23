@@ -1,10 +1,11 @@
+import { css } from '../../styled-system/css'
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
 import { ValueCheckbox } from '../value-checkbox'
 import { ValueSetter } from '../value-setter'
 
-const checkboxClassName = 'mr-3.25'
+const checkboxClassName = css({ mr: '3.5' })
 
 export const HealthEditor = () => {
   const data = useAPIStore(s => s.data)

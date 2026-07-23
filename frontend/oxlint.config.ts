@@ -54,8 +54,8 @@ export default defineConfig({
       specifier: 'eslint-plugin-react-you-might-not-need-an-effect',
     },
     {
-      name: 'unocss-js',
-      specifier: '@unocss/eslint-plugin',
+      name: 'pandacss-js',
+      specifier: '@pandacss/eslint-plugin',
     },
   ],
   rules: {
@@ -155,17 +155,25 @@ export default defineConfig({
         'jsx-a11y/prefer-tag-over-role': 'off',
         'react/jsx-max-depth': 'off',
         'react/jsx-props-no-spreading': 'off',
-        'react/react-in-jsx-scope': 'off',
         'react/react-compiler': 'error',
+        'react/react-in-jsx-scope': 'off',
+        'react/function-component-definition': 'off',
 
         // Disable - solved by react-compilter
         'react-perf/jsx-no-new-function-as-prop': 'off',
         'react-perf/jsx-no-new-object-as-prop': 'off',
 
-        // UnoCSS
-        'unocss-js/order': 'warn',
-        'unocss-js/order-attributify': 'warn',
-        'unocss-js/enforce-class-compile': 'error',
+        // PandaCSS
+        // 'pandacss-js/file-not-included': 'error',
+        'pandacss-js/no-config-function-in-source': 'error',
+        'pandacss-js/no-debug': 'warn',
+        'pandacss-js/no-dynamic-styling': 'warn',
+        'pandacss-js/no-hardcoded-color': 'warn',
+        'pandacss-js/no-invalid-nesting': 'error',
+        'pandacss-js/no-invalid-token-paths': 'error',
+        'pandacss-js/no-property-renaming': 'warn',
+        'pandacss-js/no-unsafe-token-fn-usage': 'warn',
+        'pandacss-js/no-deprecated-tokens': 'warn',
       },
     },
     {

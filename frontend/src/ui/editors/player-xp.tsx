@@ -1,4 +1,6 @@
 import { getLevelXP } from '../../api/data/xp-levels'
+import { css } from '../../styled-system/css'
+import { flex } from '../../styled-system/patterns/flex'
 import { MAX_LEVEL, MIN_LEVEL } from '../constants'
 import { NameChanger } from '../name-changer'
 import { PanelHeader } from '../panel'
@@ -12,7 +14,7 @@ export const PlayerXP = () => {
   const playerAge = useAPIStore(S.getPlayerAge)
 
   return (
-    <div className="text-green-200">
+    <div className={css({ color: 'green.200' })}>
       <PanelHeader title="PLAYER INFO" />
 
       <NameChanger name={data.characterName} />
@@ -90,11 +92,11 @@ export const PlayerXP = () => {
         dimOnZero={false}
       />
 
-      <div className="flex justify-between">
-        <p className="">Next Level</p>
-        <div className="flex justify-between">
+      <div className={flex({ justify: 'space-between' })}>
+        <p>Next Level</p>
+        <div className={flex({ justify: 'space-between' })}>
           {getLevelXP(data.playerLevel + 1)}
-          <div className="w-4" />
+          <div className={css({ w: '4' })} />
         </div>
       </div>
     </div>

@@ -1,0 +1,73 @@
+@layer reset, base, tokens, recipes, utilities;
+
+@import './fonts.css';
+@import './scrollbar.css';
+
+:root {
+  --font-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-body: fallouty, var(--font-base);
+  --font-mono: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-falloutx: falloutx, var(--font-base);
+  --font-fallouty: fallouty, var(--font-base);
+
+  --default-transition-timing-function: var(--ease-in-out);
+  --default-transition-duration: 200ms;
+}
+
+[popover] {
+  opacity: 0;
+  transition-duration: 0.3s;
+  transition-property: opacity display;
+  transition-behavior: allow-discrete;
+}
+
+[popover]:popover-open {
+  opacity: 1;
+}
+
+@starting-style {
+  [popover]:popover-open {
+    opacity: 0;
+  }
+}
+
+.tooltip {
+  position: absolute;
+  position-area: bottom;
+
+  max-width: 15rem;
+  padding: 0.75rem;
+  padding-bottom: 0.5rem;
+  background: var(--colors-gray-700);
+  color: white;
+  font-size: 0.875rem;
+  text-align: center;
+
+  --cr: 8px; /* corner-radius */
+  --ap: 50%; /* anchor position (center) */
+  --ah: 8px; /* anchor height */
+  --aw: 8px; /* anchor width */
+
+  /* https://una.im/border-shape */
+  --border-shape: shape(
+    from var(--cr) var(--ah),
+    hline to calc(var(--ap) - var(--aw)),
+    line by var(--aw) calc(var(--ah) * -1),
+    line by var(--aw) var(--ah),
+    hline to calc(100% - var(--cr)),
+    curve to right calc(var(--ah) + var(--cr)) with right calc(var(--ah)),
+    vline to calc(100% - var(--cr)),
+    curve to calc(100% - var(--cr)) bottom with right bottom,
+    hline to var(--cr),
+    curve to left calc(100% - var(--cr)) with left bottom,
+    vline to calc(var(--ah) + var(--cr)),
+    curve to var(--cr) var(--ah) with left var(--ah)
+  );
+
+  clip-path: var(--border-shape);
+
+  @supports (border-shape: shape(from 0 0, hline to 100%)) {
+    clip-path: revert;
+    border-shape: var(--border-shape);
+  }
+}

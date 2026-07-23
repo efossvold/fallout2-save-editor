@@ -2,6 +2,8 @@ import React from 'react'
 
 import { PERKS } from '../../api/data/perks'
 import { keysOf, prefixString } from '../../api/utils'
+import { css, cx } from '../../styled-system/css'
+import { flex } from '../../styled-system/patterns/flex'
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
@@ -17,8 +19,16 @@ export const PerksEditor = () => {
   return (
     <>
       <PanelHeader title="PERKS" />
-      <div className="styled-scrollbar max-h-none overflow-y-auto sm:max-h-105">
-        <div className="flex flex-col">
+      <div
+        className={cx(
+          css({
+            maxH: { base: 'auto', sm: '[420px]' },
+            overflowY: 'auto',
+          }),
+          'styled-scrollbar',
+        )}
+      >
+        <div className={flex({ direction: 'column' })}>
           {perkKeysSorted.map(key => {
             const { name, ranks, desc } = PERKS[key]
             const perkKey = prefixString(key, 'perk')

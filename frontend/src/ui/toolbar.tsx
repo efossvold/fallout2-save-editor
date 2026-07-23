@@ -1,38 +1,30 @@
-import { Button } from '@headlessui/react'
-import { clsx, cn } from 'cnfast'
 import React, { use, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useShallow } from 'zustand/react/shallow'
 
-import type { ButtonProps } from '~/types'
-
 import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
 import { base64toBlob, getError } from '../api/utils'
+import { css } from '../styled-system/css'
+import { Grid, HStack } from '../styled-system/jsx'
+import { flex } from '../styled-system/patterns/flex'
+import { ToolbarButton } from './components/buttons'
 import { DEFAULT_SAVE_FILENAME } from './constants'
-import { useIsWeb } from './hooks'
+import { useIsWeb } from './hooks/use-is-web'
 import { Logo } from './logo'
 import * as S from './selectors'
 import { useAPIStore, handler } from './store'
 import { basename, dirname } from './utils'
 
-const ToolbarButton = ({ children, onClick, isDisabled, isToggled, className }: ButtonProps) => (
-  <Button
-    className={cn(
-      'flex h-11 w-24 cursor-pointer items-center justify-center rounded-sm bg-gray-100 font-semibold text-gray-900 transition-colors hover:bg-gray-200 data-disabled:cursor-default data-disabled:bg-gray-300 sm:text-lg',
-      isToggled && 'bg-gray-600 text-gray-100 hover:(bg-gray-400 text-gray-50)',
-      className,
-    )}
-    onClick={onClick}
-    disabled={isDisabled ?? false}
-  >
-    {children}
-  </Button>
-)
-
 const InfoItem = (p: React.PropsWithChildren<{ name: string }>) => (
-  <div className="text-xs flex justify-between">
-    <p className="text-gray-600">{p.name}</p>
-    <div className="text-gray-400">{p.children}</div>
+  <div
+    className={css({
+      display: 'flex',
+      justifyContent: 'space-between',
+      fs: 'xs',
+    })}
+  >
+    <p className={css({ color: 'gray.600' })}>{p.name}</p>
+    <div className={css({ color: 'gray.400' })}>{p.children}</div>
   </div>
 )
 
@@ -48,13 +40,22 @@ const SaveGameMeta = () => {
   const savePathShort = currentSaveFile?.split('/').slice(-2).join('/')
 
   return currentSaveFile ? (
-    <div className="m-auto grid grid-cols-[50%_30%] w-full justify-between order-last sm:grid-cols-[40%_25%] lg:(w-1/2 order-0)">
+    <Grid
+      templateCols={{ base: '50% 30%', sm: '40% 25%' }}
+      justify="space-between"
+      className={css({
+        w: 'full',
+        m: 'auto',
+        order: '999',
+        lg: { w: '1/2', order: 0 },
+      })}
+    >
       <InfoItem name="Path">
         <button
           // @ts-expect-error
           interestfor="tooltip-save-path"
           id="save-path-btn"
-          className="cursor-pointer"
+          className={css({ cursor: 'pointer' })}
           style={{
             anchorName: '--tooltip-anchor',
           }}
@@ -75,7 +76,7 @@ const SaveGameMeta = () => {
       <InfoItem name="Save name">{saveName}</InfoItem>
       <InfoItem name="In-game time">{inGameTimeText}</InfoItem>
       <InfoItem name="Game version">{gameVersion}</InfoItem>
-    </div>
+    </Grid>
   ) : (
     <></>
   )
@@ -199,21 +200,46 @@ export const Toolbar = () => {
   }
 
   return (
-    <div className="px-2 py-1 rounded-sm bg-gray-50 w-full">
-      <div className="flex flex-row flex-wrap gap-1 w-full justify-between justify-items-center">
+    <div
+      className={css({
+        px: '2',
+        py: '1',
+        rounded: 'sm',
+        bg: 'gray.50',
+        w: 'full',
+      })}
+    >
+      <HStack justify="space-between" gap="1" className={css({ w: 'full', flexWrap: 'wrap' })}>
         <Logo
-          className={clsx('h-11 transition', currentSaveFile ? 'fill-blue-400' : 'fill-gray-200')}
+          active={Boolean(currentSaveFile)}
+          className={css({
+            h: '11',
+            fill: 'gray.200',
+            _active: { fill: 'blue.400' },
+          })}
         />
 
         <SaveGameMeta />
 
-        <div className="flex flex-row gap-4 justify-between">
+        <HStack gap="4" justify="space-around">
           {isWeb ? (
             <>
               <input type="file" id="open-file" onChange={onFileChange} hidden />
               <label
                 htmlFor="open-file"
-                className="text-gray-900 font-semibold rounded-sm bg-gray-100 flex h-11 w-24 cursor-pointer transition-colors items-center justify-center sm:text-lg hover:bg-gray-200"
+                className={flex({
+                  justify: 'center',
+                  color: 'gray.900',
+                  bg: 'gray.100',
+                  rounded: 'sm',
+                  align: 'center',
+                  h: '11',
+                  w: '24',
+                  cursor: 'pointer',
+                  fontWeight: 'semibold',
+                  sm: { fs: 'lg' },
+                  _hover: { bg: 'gray.200' },
+                })}
               >
                 Open
               </label>
@@ -229,7 +255,13 @@ export const Toolbar = () => {
             <ToolbarButton
               isToggled={showDebugWindow}
               onClick={toggleDebugWindow}
-              className="hidden sm:block"
+              className={css({
+                display: {
+                  base: 'none',
+                  // sm: 'none',
+                  sm: 'block',
+                },
+              })}
             >
               Debug
             </ToolbarButton>
@@ -245,8 +277,8 @@ export const Toolbar = () => {
               Quit
             </ToolbarButton>
           )}
-        </div>
-      </div>
+        </HStack>
+      </HStack>
     </div>
   )
 }

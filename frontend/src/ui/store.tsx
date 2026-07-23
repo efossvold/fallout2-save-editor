@@ -32,7 +32,8 @@ export type StoreState = Readonly<{
 export const useAPIStore = create<StoreState>()(
   immer((set, get) => ({
     data: createSaveData(),
-    showDebugWindow: !import.meta.env.PROD,
+    showDebugWindow: false,
+    // showDebugWindow: !import.meta.env.PROD,
     panelsHeight: 733,
 
     // Calculate permanent bonus/penalties from perks

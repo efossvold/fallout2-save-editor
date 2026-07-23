@@ -1,11 +1,11 @@
-import { clsx } from 'cnfast'
 import { useState } from 'react'
 
 import { entries } from '~/api/utils'
 
 import type { SaveGameData, SaveGameDataExtra } from '../../api/types/map'
 
-import { useDebouncedValue } from '../hooks'
+import { css } from '../../styled-system/css'
+import { useDebouncedValue } from '../hooks/use-debounced-value'
 
 type UseChangedPropsChanges = { name: string; prev: string | number; current: string | number }[]
 
@@ -36,6 +36,10 @@ const getChangedProps = (
   return changes
 }
 
+const Arrow = () => (
+  <span className={css({ color: 'gray.500', mx: '1', pos: 'relative', top: '[1px]' })}>→</span>
+)
+
 interface PropChangedProps {
   showChangesOnly: boolean
   filter: string
@@ -55,7 +59,12 @@ export const PropChangedList = (p: PropChangedProps) => {
   }
 
   return (
-    <div className={clsx(p.showChangesOnly ? 'table' : 'hidden', 'mt-1')}>
+    <div
+      className={css({ mt: '1' })}
+      style={{
+        display: p.showChangesOnly ? 'table' : 'hidden',
+      }}
+    >
       {changedProps.map(prop => {
         let isVisible = true
 
@@ -64,30 +73,31 @@ export const PropChangedList = (p: PropChangedProps) => {
         }
 
         return (
-          <div key={prop.name} className={isVisible ? 'table-row' : 'hidden'}>
-            <div className="table-cell">
-              <span className="text-gray-500">{prop.name}</span>
-              <span className="text-gray-900 ml-px mr-2">:</span>
+          <div key={prop.name} style={{ display: isVisible ? 'table-row' : 'hidden' }}>
+            <div className={css({ display: 'table-cell' })}>
+              <span className={css({ color: 'gray.500' })}>{prop.name}</span>
+              <span className={css({ color: 'gray.900', ml: '1', mr: '2' })}>:</span>
               {typeof prop.current === 'number' && (
                 <>
-                  <span className="text-gray-200">{prop.prev}</span>
-                  <span className="text-gray-500 mx-1">→</span>
-                  <span className="text-green-600">{prop.current}</span>
+                  <span className={css({ color: 'gray.200' })}>{prop.prev}</span>
+                  <Arrow />
+                  <span className={css({ color: 'green.600' })}>{prop.current}</span>
                 </>
               )}
               {typeof prop.current === 'boolean' && (
                 <>
-                  <span className="text-gray-200">{prop.prev ? 'true' : 'false'}</span>
-                  <span className="text-gray-500 mx-1">→</span>
-                  {/* oxlint-disable-next-line typescript/no-unnecessary-condition */}
-                  <span className="text-blue-600">{prop.current ? 'true' : 'false'}</span>
+                  <span className={css({ color: 'gray.200' })}>{prop.prev ? 'true' : 'false'}</span>
+                  <Arrow />
+                  <span className={css({ color: 'blue.600' })}>
+                    {prop.current === true ? 'true' : 'false'}
+                  </span>
                 </>
               )}
               {typeof prop.current === 'string' && (
                 <>
-                  <span className="text-gray-200">"{prop.prev}"</span>
-                  <span className="text-gray-500 mx-1">→</span>
-                  <span className="text-green-600">"{prop.current}"</span>
+                  <span className={css({ color: 'gray.200' })}>"{prop.prev}"</span>
+                  <Arrow />
+                  <span className={css({ color: 'green.600' })}>"{prop.current}"</span>
                 </>
               )}
             </div>

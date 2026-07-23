@@ -5,10 +5,12 @@ import type { SkillValues } from '../../api/types/skills'
 
 import { SKILLS } from '../../api/data/skills'
 import { entries } from '../../api/utils'
+import { flex } from '../../styled-system/patterns/flex'
 import { MAX_SKILL_ID, MAX_SKILL_VALUE, MAX_TAGGED_SKILLS, MIN_SKILL_VALUE } from '../constants'
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
+import { getColorToken } from '../utils'
 import { ValueSetter } from '../value-setter'
 
 const SkillSetter = (p: { name: keyof SkillValues; value: number }) => {
@@ -29,7 +31,7 @@ const SkillSetter = (p: { name: keyof SkillValues; value: number }) => {
       isMaxValue={skillTotal >= MAX_SKILL_VALUE}
       minValueMsg="Minimum level reached for this skill, why go lower?"
       maxValueMsg="Max level reached. Way to go! Or... Did you cheat?"
-      color={isSkillTagged ? 'text-gray-100' : 'text-green-200'}
+      color={isSkillTagged ? getColorToken('green.200') : getColorToken('green.200')}
       onClick={() => {
         // Tag/untag skill
         if (isSkillTagged) {
@@ -77,7 +79,7 @@ export const SkillsEditor = () => {
   return (
     <>
       <PanelHeader title="SKILLS" />
-      <div className="flex flex-col">
+      <div className={flex({ direction: 'column' })}>
         {entries(skills).map(([name, value]) => (
           <SkillSetter key={name} name={name} value={value} />
         ))}

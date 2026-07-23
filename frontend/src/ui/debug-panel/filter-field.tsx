@@ -1,27 +1,34 @@
 import type { ChangeEventHandler, MouseEventHandler } from 'react'
 
-import { Button, Input } from '@headlessui/react'
-import { clsx } from 'cnfast'
+import { css } from '../../styled-system/css'
+import { InputField } from '../components/input-field'
 
 export const FilterField = (p: {
   value: string
   handleChange: ChangeEventHandler<HTMLInputElement, HTMLInputElement>
   handleReset: MouseEventHandler<HTMLButtonElement>
 }) => (
-  <div className="relative">
-    <Input
-      className={clsx(
-        'focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25 text-gray-800 mb-1 mt-1 px-3 py-1 rounded-sm bg-gray-100 w-full',
-      )}
+  <div className={css({ pos: 'relative' })}>
+    <InputField
+      name="filter"
+      size="sm"
+      variant="light"
       placeholder="Filter"
       value={p.value}
       onChange={p.handleChange}
     />
-    <Button
-      className="text-gray-400 cursor-pointer right-2 top-1.5 absolute hover:text-gray-50"
+    <button
+      className={css({
+        color: 'gray.400',
+        cursor: 'pointer',
+        right: '2',
+        top: '3.5',
+        pos: 'absolute',
+        _hover: { color: 'gray.500' },
+      })}
       onClick={p.handleReset}
     >
       x
-    </Button>
+    </button>
   </div>
 )

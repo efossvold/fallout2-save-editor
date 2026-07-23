@@ -1,4 +1,3 @@
-import { clsx } from 'cnfast'
 import { useState } from 'react'
 
 import type { SaveGameDataExtra } from '../../api/types/map'
@@ -6,6 +5,8 @@ import type { SaveGameDataExtra } from '../../api/types/map'
 import { ATTRIBUTES } from '../../api/data/attributes'
 import { SKILLS } from '../../api/data/skills'
 import * as U from '../../api/utils'
+import { css } from '../../styled-system/css'
+import { flex } from '../../styled-system/patterns/flex'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
 import { FilterField } from './filter-field'
@@ -61,14 +62,35 @@ export const StoreDebuggerPanel = () => {
 
   return (
     <div
-      className={clsx(
-        'my-1 transition-[width] overflow-hidden',
-        showDebugWindow ? 'w-[320px]' : 'w-0',
-      )}
-      style={{ maxHeight: panelsHeight ? `${panelsHeight}px` : 'auto' }}
+      className={css({
+        display: { base: 'none', sm: 'block' },
+        my: '1',
+        transition: '[width]',
+        transitionDuration: 'slower',
+        overflow: 'hidden',
+      })}
+      style={{
+        width: showDebugWindow ? '20rem' : '0',
+      }}
     >
-      <div className="text-xs mr-0.5 p-2 py-1 rounded-sm bg-gray-50 flex flex-col gap-1 h-full">
-        <h1 className="text-base text-gray-700">Data</h1>
+      <div
+        className={flex({
+          direction: 'column',
+          py: '1',
+          rounded: 'sm',
+          bg: 'gray.50',
+          gap: '1',
+          p: '2',
+          h: 'full',
+          w: 'full',
+          fs: 'xs',
+          overflow: 'auto',
+        })}
+        style={{
+          maxHeight: panelsHeight ? `${panelsHeight}px` : 'auto',
+        }}
+      >
+        <h1 className={css({ color: 'gray.700', fs: 'md' })}>Data</h1>
 
         <FilterField
           value={search}
@@ -88,7 +110,7 @@ export const StoreDebuggerPanel = () => {
           }}
         />
 
-        <div className="overflow-auto">
+        <div className={css({ overflow: 'auto' })}>
           <PropList data={data} filter={search} showChangesOnly={showChangesOnly} />
           <PropChangedList data={data} filter={search} showChangesOnly={showChangesOnly} />
           <PropList data={dataExtra} filter={search} showChangesOnly={showChangesOnly} />

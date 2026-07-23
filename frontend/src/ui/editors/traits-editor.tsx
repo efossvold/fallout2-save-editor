@@ -2,6 +2,8 @@ import { toast } from 'react-hot-toast'
 
 import { TRAITS } from '../../api/data/traits'
 import { entries } from '../../api/utils'
+import { css } from '../../styled-system/css'
+import { flex } from '../../styled-system/patterns/flex'
 import { MAX_TRAITS } from '../constants'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
@@ -23,9 +25,9 @@ export const TraitsEditor = () => {
   }
 
   return (
-    <div className="flex flex-row flex-wrap w-full justify-between">
+    <div className={flex({ justify: 'space-between', wrap: 'wrap', w: 'full' })}>
       {entries(TRAITS).map(([, trait]) => (
-        <div key={trait.name} className="w-full md:w-[45%]">
+        <div key={trait.name} className={css({ w: { base: 'full', md: '[45%]' } })}>
           <ValueCheckbox
             name={trait.name}
             value={traits.includes(trait.id)}

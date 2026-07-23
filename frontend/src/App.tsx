@@ -1,18 +1,30 @@
-import 'virtual:uno.css'
-import './style/base.css'
+import './style/index.css'
 import { Toaster } from 'react-hot-toast'
 
+import { css } from './styled-system/css'
+import { flex } from './styled-system/patterns/flex'
 import { StoreDebuggerPanel } from './ui/debug-panel'
 import { Panels } from './ui/panels'
 
 const App = () => (
-  <div className="bg-gray-300 h-screen w-screen">
-    <div className="flex flex-row justify-center">
-      <div className="px-0.5 py-1 min-w-125 md:w-full sm:w-full xl:max-w-300">
-        <Panels />
-      </div>
+  <>
+    <div className={css({ bg: 'gray.300', h: 'screen', w: 'screen' })}>
+      <div className={flex({ justify: 'center' })}>
+        <div
+          className={css({
+            px: '0.5',
+            py: '1',
+            minW: '[500px]',
+            w: 'full',
+            h: 'full',
+            xl: { maxW: '300' },
+          })}
+        >
+          <Panels />
+        </div>
 
-      <StoreDebuggerPanel />
+        <StoreDebuggerPanel />
+      </div>
     </div>
 
     <Toaster
@@ -21,7 +33,7 @@ const App = () => (
         className: 'bg-red-500',
       }}
     />
-  </div>
+  </>
 )
 
 export default App
