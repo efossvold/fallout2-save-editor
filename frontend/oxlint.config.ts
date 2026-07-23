@@ -154,10 +154,11 @@ export default defineConfig({
         'import/no-nodejs-modules': 'error',
         'jsx-a11y/no-autofocus': 'warn',
         'jsx-a11y/prefer-tag-over-role': 'off',
+        'react/function-component-definition': 'off',
         'react/jsx-max-depth': 'off',
         'react/jsx-props-no-spreading': 'off',
-        'react/react-in-jsx-scope': 'off',
         'react/react-compiler': 'error',
+        'react/react-in-jsx-scope': 'off',
 
         // Disable - solved by react-compilter
         'react-perf/jsx-no-new-function-as-prop': 'off',
