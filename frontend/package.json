@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "vite-react-ssg build",
+    "build:prod": "bun run prepare:prod && bun run build",
     "devtools": "vite build",
     "analyze": "vite analyze",
     "deploy": "bunx netlify-cli deploy",
