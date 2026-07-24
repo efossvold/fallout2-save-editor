@@ -1,7 +1,6 @@
 import type { PropsWithChildren } from 'react'
 
-import { cx } from '../../styled-system/css'
-import { css } from '../../styled-system/css/css'
+import { cx, css } from '../../styled-system/css'
 import { Flex } from '../components/flex'
 import * as E from '../editors'
 import { useTabsStore } from './store'
