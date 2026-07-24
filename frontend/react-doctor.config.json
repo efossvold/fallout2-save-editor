@@ -1,0 +1,5 @@
+{
+  "ignore": {
+    "files": ["src/styled-system/**", "wailsjs/**", "panda.config.ts"]
+  }
+}

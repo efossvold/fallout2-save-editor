@@ -5,6 +5,7 @@ import type { RecipeVariant } from '../styled-system/css'
 import { css, cva } from '../styled-system/css'
 import { useEventListener } from './hooks/use-add-event-listener'
 import { useDelayValue } from './hooks/use-delay-value'
+import { getDocument } from './utils'
 
 const backdropStyle = css({
   pos: 'fixed',
@@ -49,6 +50,7 @@ interface ModalProps extends RecipeVariant<typeof modalStyle> {
 export default function Modal({ isOpen, onClose, size, children }: ModalProps) {
   const shouldRender = useDelayValue(isOpen, 1000)
   const shouldAnimateFadeIn = useDelayValue(!isOpen, 1)
+  const documentBody = getDocument()?.body
 
   let state = isOpen ? 'open' : 'closed'
 
@@ -65,7 +67,7 @@ export default function Modal({ isOpen, onClose, size, children }: ModalProps) {
     }
   })
 
-  if (!shouldRender) {
+  if (!shouldRender || !documentBody) {
     return undefined
   }
 
@@ -85,6 +87,6 @@ export default function Modal({ isOpen, onClose, size, children }: ModalProps) {
       </div>
     </div>,
     /* oxlint-enable jsx-a11y/no-static-element-interactions jsx-a11y/click-events-have-key-events jsx-a11y/no-noninteractive-element-interactions */
-    document.body,
+    documentBody,
   )
 }

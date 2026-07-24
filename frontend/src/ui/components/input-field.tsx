@@ -40,7 +40,7 @@ const inputStyle = cva({
   },
 })
 
-export interface InputProps
+interface InputProps
   extends
     Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>,
     RecipeVariant<typeof inputStyle> {

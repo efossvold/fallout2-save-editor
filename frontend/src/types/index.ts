@@ -16,11 +16,11 @@ export type UnionToDict<Union extends string, Type, Prefix extends string> = {
 
 export type Fn = () => void
 
-export interface IError {
-  message: string
-}
+// export interface IError {
+//   message: string
+// }
 
-export type MayBeError = Error | string | IError
+// export type MayBeError = Error | string | IError
 
 export interface BoxProps {
   children?: React.ReactNode

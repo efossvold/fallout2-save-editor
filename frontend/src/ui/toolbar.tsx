@@ -13,7 +13,7 @@ import { useIsWeb } from './hooks/use-is-web'
 import { Logo } from './logo'
 import * as S from './selectors'
 import { useAPIStore, handler } from './store'
-import { basename, dirname } from './utils'
+import { basename, dirname, getDocument } from './utils'
 
 const InfoItem = (p: React.PropsWithChildren<{ name: string }>) => (
   <div
@@ -161,18 +161,24 @@ export const Toolbar = () => {
 
     if (isWeb) {
       try {
+        const doc = getDocument()
+
+        if (!doc) {
+          return
+        }
+
         const blob = base64toBlob(handler.toBase64(), 'application/octet-stream')
         const url = URL.createObjectURL(blob)
-        const a = document.createElement('a')
+        const a = doc.createElement('a')
 
         a.href = url
         a.download = currentSaveFile ?? DEFAULT_SAVE_FILENAME
-        document.body.appendChild(a)
+        doc.body.appendChild(a)
         a.click()
 
         setTimeout(() => {
           URL.revokeObjectURL(url)
-          document.body.removeChild(a)
+          doc.body.removeChild(a)
         }, 100)
       } catch (error) {
         const err = getError(error)

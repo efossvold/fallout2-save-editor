@@ -8,6 +8,7 @@
     "build": "vite-react-ssg build",
     "build:prod": "bun run prepare:prod && bun run build",
     "devtools": "vite build",
+    "doctor": "react-doctor --no-lint",
     "analyze": "vite analyze",
     "deploy": "bunx netlify-cli deploy",
     "deploy:prod": "git hook run pre-commit && bunx netlify-cli deploy --prod",

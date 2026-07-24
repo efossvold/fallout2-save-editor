@@ -10,7 +10,7 @@ export const dirname = (path: string): string => {
   return parts.join('/')
 }
 
-export const isClient = () => typeof globalThis.window !== 'undefined'
+const isClient = () => typeof globalThis.window !== 'undefined'
 
 export const getWindow = () => (isClient() ? globalThis.window : undefined)
 
