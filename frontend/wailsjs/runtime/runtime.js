@@ -29,7 +29,7 @@ export function LogWarning(message) {
 }
 
 export function LogError(message) {
-    new window.runtime.LogError(message);
+    window.runtime.LogError(message);
 }
 
 export function LogFatal(message) {
@@ -57,7 +57,7 @@ export function EventsOnce(eventName, callback) {
 }
 
 export function EventsEmit(eventName) {
-    const args = [eventName].slice.call(arguments);
+    let args = [eventName].slice.call(arguments);
     return window.runtime.EventsEmit.apply(null, args);
 }
 
