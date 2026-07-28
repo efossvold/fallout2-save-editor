@@ -6,5 +6,7 @@ bun = "latest"
 _.path = ["{{config_root}}/frontend/node_modules/.bin"]
 
 [tasks]
-dev = "wails dev"
-build = "./build.sh"
+dev = "wails3 dev"
+gen-bindings = "wails3 generate bindings"
+build-macos = "wails3 task darwin:package:universal"
+build-all = "./build.sh"
