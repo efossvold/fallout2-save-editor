@@ -30,3 +30,13 @@ export const getColorToken = (color: ColorToken, fallback: ColorToken = 'white')
   // console.log(color, colorStr)
   return colorStr
 }
+
+export const getFileService = async () => {
+  const res = await import('../../bindings/app')
+  return res.FileService
+}
+
+export const getWailsRuntimeApp = async () => {
+  const res = await import('@wailsio/runtime')
+  return res.Application
+}

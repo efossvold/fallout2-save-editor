@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "allowJs": false,
+    "allowJs": true, // necessary for Wails bindings
     "isolatedModules": true,
     "jsx": "react-jsx",
     "lib": [ "DOM", "DOM.Iterable", "ESNext" ],
@@ -29,5 +29,5 @@
     "noUnusedLocals": false, // Covered by no-unused-vars with tailored configuration
     "noUnusedParameters": true,
   },
-  "include": [ "src", "types.d.ts", "*.config.ts" ]
+  "include": [ "src", "bindings", "types.d.ts", "*.config.ts" ]
 }

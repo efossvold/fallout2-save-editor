@@ -191,6 +191,7 @@ export default defineConfig({
   ignorePatterns: [
     '.idea',
     '.vscode',
+    'bindings',
     'build',
     'cypress/coverage',
     'cypress/reports',

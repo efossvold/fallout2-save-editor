@@ -6,7 +6,7 @@ Basic save game editor for Fallout 2.
 
 I wrote this editor for fun as hobby project for learning react-native. While replaying the classic Fallout 2 recently I ran into an issue where I got the reputation "childkiller" when a kid accidentally got hit by a shrapnel. This reputation blocks a LOT of quests and AFAIK there's no way of removing it. To make matters worse I also got eye damage which gives you severely poor aim. One can remove this if you have the doctor skill, but there was also a bug in Fallout CE, where when using the doctor skill the screen would go black. Thus, two major pains ruining the fun. So I could start over or write an editor, obviously I chose the latter.
 
-Mainly tested with the amazing [Fallout CE](https://github.com/alexbatalov/fallout2-ce) (check it out), but also briefly verified it works with the GoG version.
+Mainly tested with the amazing [Fallout CE](https://github.com/fallout2-ce/fallout2-ce) (check it out), but also briefly verified it works with the GoG version.
 
 **Update:**
 I migrated from react-native to [Wails](https://wails.io/) as it is much easier to work with both in terms of support for web libraries and native OS components across supported platforms (Mac, Windows and Linux).

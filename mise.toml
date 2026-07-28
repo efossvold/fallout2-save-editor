@@ -1,5 +1,5 @@
 [tools]
-go = "1.23"
+go = "1.26"
 node = "26"
 bun = "latest"
 

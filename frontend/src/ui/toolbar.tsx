@@ -2,7 +2,6 @@ import React, { use, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useShallow } from 'zustand/react/shallow'
 
-import { ReadFile, SaveFile } from '../../wailsjs/go/main/App'
 import { base64toBlob, getError } from '../api/utils'
 import { css } from '../styled-system/css'
 import { Grid, HStack } from '../styled-system/jsx'
@@ -13,7 +12,7 @@ import { useIsWeb } from './hooks/use-is-web'
 import { Logo } from './logo'
 import * as S from './selectors'
 import { useAPIStore, handler } from './store'
-import { basename, dirname, getDocument } from './utils'
+import { basename, dirname, getFileService, getWailsRuntimeApp, getDocument } from './utils'
 
 const InfoItem = (p: React.PropsWithChildren<{ name: string }>) => (
   <div
@@ -144,8 +143,9 @@ export const Toolbar = () => {
 
   const handleOpenFile = async () => {
     try {
+      const fs = await getFileService()
       // oxlint-disable-next-line new-cap
-      const [path, content, error] = (await ReadFile()) as [string, string, string]
+      const [path, content, error] = (await fs.ReadFile()) as [string, string, string]
       if (error) {
         toast.error(error)
       } else if (path) {
@@ -188,8 +188,9 @@ export const Toolbar = () => {
       }
     } else {
       try {
+        const fs = await getFileService()
         // oxlint-disable-next-line new-cap
-        const [filename, error] = (await SaveFile(
+        const [filename, error] = (await fs.SaveFile(
           handler.toBase64(),
           dirname(currentSaveFile ?? ''),
           basename(currentSaveFile ?? ''),
@@ -275,9 +276,10 @@ export const Toolbar = () => {
 
           {!isWeb && (
             <ToolbarButton
-              onClick={() => {
+              onClick={async () => {
+                const app = await getWailsRuntimeApp()
                 // oxlint-disable-next-line new-cap
-                globalThis.runtime.Quit()
+                await app.Quit()
               }}
             >
               Quit

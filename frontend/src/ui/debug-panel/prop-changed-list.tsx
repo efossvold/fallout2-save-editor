@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
 import { entries } from '~/api/utils'
+import { css } from '~/styled-system/css'
 
 import type { SaveGameData, SaveGameDataExtra } from '../../api/types/map'
 
-import { css } from '../../styled-system/css'
 import { useDebouncedValue } from '../hooks/use-debounced-value'
 
 type UseChangedPropsChanges = { name: string; prev: string | number; current: string | number }[]
