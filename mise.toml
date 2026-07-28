@@ -1,6 +1,5 @@
 [tools]
 go = "1.26"
-node = "26"
 bun = "latest"
 
 [env]

@@ -248,6 +248,7 @@ cert
 # Wails
 .task
 bin
+frontend/bindings
 frontend/dist
 frontend/node_modules
 build/linux/appimage/build
