@@ -47,7 +47,9 @@ export default defineConfig({
     node: true,
     es2024: true,
   },
-  globals: {},
+  globals: {
+    Bun: 'readonly',
+  },
   jsPlugins: [
     {
       name: 'react-you-might-not-need-an-effect-js',
@@ -143,6 +145,8 @@ export default defineConfig({
 
     // Conflicts with oxlint
     'unicorn/number-literal-case': 'off',
+
+    'vitest/require-hook': 'off',
   },
   overrides: [
     {
@@ -189,7 +193,6 @@ export default defineConfig({
   ],
 
   ignorePatterns: [
-    '.idea',
     '.vscode',
     'bindings',
     'build',
@@ -198,6 +201,5 @@ export default defineConfig({
     'dist',
     'eslint.config.mjs',
     'node_modules',
-    'wailsjs',
   ],
 })

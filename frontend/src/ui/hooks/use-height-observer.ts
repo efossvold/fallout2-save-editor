@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'octane'
 
 /**
  * Return an array with a element ref and the height of the element
@@ -9,7 +9,7 @@ import { useLayoutEffect, useRef, useState } from 'react'
  */
 export const useHeightObserver = ({ onChange }: { onChange?: (height: number) => void }) => {
   const [, setHeight] = useState(0)
-  const elementRef = useRef<HTMLDivElement>(null)
+  const elementRef = useRef<HTMLDivElement | null>(null)
 
   useLayoutEffect(() => {
     if (!elementRef.current) {

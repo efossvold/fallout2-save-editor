@@ -1,9 +1,9 @@
-import { toast } from 'react-hot-toast'
+// import { toast } from 'react-hot-toast'
 
 import { TRAITS } from '../../api/data/traits'
 import { entries } from '../../api/utils'
 import { css } from '../../styled-system/css'
-import { Flex } from '../components/flex'
+import { Flex } from '../components/layout'
 import { MAX_TRAITS } from '../constants'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
@@ -34,7 +34,8 @@ export const TraitsEditor = () => {
             helperText={trait.desc}
             onCheck={() => {
               if (hasMaxTraits()) {
-                toast(
+                alert(
+                  // toast(
                   `Woah, hold on there. Can't have more than 2 perks. This is a game limitation.`,
                 )
                 return

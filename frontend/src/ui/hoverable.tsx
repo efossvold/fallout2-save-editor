@@ -1,12 +1,14 @@
-import type { BoxProps } from '~/types'
+import type { Octane } from 'octane/jsx-runtime'
+
+import type { BoxProps, IPointerEvent } from '~/types'
 
 import { useHover } from './hooks/use-hover'
 
 interface HoverableProps extends Omit<BoxProps, 'children'> {
-  children: React.ReactNode | ((state: { isHovered: boolean }) => React.ReactNode)
+  children: Octane.JSX.Element | ((state: { isHovered: boolean }) => Octane.JSX.Element)
   className?: string
-  onHover?: (ev: React.PointerEvent<HTMLDivElement>) => any
-  onUnhover?: (ev: React.SyntheticEvent) => any
+  onHover?: (ev: IPointerEvent) => any
+  onUnhover?: (ev: IPointerEvent) => any
 }
 
 export const Hoverable = ({ children, onHover, onUnhover, ...rest }: HoverableProps) => {
@@ -20,7 +22,11 @@ export const Hoverable = ({ children, onHover, onUnhover, ...rest }: HoverablePr
           onHover(ev)
         }
       }}
-      onPointerLeave={onUnhover}
+      onPointerLeave={ev => {
+        if (onUnhover) {
+          onUnhover(ev)
+        }
+      }}
       {...rest}
     >
       {typeof children === 'function' ? children({ isHovered }) : children}

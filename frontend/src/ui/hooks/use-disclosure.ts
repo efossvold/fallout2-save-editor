@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'octane'
 
 import type { Fn } from '~/types'
 

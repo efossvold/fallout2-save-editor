@@ -110,7 +110,11 @@ export const ToolbarButton = ({
 }: ToolbarButtonProps) => (
   <button
     className={cx(toolbarButtonStyle({ isDisabled, isToggled }), className)}
-    onClick={onClick}
+    onClick={ev => {
+      if (onClick) {
+        onClick(ev)
+      }
+    }}
     disabled={isDisabled}
   >
     {children}

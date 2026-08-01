@@ -1,11 +1,11 @@
-import { toast } from 'react-hot-toast'
+// import { toast } from 'react-hot-toast'
 
 import type { TaggedSkillsKeys } from '../../api/types/map'
 import type { SkillValues } from '../../api/types/skills'
 
 import { SKILLS } from '../../api/data/skills'
 import { entries } from '../../api/utils'
-import { Flex } from '../components/flex'
+import { Flex } from '../components/layout'
 import { MAX_SKILL_ID, MAX_SKILL_VALUE, MAX_TAGGED_SKILLS, MIN_SKILL_VALUE } from '../constants'
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
@@ -48,7 +48,8 @@ const SkillSetter = (p: { name: keyof SkillValues; value: number }) => {
         }).length
 
         if (numTaggedSkills >= MAX_TAGGED_SKILLS) {
-          toast.error(
+          alert(
+            // toast.error(
             `Cannot tag more than ${MAX_TAGGED_SKILLS} skills. This is a game limitation.`,
           )
           return

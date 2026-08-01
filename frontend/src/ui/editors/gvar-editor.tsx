@@ -1,6 +1,6 @@
 import { GVARS } from '../../api/data/gvar'
 import { keysOf, prefixString } from '../../api/utils'
-import { Flex } from '../components/flex'
+import { Flex } from '../components/layout'
 import { ATTR_PREFIX } from '../constants'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'

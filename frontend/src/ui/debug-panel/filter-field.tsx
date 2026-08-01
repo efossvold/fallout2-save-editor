@@ -1,12 +1,12 @@
-import type { ChangeEventHandler, MouseEventHandler } from 'react'
+import type { IInputEventHandler, IMouseEventHandler } from '~/types'
 
 import { css } from '../../styled-system/css'
 import { InputField } from '../components/input-field'
 
 export const FilterField = (p: {
   value: string
-  handleChange: ChangeEventHandler<HTMLInputElement, HTMLInputElement>
-  handleReset: MouseEventHandler<HTMLButtonElement>
+  handleChange: IInputEventHandler
+  handleReset: IMouseEventHandler
 }) => (
   <div className={css({ pos: 'relative' })}>
     <InputField
@@ -15,7 +15,7 @@ export const FilterField = (p: {
       variant="light"
       placeholder="Filter"
       value={p.value}
-      onChange={p.handleChange}
+      onInput={p.handleChange}
     />
     <button
       className={css({

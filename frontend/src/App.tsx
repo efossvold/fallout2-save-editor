@@ -1,12 +1,11 @@
 import './style/index.css'
-import { Toaster } from 'react-hot-toast'
-
+// import { Toaster } from 'react-hot-toast'
 import { css } from './styled-system/css'
-import { Flex } from './ui/components/flex'
+import { Flex } from './ui/components/layout'
 import { StoreDebuggerPanel } from './ui/debug-panel'
 import { Panels } from './ui/panels'
 
-const App = () => (
+export const App = () => (
   <>
     <div className={css({ bg: 'gray.300', h: 'screen', w: 'screen' })}>
       <Flex justify="center">
@@ -27,13 +26,11 @@ const App = () => (
       </Flex>
     </div>
 
-    <Toaster
+    {/* <Toaster
       position="bottom-center"
       toastOptions={{
         className: 'bg-red-500',
       }}
-    />
+    /> */}
   </>
 )
-
-export default App

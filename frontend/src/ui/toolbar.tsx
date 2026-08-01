@@ -1,12 +1,14 @@
-import React, { use, useState } from 'react'
-import { toast } from 'react-hot-toast'
-import { useShallow } from 'zustand/react/shallow'
+import { useShallow } from '@octanejs/zustand/shallow'
+// import { toast } from 'react-hot-toast'
 
+import type { Children, IInputEventHandler } from '~/types'
+
+// import saveBase64 from '../api/fixtures/slot01-stats.base64'
 import { base64toBlob, getError } from '../api/utils'
 import { css } from '../styled-system/css'
-import { Grid, HStack } from '../styled-system/jsx'
 import { flex } from '../styled-system/patterns/flex'
 import { ToolbarButton } from './components/buttons'
+import { Grid, HStack } from './components/layout'
 import { DEFAULT_SAVE_FILENAME } from './constants'
 import { useIsWeb } from './hooks/use-is-web'
 import { Logo } from './logo'
@@ -14,7 +16,7 @@ import * as S from './selectors'
 import { useAPIStore, handler } from './store'
 import { basename, dirname, getFileService, getWailsRuntimeApp, getDocument } from './utils'
 
-const InfoItem = (p: React.PropsWithChildren<{ name: string }>) => (
+const InfoItem = (p: { children: Children; name: string }) => (
   <div
     className={css({
       display: 'flex',
@@ -82,23 +84,26 @@ const SaveGameMeta = () => {
 }
 
 const useLoadDevData = () => {
-  const load = useAPIStore(s => s.load)
-  const isWeb = useIsWeb()
-  const [hasLoaded, setHasLoaded] = useState(false)
-
-  const loadStats = async () => {
-    try {
-      const saveBase64 = await import('../api/fixtures/slot01-stats.base64')
-      load('/xxx/yyy/savegame.file', saveBase64.default)
-      setHasLoaded(true)
-    } catch (error) {
-      toast.error(getError(error).message)
-    }
-  }
-
-  if (!import.meta.env.PROD && Boolean(isWeb) && !hasLoaded) {
-    use(loadStats())
-  }
+  // const load = useAPIStore(s => s.load)
+  // const isWeb = useIsWeb()
+  // const [hasLoaded, setHasLoaded] = useState(false)
+  // const loadStats = async () => {
+  //   try {
+  //     const saveBase64 = await import('../api/fixtures/slot01-stats.base64')
+  //     load('/xxx/yyy/savegame.file', saveBase64.default)
+  //     setHasLoaded(true)
+  //   } catch (error) {
+  //     // toast.error(getError(error).message)
+  //     alert(getError(error).message)
+  //   }
+  // }
+  // if (!import.meta.env.PROD && Boolean(isWeb) && !hasLoaded) {
+  //   use(loadStats())
+  // }
+  // if (!import.meta.env.PROD && Boolean(isWeb) && !hasLoaded) {
+  //   load('/xxx/yyy/savegame.file', saveBase64)
+  //   setHasLoaded(true)
+  // }
 }
 
 export const Toolbar = () => {
@@ -111,7 +116,7 @@ export const Toolbar = () => {
 
   useLoadDevData()
 
-  const onFileChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+  const onFileChange: IInputEventHandler = ev => {
     ev.preventDefault()
 
     let filename = ''
@@ -125,12 +130,13 @@ export const Toolbar = () => {
           const base64 = data.replace(/^data:application\/octet-stream;base64,/, '')
           load(filename, base64)
         } else {
-          toast.error('Invalid file format')
+          // toast.error('Invalid file format')
+          alert('Invalid file format')
         }
       }
     })
 
-    const { files } = ev.target
+    const { files } = ev.currentTarget
 
     if (files && files.length > 0) {
       const [file] = files
@@ -147,12 +153,14 @@ export const Toolbar = () => {
       // oxlint-disable-next-line new-cap
       const [path, content, error] = (await fs.ReadFile()) as [string, string, string]
       if (error) {
-        toast.error(error)
+        alert(error)
+        // toast.error(error)
       } else if (path) {
         load(path, content)
       }
     } catch (error) {
-      toast.error(getError(error).message)
+      alert(getError(error).message)
+      // toast.error(getError(error).message)
     }
   }
 
@@ -183,7 +191,8 @@ export const Toolbar = () => {
       } catch (error) {
         const err = getError(error)
         if (!err.name.startsWith('AbortError')) {
-          toast.error(getError(error).message)
+          alert(getError(error).message)
+          // toast.error(getError(error).message)
         }
       }
     } else {
@@ -196,12 +205,15 @@ export const Toolbar = () => {
           basename(currentSaveFile ?? ''),
         )) as [string, string]
         if (error) {
-          toast.error(error)
+          alert(error)
+          // toast.error(error)
         } else if (filename) {
-          toast.success('Save successful')
+          alert('Save successful')
+          // toast.success('Save successful')
         }
       } catch (error) {
-        toast.error(getError(error).message)
+        alert(getError(error).message)
+        // toast.error(getError(error).message)
       }
     }
   }
@@ -231,7 +243,7 @@ export const Toolbar = () => {
         <HStack gap="4" justify="space-around">
           {isWeb ? (
             <>
-              <input type="file" id="open-file" onChange={onFileChange} hidden />
+              <input type="file" id="open-file" onInput={onFileChange} hidden />
               <label
                 htmlFor="open-file"
                 className={flex({

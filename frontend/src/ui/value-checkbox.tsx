@@ -1,5 +1,5 @@
 import { css, cx } from '../styled-system/css'
-import { Flex } from './components/flex'
+import { Flex } from './components/layout'
 import { useHelpTextStore } from './help-text/store'
 import { Hoverable } from './hoverable'
 import { Checkbox as CheckboxUnchecked, CheckboxChecked } from './icons'

@@ -1,6 +1,6 @@
 import { defineConfig, defineGlobalStyles } from '@pandacss/dev'
-// import { pluginRemoveUnusedCSS } from '~/style/utils'
 
+// import { pluginRemoveUnusedCSS } from '~/style/utils'
 import myPreset from './src/style/preset'
 
 /**

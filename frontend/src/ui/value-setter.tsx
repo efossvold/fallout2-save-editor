@@ -1,9 +1,10 @@
-import { toast } from 'react-hot-toast'
+// import { toast } from 'react-hot-toast'
 
 import type { ColorToken } from '~/styled-system/tokens'
+import type { IInteractionEvent } from '~/types'
 
 import { css, cx } from '../styled-system/css'
-import { Flex } from './components/flex'
+import { Flex } from './components/layout'
 import { useHelpTextStore } from './help-text/store'
 import { useHoverColor } from './hooks/use-hover-color'
 import { Hoverable } from './hoverable'
@@ -18,7 +19,7 @@ interface Props {
   helperTitle?: string
   helperText: string
   unit?: string
-  onClick?: (ev: React.SyntheticEvent) => void
+  onClick?: (ev: IInteractionEvent) => void
   onIncrease: () => void
   onDecrease: () => void
   color?: ColorToken
@@ -73,7 +74,7 @@ export const ValueSetter = ({
     return getHoverColor(isHovered, color ?? defaultColor, hoverColor)
   }
 
-  const onIncreasePress = (ev: React.SyntheticEvent) => {
+  const onIncreasePress = (ev: IInteractionEvent) => {
     ev.preventDefault()
     ev.stopPropagation()
 
@@ -83,7 +84,8 @@ export const ValueSetter = ({
       isMaxValue
     ) {
       if (maxValueMsg) {
-        toast(maxValueMsg as string)
+        alert(maxValueMsg as string)
+        // toast(maxValueMsg as string)
       }
       return
     }
@@ -91,7 +93,7 @@ export const ValueSetter = ({
     onIncrease()
   }
 
-  const onDecreasePress = (ev: React.SyntheticEvent) => {
+  const onDecreasePress = (ev: IInteractionEvent) => {
     ev.preventDefault()
     ev.stopPropagation()
 
@@ -105,7 +107,8 @@ export const ValueSetter = ({
       isMinValue
     ) {
       if (minValueMsg) {
-        toast(minValueMsg as string)
+        alert(minValueMsg as string)
+        // toast(minValueMsg as string)
       }
       return
     }
@@ -129,8 +132,16 @@ export const ValueSetter = ({
             data-highlight={dimOnZero && totalValue < 1}
             style={{ color: getColor(isHovered) }}
             className={css({ '&[data-onclick=true]': { cursor: 'pointer' } })}
-            onClick={onClick}
-            onKeyUp={onClick}
+            onClick={ev => {
+              if (onClick) {
+                onClick(ev)
+              }
+            }}
+            onKeyUp={ev => {
+              if (onClick) {
+                onClick(ev)
+              }
+            }}
           >
             {name}.
           </div>

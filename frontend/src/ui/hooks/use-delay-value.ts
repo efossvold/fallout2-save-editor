@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'octane'
 
 export const useDelayValue = (isOpen: boolean, delayTime: number) => {
   const [shouldRender, setShouldRender] = useState(isOpen)

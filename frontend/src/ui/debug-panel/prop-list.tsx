@@ -23,7 +23,7 @@ export const PropList = (p: PropListProps) => (
       }
 
       return (
-        <div key={name} style={{ display: isVisible ? 'table-row' : 'hidden' }}>
+        <div key={name} style={{ display: isVisible ? 'table-row' : 'none' }}>
           <div className={css({ display: 'table-cell' })}>
             <span className={css({ color: 'gray.500' })}>{name}</span>
             <span className={css({ color: 'gray.900', ml: '0.5', mr: '2' })}>:</span>

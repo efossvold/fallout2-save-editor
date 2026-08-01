@@ -1,4 +1,4 @@
-import { create } from 'zustand'
+import { create } from '@octanejs/zustand';
 
 import type { StatNames } from '../api/save-data'
 import type * as M from '../api/types/map'

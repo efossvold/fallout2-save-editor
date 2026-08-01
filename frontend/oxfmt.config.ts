@@ -21,14 +21,13 @@ export default defineConfig({
   jsxBracketSameLine: false,
   arrowParens: 'avoid',
   ignorePatterns: [
-    '.idea',
     '.vscode',
+    'bindings',
     'build',
     'cypress/coverage',
     'cypress/reports',
     'dist',
     'eslint.config.mjs',
     'node_modules',
-    'wailsjs',
   ],
 })

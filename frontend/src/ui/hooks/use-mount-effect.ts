@@ -1,11 +1,11 @@
-import { useEffect, useEffectEvent, useRef } from 'react'
+import { useEffect, useEffectEvent, useState } from 'octane'
 
 export const useMountEffect = (fn: () => any) => {
-  const mounted = useRef(false)
+  const [mounted, setMounted] = useState(false)
 
   const onMount = useEffectEvent(() => {
-    if (!mounted.current) {
-      mounted.current = true
+    if (!mounted) {
+      setMounted(true)
       fn()
     }
   })

@@ -3,6 +3,7 @@
     "allowJs": true, // necessary for Wails bindings
     "isolatedModules": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "octane",
     "lib": [ "DOM", "DOM.Iterable", "ESNext" ],
     "paths": { "~/*": [ "./src/*" ] },
     "types": [ "bun", "react", "react-dom" ],
@@ -29,5 +30,5 @@
     "noUnusedLocals": false, // Covered by no-unused-vars with tailored configuration
     "noUnusedParameters": true,
   },
-  "include": [ "src", "bindings", "types.d.ts", "*.config.ts" ]
+  "include": [ "src", "types.d.ts", "*.config.ts" ]
 }

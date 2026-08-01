@@ -1,4 +1,6 @@
-import { createPortal } from 'react-dom'
+import { createPortal } from 'octane'
+
+import type { Children } from '~/types'
 
 import type { RecipeVariant } from '../styled-system/css'
 
@@ -43,7 +45,7 @@ const modalStyle = cva({
 interface ModalProps extends RecipeVariant<typeof modalStyle> {
   isOpen: boolean
   onClose: () => void
-  children: React.ReactNode
+  children: Children
   className?: string
 }
 
@@ -67,8 +69,12 @@ export default function Modal({ isOpen, onClose, size, children }: ModalProps) {
     }
   })
 
+  console.log({ shouldRender, documentBody })
+
   if (!shouldRender || !documentBody) {
-    return undefined
+    // Need to return null here in Octane, returning undefined keeps the portal in DOM.
+    // oxlint-disable-next-line unicorn/no-null
+    return null
   }
 
   return createPortal(
@@ -88,5 +94,9 @@ export default function Modal({ isOpen, onClose, size, children }: ModalProps) {
     </div>,
     /* oxlint-enable jsx-a11y/no-static-element-interactions jsx-a11y/click-events-have-key-events jsx-a11y/no-noninteractive-element-interactions */
     documentBody,
+    {
+      onClose,
+      onDismiss: onClose,
+    },
   )
 }

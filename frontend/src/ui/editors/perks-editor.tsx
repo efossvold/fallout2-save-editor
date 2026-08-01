@@ -1,9 +1,7 @@
-import React from 'react'
-
 import { PERKS } from '../../api/data/perks'
 import { keysOf, prefixString } from '../../api/utils'
 import { css, cx } from '../../styled-system/css'
-import { Flex } from '../components/flex'
+import { Flex } from '../components/layout'
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
@@ -36,7 +34,7 @@ export const PerksEditor = () => {
 
             // Filter out Fallout 1 perks
             if (desc.toLocaleLowerCase().includes('unimplemented'.toLocaleLowerCase())) {
-              return <React.Fragment key={name} />
+              return undefined
             }
 
             return (

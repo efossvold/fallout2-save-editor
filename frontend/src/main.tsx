@@ -1,6 +1,16 @@
-import { ViteReactSSG } from 'vite-react-ssg/single-page'
+import { createRoot } from 'octane'
+// import { renderToString } from 'octane/server'
 
-import App from './app'
+import { App } from './app'
+import { getDocument } from './ui/utils'
 
-// oxlint-disable-next-line new-cap
-export const createRoot = ViteReactSSG(<App />)
+const container = getDocument()?.getElementById('root')
+
+if (!container) {
+  throw new Error("'root' element not found")
+}
+
+// const xxx = renderToString(App)
+// console.log(xxx.html)
+
+createRoot(container).render(App)

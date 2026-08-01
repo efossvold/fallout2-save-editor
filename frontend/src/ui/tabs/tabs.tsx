@@ -1,11 +1,16 @@
-import type { PropsWithChildren } from 'react'
+import type { Children } from '~/types'
 
 import { cx, css } from '../../styled-system/css'
-import { Flex } from '../components/flex'
+import { Flex } from '../components/layout'
 import * as E from '../editors'
 import { useTabsStore } from './store'
 
-const TabButton = (p: PropsWithChildren<{ index: number }>) => {
+interface TabButtonProps {
+  children?: Children
+  index: number
+}
+
+const TabButton = (p: TabButtonProps) => {
   const store = useTabsStore()
   const onClick = () => store.setIndex(p.index)
 

@@ -1,5 +1,4 @@
-import type React from 'react'
-import type { RefObject } from 'react'
+import type { Octane } from 'octane/jsx-runtime'
 
 import type { RecipeVariant } from '../../styled-system/css'
 
@@ -42,11 +41,11 @@ const inputStyle = cva({
 
 interface InputProps
   extends
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>,
+    Omit<Octane.InputHTMLAttributes<HTMLInputElement>, 'size'>,
     RecipeVariant<typeof inputStyle> {
   autoFocus?: boolean
   className?: string
-  ref?: RefObject<HTMLInputElement>
+  ref?: Octane.Ref<HTMLInputElement>
 }
 
 export const InputField = ({

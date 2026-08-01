@@ -1,29 +1,31 @@
-import type { RefObject } from 'react'
+import type { Octane } from 'octane/jsx-runtime'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'octane'
 
-export const useDebouncedValue = <T>(value: T, delay = 500): [RefObject<T>, T] => {
+/* Deprecated over native useDeferredValue */
+export const useDebouncedValue = <T>(value: T, delay = 500): [Octane.Ref<T>, T] => {
   const prevValue = useRef(value)
   const isPrevValueSet = useRef(false)
   const [debouncedValue, setDebouncedValue] = useState(value)
 
   useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value)
-      isPrevValueSet.current = false
-    }, delay)
+    let handler: NodeJS.Timeout | undefined
+
+    if (!isPrevValueSet.current) {
+      handler = setTimeout(() => {
+        setDebouncedValue(value)
+        isPrevValueSet.current = false
+        prevValue.current = value
+        isPrevValueSet.current = true
+      }, delay)
+    }
 
     return () => {
-      clearTimeout(handler)
+      if (handler) {
+        clearTimeout(handler)
+      }
     }
-  }, [value, delay])
-
-  useEffect(() => {
-    if (!isPrevValueSet.current) {
-      prevValue.current = value
-      isPrevValueSet.current = true
-    }
-  }, [value])
+  }, [value, delay, prevValue])
 
   return [prevValue, debouncedValue]
 }

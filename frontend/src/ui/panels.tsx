@@ -1,8 +1,8 @@
 import { css } from '../styled-system/css'
-import { Grid } from '../styled-system/jsx'
 import { flex } from '../styled-system/patterns/flex'
+import { Grid } from '../ui/components/layout'
 import { VERSION } from '../version'
-import { Flex } from './components/flex'
+import { Flex } from './components/layout'
 import * as E from './editors'
 import { HelpText } from './help-text'
 import { useHeightObserver } from './hooks/use-height-observer'
@@ -14,7 +14,6 @@ import { Toolbar } from './toolbar'
 
 export const Panels = () => {
   const setPanelsHeight = useAPIStore(s => s.setPanelsHeight)
-
   const ref = useHeightObserver({
     onChange: height => {
       setPanelsHeight(height)
@@ -24,7 +23,6 @@ export const Panels = () => {
   return (
     <div ref={ref} id="panels" className={flex({ direction: 'column', gap: '0.5' })}>
       <Toolbar />
-
       <Grid templateCols={{ lg: '47% 1fr' }} gap="0.5">
         <Grid templateCols={{ sm: 'repeat(2,minmax(0,1fr))' }} gap="0.5">
           <Grid templateRows="auto 1fr" gap="0.5">
@@ -60,7 +58,6 @@ export const Panels = () => {
           </Panel>
         </Grid>
       </Grid>
-
       <Grid
         templateCols={{ sm: '47% 1fr' }}
         gap="0.5"

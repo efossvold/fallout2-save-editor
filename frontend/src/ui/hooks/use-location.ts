@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'octane'
 
 import { getWindow } from '../utils'
 import { useMountEffect } from './use-mount-effect'

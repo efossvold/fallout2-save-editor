@@ -1,6 +1,6 @@
 import { getLevelXP } from '../../api/data/xp-levels'
 import { css } from '../../styled-system/css'
-import { Flex } from '../components/flex'
+import { Flex } from '../components/layout'
 import { MAX_LEVEL, MIN_LEVEL } from '../constants'
 import { NameChanger } from '../name-changer'
 import { PanelHeader } from '../panel'

@@ -1,4 +1,4 @@
-import { Flex } from '../components/flex'
+import { Flex } from '../components/layout'
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'

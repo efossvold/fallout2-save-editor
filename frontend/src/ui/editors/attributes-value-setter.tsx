@@ -1,12 +1,13 @@
 // oxlint-disable jsx-a11y/control-has-associated-label
-import { toast } from 'react-hot-toast'
+// import { toast } from 'react-hot-toast'
+
+import type { IInteractionEvent } from '~/types'
 
 import type { AttributesValues } from '../../api/types/attributes'
 
 import { prefixString } from '../../api/utils'
 import { css, cx } from '../../styled-system/css'
-import { Grid } from '../../styled-system/jsx'
-import { Flex } from '../components/flex'
+import { Flex, Grid } from '../components/layout'
 import { ATTR_PREFIX, MAX_ATTRIBUTE_VALUE, MIN_ATTRIBUTE_VAULE } from '../constants'
 import { caretDown, caretUp } from '../icons'
 import * as S from '../selectors'
@@ -19,25 +20,27 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
 
   const totalValue = useAPIStore(s => S.getAttributeTotal(s, p.name))
 
-  const onValueUp = (ev: React.SyntheticEvent) => {
+  const onValueUp = (ev: IInteractionEvent) => {
     ev.preventDefault()
     ev.stopPropagation()
 
     if (totalValue < MAX_ATTRIBUTE_VALUE) {
       setProp(prefixString(p.name, ATTR_PREFIX.BASE_ATTR), baseValue + 1)
     } else {
-      toast('Max attribute level reached, you rock!')
+      alert('Max attribute level reached, you rock!')
+      // toast('Max attribute level reached, you rock!')
     }
   }
 
-  const onValueDown = (ev: React.SyntheticEvent) => {
+  const onValueDown = (ev: IInteractionEvent) => {
     ev.preventDefault()
     ev.stopPropagation()
 
     if (totalValue > MIN_ATTRIBUTE_VAULE) {
       setProp(prefixString(p.name, ATTR_PREFIX.BASE_ATTR), baseValue - 1)
     } else {
-      toast('Minimum attribute level reached, not your strongest side is it?')
+      alert('Minimum attribute level reached, not your strongest side is it?')
+      // toast('Minimum attribute level reached, not your strongest side is it?')
     }
   }
 

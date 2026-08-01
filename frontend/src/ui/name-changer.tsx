@@ -1,13 +1,12 @@
-import { useState } from 'react'
+import { useState } from 'octane'
 
 import type { UseDisclosureReturn } from './hooks/use-disclosure'
 
 import { css } from '../styled-system/css'
-import { HStack } from '../styled-system/jsx'
 import { flex } from '../styled-system/patterns/flex'
 import { ModalButton } from './components/buttons'
-import { Flex } from './components/flex'
 import { InputField } from './components/input-field'
+import { Flex, HStack } from './components/layout'
 import { MAX_CHARACTER_NAME_LENGTH } from './constants'
 import { useDisclosure } from './hooks/use-disclosure'
 import Modal from './modal'
@@ -33,9 +32,7 @@ const NameChangerModal = (p: { initialValue: string; disclosure: UseDisclosureRe
       <InputField
         name="character-name"
         value={name}
-        onChange={ev => {
-          setName(ev.target.value)
-        }}
+        onInput={event => setName(event.currentTarget.value)}
         size="lg"
         variant="dark"
         maxLength={MAX_CHARACTER_NAME_LENGTH}

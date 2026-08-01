@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'octane'
 
 import type { SaveGameDataExtra } from '../../api/types/map'
 
@@ -6,7 +6,7 @@ import { ATTRIBUTES } from '../../api/data/attributes'
 import { SKILLS } from '../../api/data/skills'
 import * as U from '../../api/utils'
 import { css } from '../../styled-system/css'
-import { Flex } from '../components/flex'
+import { Flex } from '../components/layout'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
 import { FilterField } from './filter-field'
@@ -95,7 +95,7 @@ export const StoreDebuggerPanel = () => {
         <FilterField
           value={search}
           handleChange={ev => {
-            setSearch(ev.target.value)
+            setSearch(ev.currentTarget.value)
           }}
           handleReset={() => {
             setSearch('')

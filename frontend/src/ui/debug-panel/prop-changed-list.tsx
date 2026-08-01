@@ -1,11 +1,9 @@
-import { useState } from 'react'
+import { useDeferredValue, useState } from 'octane'
 
 import { entries } from '~/api/utils'
 import { css } from '~/styled-system/css'
 
 import type { SaveGameData, SaveGameDataExtra } from '../../api/types/map'
-
-import { useDebouncedValue } from '../hooks/use-debounced-value'
 
 type UseChangedPropsChanges = { name: string; prev: string | number; current: string | number }[]
 
@@ -47,7 +45,7 @@ interface PropChangedProps {
 }
 
 export const PropChangedList = (p: PropChangedProps) => {
-  const [, data] = useDebouncedValue(p.data)
+  const data = useDeferredValue(p.data)
   const [prevData, setPrevData] = useState(data)
   const [changedProps, setChangedProps] = useState<UseChangedPropsChanges>([])
 
@@ -62,7 +60,7 @@ export const PropChangedList = (p: PropChangedProps) => {
     <div
       className={css({ mt: '1' })}
       style={{
-        display: p.showChangesOnly ? 'table' : 'hidden',
+        display: p.showChangesOnly ? 'table' : 'none',
       }}
     >
       {changedProps.map(prop => {
@@ -73,7 +71,7 @@ export const PropChangedList = (p: PropChangedProps) => {
         }
 
         return (
-          <div key={prop.name} style={{ display: isVisible ? 'table-row' : 'hidden' }}>
+          <div key={prop.name} style={{ display: isVisible ? 'table-row' : 'none' }}>
             <div className={css({ display: 'table-cell' })}>
               <span className={css({ color: 'gray.500' })}>{prop.name}</span>
               <span className={css({ color: 'gray.900', ml: '1', mr: '2' })}>:</span>

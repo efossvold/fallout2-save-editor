@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import type { Octane } from 'octane/jsx-runtime'
+
+import { useEffect, useRef, useState } from 'octane'
 
 export const useHover = <ElementType extends HTMLElement>(): [
-  React.RefObject<ElementType | null>,
+  Octane.Ref<ElementType | null>,
   boolean,
 ] => {
   const [value, setValue] = useState(false)
-  const ref = useRef<ElementType>(null)
+  const ref = useRef<ElementType | null>(null)
 
   const handlePointerOver = (): void => setValue(true)
   const handlePointerOut = (): void => setValue(false)

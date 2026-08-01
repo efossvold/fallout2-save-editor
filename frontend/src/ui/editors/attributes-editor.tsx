@@ -1,7 +1,7 @@
 import { ATTRIBUTES } from '../../api/data/attributes'
 import { captializeFirstLetter, entries } from '../../api/utils'
 import { css } from '../../styled-system/css'
-import { Flex } from '../components/flex'
+import { Flex } from '../components/layout'
 import { useHelpTextStore } from '../help-text/store'
 import { AttrValueSetter } from './attributes-value-setter'
 
