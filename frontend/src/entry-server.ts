@@ -18,11 +18,24 @@ const minifyHTML = (html: string) =>
 
 const render = async (url: string) => {
   const { html, css, head } = await prerender(App)
+  const manifest = await Bun.file(path.join(CLIENT_DIR, '.vite/ssr-manifest.json')).json()
+  let ssrHead = head ?? ''
+
+  if ('index.html' in manifest) {
+    const fonts = manifest['index.html']
+      .filter((entry: string) => entry.endsWith('.woff2'))
+      .map(
+        (font: string) =>
+          `<link rel="preload" href="${font}" as="font" type="font/woff2" crossorigin>`,
+      )
+    ssrHead += fonts.join('')
+  }
+
   const index = await Bun.file(SRC_INDEX_HTML).text()
-  const htmlContent = index.replace('<!--ssr-body-->', html)
+  const htmlContent = index.replace('<!--ssr-body-->', html).replace('<!--ssr-head-->', ssrHead)
   const htmlMinified = minifyHTML(htmlContent)
   await Bun.write(DEST_INDEX_HTML, htmlMinified)
-  console.log({ url, html: htmlContent.length, html2: htmlMinified.length, css, head })
+  console.log({ url, html: htmlContent.length, html2: htmlMinified.length, css, head: ssrHead })
 }
 
 await render('/')

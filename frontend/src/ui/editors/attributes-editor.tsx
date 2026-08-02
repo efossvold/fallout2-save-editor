@@ -11,7 +11,7 @@ export const AttributesEditor = () => {
 
   return (
     <Flex wrap="wrap" gap="1">
-      {entries(ATTRIBUTES).map(([name, attr]) => (
+      {entries(ATTRIBUTES).map(([name, _attr]) => (
         <div
           key={name}
           onMouseEnter={() => setHelpText(captializeFirstLetter(name), ATTRIBUTES[name].desc)}

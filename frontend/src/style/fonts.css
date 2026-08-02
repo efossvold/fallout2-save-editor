@@ -11,6 +11,7 @@
   src: url('../assets/fonts/fallouty.woff2') format('woff2');
 }
 @font-face {
+  /* Glyphs included: -=*+:!.[]()&?#/%0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ */
   font-family: 'falloutx';
   font-style: normal;
   font-weight: 500;
