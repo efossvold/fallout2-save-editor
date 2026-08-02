@@ -41,7 +41,9 @@ export default defineConfig({
       open: '&[data-state="open"]',
       closed: '&[data-state="closed"]',
       active: '&[data-active="true"]',
+      dataChecked: '&[data-checked="true"]',
       parentHover: '&[data-parent-hover="true"]',
+      parentFocus: '&[data-parent-focus="true"]',
     },
   },
   theme: {

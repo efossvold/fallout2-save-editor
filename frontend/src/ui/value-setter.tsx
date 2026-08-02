@@ -1,15 +1,19 @@
 // import { toast } from 'react-hot-toast'
 
+import { useState } from 'octane'
+
 import type { ColorToken } from '~/styled-system/tokens'
 import type { IInteractionEvent } from '~/types'
 
-import { css, cx } from '../styled-system/css'
+import { flex } from '~/styled-system/patterns'
+
+import { css } from '../styled-system/css'
 import { Flex } from './components/layout'
 import { useHelpTextStore } from './help-text/store'
 import { useHoverColor } from './hooks/use-hover-color'
 import { Hoverable } from './hoverable'
-import { caretLeft, caretRight } from './icons'
-import { getColorToken } from './utils'
+import { caretStyle } from './icons'
+import { getColorToken, onMatchKey } from './utils'
 
 interface Props {
   name: string
@@ -66,6 +70,10 @@ export const ValueSetter = ({
   const getHoverColor = useHoverColor()
   const setHelpText = useHelpTextStore(s => s.setHelpText)
   const clearHelpText = useHelpTextStore(s => s.clearHelpText)
+  const [hasFocus, setHasFocus] = useState(false)
+
+  const [isArrowRightKeyPressed, setIsArrowRightKeyPressed] = useState(false)
+  const [isArrowLeftKeyPressed, setIsArrowLeftKeyPressed] = useState(false)
 
   const getColor = (isHovered: boolean) => {
     const defaultColor =
@@ -123,44 +131,69 @@ export const ValueSetter = ({
       className={css({ w: 'full' })}
     >
       {({ isHovered }) => (
-        <Flex justify="space-between">
-          <div
-            role="button"
-            tabIndex={0}
-            data-hover={isHovered}
-            data-onclick={Boolean(onClick)}
-            data-highlight={dimOnZero && totalValue < 1}
-            style={{ color: getColor(isHovered) }}
-            className={css({ '&[data-onclick=true]': { cursor: 'pointer' } })}
-            onClick={ev => {
-              if (onClick) {
+        <div
+          className={flex({
+            justify: 'space-between',
+            '&[data-onclick=true]': { cursor: 'pointer' },
+          })}
+          role="button"
+          tabIndex={0}
+          data-hover={isHovered}
+          data-onclick={Boolean(onClick)}
+          data-highlight={dimOnZero && totalValue < 1}
+          style={{ color: getColor(isHovered) }}
+          onFocus={() => setHasFocus(true)}
+          onBlur={() => setHasFocus(false)}
+          onClick={ev => {
+            if (onClick) {
+              onClick(ev)
+            }
+          }}
+
+          onKeyDown={ev => {
+            onMatchKey(ev, ['ArrowUp', 'ArrowRight'], () => {
+              setIsArrowRightKeyPressed(true)
+            })
+            onMatchKey(ev, ['ArrowDown', 'ArrowLeft'], () => {
+              setIsArrowLeftKeyPressed(true)
+            })
+          }}
+          onKeyUp={ev => {
+            onMatchKey(ev, ['ArrowUp', 'ArrowRight'], () => {
+              setIsArrowRightKeyPressed(false)
+              onIncreasePress(ev)
+            })
+            onMatchKey(ev, ['ArrowDown', 'ArrowLeft'], () => {
+              setIsArrowLeftKeyPressed(false)
+              onDecreasePress(ev)
+            })
+
+            if (onClick) {
+              onMatchKey(ev, ['Enter', 'Space'], () => {
                 onClick(ev)
-              }
-            }}
-            onKeyUp={ev => {
-              if (onClick) {
-                onClick(ev)
-              }
-            }}
-          >
-            {name}.
-          </div>
+              })
+            }
+          }}
+        >
+          <span>{name}</span>
 
           <Flex justifyItems="center" gap="0.5">
             {showControls && (
               <Flex justifyItems="center" alignItems="center">
                 <button
+                  tabIndex={isHovered ? 0 : -1}
                   aria-label={`Decrease ${name}`}
+                  data-active={isArrowLeftKeyPressed}
+                  data-parent-focus={hasFocus}
                   data-parent-hover={isHovered}
-                  className={cx(
-                    caretLeft(),
-                    css({
-                      pos: 'relative',
-                      top: { base: '0.25', sm: '0' },
-                      visibility: { base: 'visible', sm: 'hidden' },
-                      _parentHover: { visibility: 'visible' },
-                    }),
-                  )}
+                  className={css({
+                    ...caretStyle.raw({ size: 'small', direction: 'left' }),
+                    pos: 'relative',
+                    top: { base: '0.25', sm: '0' },
+                    visibility: { base: 'visible', sm: 'hidden' },
+                    _parentHover: { visibility: 'visible' },
+                    _parentFocus: { visibility: 'visible' },
+                  })}
                   onClick={onDecreasePress}
                 />
               </Flex>
@@ -172,23 +205,25 @@ export const ValueSetter = ({
               <Flex justifyItems="center" alignItems="center" gap="0.5">
                 <button
                   aria-label={`Increase ${name}`}
+                  tabIndex={isHovered ? 0 : -1}
+                  data-active={isArrowRightKeyPressed}
+                  data-parent-focus={hasFocus}
                   data-parent-hover={isHovered}
-                  className={cx(
-                    caretRight(),
-                    css({
-                      pos: 'relative',
-                      top: { base: '0.25', sm: '0' },
-                      visibility: { base: 'visible', sm: 'hidden' },
-                      cursor: 'pointer',
-                      _parentHover: { visibility: 'visible' },
-                    }),
-                  )}
+                  className={css({
+                    ...caretStyle.raw({ size: 'small', direction: 'right' }),
+                    pos: 'relative',
+                    top: { base: '0.25', sm: '0' },
+                    visibility: { base: 'visible', sm: 'hidden' },
+                    cursor: 'pointer',
+                    _parentHover: { visibility: 'visible' },
+                    _parentFocus: { visibility: 'visible' },
+                  })}
                   onClick={onIncreasePress}
                 />
               </Flex>
             )}
           </Flex>
-        </Flex>
+        </div>
       )}
     </Hoverable>
   )

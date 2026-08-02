@@ -1,44 +1,43 @@
-import { css } from '../styled-system/css'
+import { cva } from '~/styled-system/css/cva'
 
-export const caretRight = () =>
-  css({
+export const caretStyle = cva({
+  base: {
     borderWidth: '5',
     borderTopColor: 'transparent',
     borderRightColor: 'transparent',
-    borderLeftColor: { base: 'green.200', _hover: 'gold.400' },
-    borderBottomColor: 'transparent',
-    mt: '0.5',
-    ml: '1',
-  })
-
-export const caretLeft = () =>
-  css({
-    borderWidth: '5',
-    borderTopColor: 'transparent',
-    borderRightColor: { base: 'green.200', _hover: 'gold.400' },
     borderLeftColor: 'transparent',
     borderBottomColor: 'transparent',
-    mt: '0.5',
-    mr: '1',
-  })
-
-export const caretUp = () =>
-  css({
-    borderWidth: '7',
-    borderTopColor: 'transparent',
-    borderRightColor: 'transparent',
-    borderLeftColor: 'transparent',
-    borderBottomColor: { base: 'gray.900', _hover: 'gold.400' },
-  })
-
-export const caretDown = () =>
-  css({
-    borderWidth: '7',
-    borderTopColor: { base: 'gray.900', _hover: 'gold.400' },
-    borderRightColor: 'transparent',
-    borderLeftColor: 'transparent',
-    borderBottomColor: 'transparent',
-  })
+    cursor: 'pointer',
+  },
+  variants: {
+    size: {
+      small: {
+        borderWidth: '5',
+      },
+      large: {
+        borderWidth: '7',
+      },
+    },
+    direction: {
+      up: {
+        borderBottomColor: { base: 'gray.900', _hover: 'gold.400', _active: 'gold.400' },
+      },
+      down: {
+        borderTopColor: { base: 'gray.900', _hover: 'gold.400', _active: 'gold.400' },
+      },
+      left: {
+        borderRightColor: { base: 'green.200', _hover: 'gold.400', _active: 'gold.400' },
+        mt: '0.5',
+        mr: '1',
+      },
+      right: {
+        borderLeftColor: { base: 'green.200', _hover: 'gold.400', _active: 'gold.400' },
+        mt: '0.5',
+        ml: '1',
+      },
+    },
+  },
+})
 
 export const Checkbox = (p: {
   className?: string
@@ -55,7 +54,7 @@ export const Checkbox = (p: {
     height="1em"
     width="1em"
     xmlns="http://www.w3.org/2000/svg"
-    aria-checked="false"
+    data-checked="false"
     data-hover={p['data-hover']}
     data-parent-hover={p['data-parent-hover']}
   >
@@ -79,7 +78,7 @@ export const CheckboxChecked = (p: {
     height="1em"
     width="1em"
     xmlns="http://www.w3.org/2000/svg"
-    aria-checked="true"
+    data-checked="true"
     data-hover={p['data-hover']}
     data-parent-hover={p['data-parent-hover']}
   >

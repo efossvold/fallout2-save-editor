@@ -1,9 +1,10 @@
 import { useShallow } from '@octanejs/zustand/shallow'
 // import { toast } from 'react-hot-toast'
+import { useState } from 'octane'
 
 import type { Children, IInputEventHandler } from '~/types'
 
-// import saveBase64 from '../api/fixtures/slot01-stats.base64'
+import saveBase64 from '../api/fixtures/slot01-stats.base64'
 import { base64toBlob, getError } from '../api/utils'
 import { css } from '../styled-system/css'
 import { flex } from '../styled-system/patterns/flex'
@@ -53,6 +54,7 @@ const SaveGameMeta = () => {
     >
       <InfoItem name="Path">
         <button
+          tabIndex={-1}
           // @ts-expect-error
           interestfor="tooltip-save-path"
           id="save-path-btn"
@@ -84,9 +86,9 @@ const SaveGameMeta = () => {
 }
 
 const useLoadDevData = () => {
-  // const load = useAPIStore(s => s.load)
-  // const isWeb = useIsWeb()
-  // const [hasLoaded, setHasLoaded] = useState(false)
+  const load = useAPIStore(s => s.load)
+  const isWeb = useIsWeb()
+  const [hasLoaded, setHasLoaded] = useState(false)
   // const loadStats = async () => {
   //   try {
   //     const saveBase64 = await import('../api/fixtures/slot01-stats.base64')
@@ -100,10 +102,10 @@ const useLoadDevData = () => {
   // if (!import.meta.env.PROD && Boolean(isWeb) && !hasLoaded) {
   //   use(loadStats())
   // }
-  // if (!import.meta.env.PROD && Boolean(isWeb) && !hasLoaded) {
-  //   load('/xxx/yyy/savegame.file', saveBase64)
-  //   setHasLoaded(true)
-  // }
+  if (!import.meta.env.PROD && Boolean(isWeb) && !hasLoaded) {
+    load('/xxx/yyy/savegame.file', saveBase64)
+    setHasLoaded(true)
+  }
 }
 
 export const Toolbar = () => {
@@ -242,27 +244,27 @@ export const Toolbar = () => {
 
         <HStack gap="4" justify="space-around">
           {isWeb ? (
-            <>
+            <span
+              role="button"
+              aria-label="Open"
+              tabIndex={0}
+              className={flex({
+                justify: 'center',
+                color: 'gray.900',
+                bg: 'gray.100',
+                rounded: 'sm',
+                align: 'center',
+                h: '11',
+                w: '24',
+                cursor: 'pointer',
+                fontWeight: 'semibold',
+                sm: { fs: 'lg' },
+                _hover: { bg: 'gray.200' },
+              })}
+            >
               <input type="file" id="open-file" onInput={onFileChange} hidden />
-              <label
-                htmlFor="open-file"
-                className={flex({
-                  justify: 'center',
-                  color: 'gray.900',
-                  bg: 'gray.100',
-                  rounded: 'sm',
-                  align: 'center',
-                  h: '11',
-                  w: '24',
-                  cursor: 'pointer',
-                  fontWeight: 'semibold',
-                  sm: { fs: 'lg' },
-                  _hover: { bg: 'gray.200' },
-                })}
-              >
-                Open
-              </label>
-            </>
+              <label htmlFor="open-file">Open</label>
+            </span>
           ) : (
             <ToolbarButton onClick={handleOpenFile}>Open</ToolbarButton>
           )}

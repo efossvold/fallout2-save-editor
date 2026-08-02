@@ -6,7 +6,7 @@
     "jsxImportSource": "octane",
     "lib": [ "DOM", "DOM.Iterable", "ESNext" ],
     "paths": { "~/*": [ "./src/*" ] },
-    "types": [ "bun", "react", "react-dom" ],
+    "types": [ "bun" ],
     "useDefineForClassFields": true,
 
     // Bundler mode

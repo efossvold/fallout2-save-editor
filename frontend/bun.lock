@@ -5,18 +5,18 @@
     "": {
       "name": "frontend",
       "dependencies": {
-        "@octanejs/vite-plugin": "^0.1.22",
-        "@octanejs/zustand": "^0.1.21",
+        "@octanejs/vite-plugin": "^0.1.23",
+        "@octanejs/zustand": "^0.1.22",
         "@wailsio/runtime": "latest",
         "mutative": "^1.3.0",
-        "octane": "^0.1.22",
+        "octane": "^0.1.23",
         "react-hot-toast": "^2.6.0",
         "reselect": "^5.2.0",
         "vite-react-ssg": "^0.9.2",
         "zustand": "^5.0.14",
       },
       "devDependencies": {
-        "@octanejs/cli": "^0.0.2",
+        "@octanejs/cli": "^0.0.3",
         "@pandacss/dev": "^1.12.0",
         "@pandacss/eslint-plugin": "^0.3.2",
         "@pandacss/vite": "^2.0.0-beta.11",
@@ -408,13 +408,13 @@
 
     "@nodelib/fs.walk": ["@nodelib/fs.walk@1.2.8", "", { "dependencies": { "@nodelib/fs.scandir": "2.1.5", "fastq": "^1.6.0" } }, "sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg=="],
 
-    "@octanejs/app-core": ["@octanejs/app-core@0.0.18", "", { "dependencies": { "@ripple-ts/adapter": "^0.3.118", "esbuild": "^0.28.1" }, "peerDependencies": { "octane": "0.1.22" } }, "sha512-J3aP4syi5f+33V5+KCH8itmlC9p7oUTQVbd3enNZFxZ+GmWKuOi3PZ1QrRHmL+gjl5r6Ado2jA0pX6qaLjcHvg=="],
+    "@octanejs/app-core": ["@octanejs/app-core@0.0.19", "", { "dependencies": { "@ripple-ts/adapter": "^0.3.118", "esbuild": "^0.28.1" }, "peerDependencies": { "octane": "0.1.23" } }, "sha512-pAFP/fFndXzyE/q7gsvAVD7KOQcEivyIbvPhGXsX9zUlPoh9I95SU1Pplt67LGYrVY7UXehMuS/6l7kzMcnhQw=="],
 
-    "@octanejs/cli": ["@octanejs/cli@0.0.2", "", { "dependencies": { "@clack/prompts": "^1.7.0", "picocolors": "^1.1.1" }, "bin": { "octane": "src/bin/octane.js" } }, "sha512-8QM5U0doczOS20gbXySM+1syd4hx1bI31IljBAUZI5e5j+hqHR2bxWedaTMw3z4V03AmKFsKGvv/7c2VhIxIKg=="],
+    "@octanejs/cli": ["@octanejs/cli@0.0.3", "", { "dependencies": { "@clack/prompts": "^1.7.0", "picocolors": "^1.1.1" }, "bin": { "octane": "src/bin/octane.js" } }, "sha512-p20cbJ8XvnjVVW4PTrx2JyNL01pVyUPfvxMi037Kre5KhSa01yDhubkOqVrKFo8F3adIgoam/vhn8ybqdZu+tQ=="],
 
-    "@octanejs/vite-plugin": ["@octanejs/vite-plugin@0.1.22", "", { "dependencies": { "@octanejs/app-core": "0.0.18", "@ripple-ts/adapter": "^0.3.118" }, "peerDependencies": { "octane": "0.1.22", "vite": "^8.0.16" }, "bin": { "octane-preview": "src/bin/preview.js" } }, "sha512-pL7f0btX5gibMDMueZ3rlFcjTA3IHI3Pa8qd/TCc/h9XWAHGmWhit8emjnx7m9MV5g14vML2jdddKmbEevnYzg=="],
+    "@octanejs/vite-plugin": ["@octanejs/vite-plugin@0.1.23", "", { "dependencies": { "@octanejs/app-core": "0.0.19", "@ripple-ts/adapter": "^0.3.118" }, "peerDependencies": { "octane": "0.1.23", "vite": "^8.0.16" }, "bin": { "octane-preview": "src/bin/preview.js" } }, "sha512-SNapbxTPpjOX6nZbASRenkB8QTvbfEX9h7jYRibnOyIHXSCLgWStDp1Z3SzftD+agWqy7L0nq7O0ZJO2sXc9zA=="],
 
-    "@octanejs/zustand": ["@octanejs/zustand@0.1.21", "", { "dependencies": { "zustand": "^5.0.14" }, "peerDependencies": { "octane": "0.1.22" } }, "sha512-kIJyAjKt54mAuDPE4GGOlfefr00j284yvlBoIZyn0Td64YaI+g82djAKqWy7cbwFRRm5MsivXxsFY0CizLvELw=="],
+    "@octanejs/zustand": ["@octanejs/zustand@0.1.22", "", { "dependencies": { "zustand": "^5.0.14" }, "peerDependencies": { "octane": "0.1.23" } }, "sha512-g6r7cTh4Z4dFSjQ7zfDlyHF5vSzbXxERM6cDdgGEio6UniKVh8VgyGKf9aFKUnMV2XjicRZaAriSIJHSkiL2lQ=="],
 
     "@octokit/auth-token": ["@octokit/auth-token@6.0.0", "", {}, "sha512-P4YJBPdPSpWTQ1NU4XYdvHvXJJDxM6YwpS0FZHRgP7YFkdVxsWcpWGy/NVqlAA7PcPCnMacXlRm1y2PFZRWL/w=="],
 
@@ -1874,7 +1874,7 @@
 
     "obug": ["obug@2.1.4", "", {}, "sha512-4a+OsYv9UktOJKE+l1A4OufDgdRF9PifWj+tJnHURo/P+WOxpG4GzUFL9qCalmWauao6ogiG+QvnCovwPoyAWA=="],
 
-    "octane": ["octane@0.1.22", "", { "dependencies": { "@tsrx/core": "^0.1.56", "@types/react": "^19.2.17", "devalue": "^5.8.2", "esrap": "^2.3.0" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0", "vite": "^8.0.16" }, "optionalPeers": ["react", "react-dom", "vite"] }, "sha512-VWRMxp+LsvZenYzgJ9TtWy0Tps0C86b7eu3yNSAe22xn29N2+lp+vTHLooZo2wkxUYSAcJaWgVW7UYcCp/cd6Q=="],
+    "octane": ["octane@0.1.23", "", { "dependencies": { "@tsrx/core": "^0.1.56", "@types/react": "^19.2.17", "devalue": "^5.8.2", "esrap": "^2.3.0" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0", "vite": "^8.0.16" }, "optionalPeers": ["react", "react-dom", "vite"] }, "sha512-oqpsM1hRYxOTKaV3ZHGW1JAGHos8/lkHM8il0JJtnxRcoXP5vmwbYiEzniWYFPJDzIeywaFtNc6uDlZXRW7jww=="],
 
     "ofetch": ["ofetch@1.5.1", "", { "dependencies": { "destr": "^2.0.5", "node-fetch-native": "^1.6.7", "ufo": "^1.6.1" } }, "sha512-2W4oUZlVaqAPAil6FUg/difl6YhqhUR7x2eZY4bQCko22UXg3hptq9KLQdqFClV+Wu85UX7hNtdGTngi/1BxcA=="],
 

@@ -46,7 +46,7 @@ export type IPointerEventHandler = (ev: IPointerEvent) => void
 export type IKbdEvent = Parameters<IKbdEventHandler>[0]
 
 export type IKbdEventHandler = Exclude<
-  Octane.InputHTMLAttributes<HTMLDivElement|HTMLButtonElement>['onKeyPress'],
+  Octane.InputHTMLAttributes<HTMLDivElement | HTMLButtonElement | HTMLSpanElement>['onKeyPress'],
   undefined
 >
 

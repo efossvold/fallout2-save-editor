@@ -31,7 +31,7 @@ const SkillSetter = (p: { name: keyof SkillValues; value: number }) => {
       isMaxValue={skillTotal >= MAX_SKILL_VALUE}
       minValueMsg="Minimum level reached for this skill, why go lower?"
       maxValueMsg="Max level reached. Way to go! Or... Did you cheat?"
-      color={isSkillTagged ? getColorToken('green.200') : getColorToken('green.200')}
+      color={isSkillTagged ? getColorToken('gray.200') : getColorToken('green.200')}
       onClick={() => {
         // Tag/untag skill
         if (isSkillTagged) {

@@ -70,6 +70,7 @@ export const NameChanger = (p: { name: string }) => {
         <p>Name</p>
         <Flex justify="space-between">
           <button
+            aria-label="Change character name"
             // oxlint-disable-next-line react/jsx-handler-names
             onClick={disclosure.onOpen}
             className={flex({

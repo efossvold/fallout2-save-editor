@@ -69,8 +69,6 @@ export default function Modal({ isOpen, onClose, size, children }: ModalProps) {
     }
   })
 
-  console.log({ shouldRender, documentBody })
-
   if (!shouldRender || !documentBody) {
     // Need to return null here in Octane, returning undefined keeps the portal in DOM.
     // oxlint-disable-next-line unicorn/no-null

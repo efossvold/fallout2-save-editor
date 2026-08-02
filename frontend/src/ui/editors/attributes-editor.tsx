@@ -18,18 +18,7 @@ export const AttributesEditor = () => {
           onMouseLeave={() => clearHelpText()}
           className={css({ w: 'full' })}
         >
-          <Flex justify="space-between" alignItems="center">
-            <Flex
-              sx={css({
-                fs: { base: '2xl', sm: 'xl' },
-                textAlign: 'left',
-                color: { base: 'gold.400', _hover: 'gray.50' },
-              })}
-            >
-              {attr.name}
-            </Flex>
-            <AttrValueSetter name={name} />
-          </Flex>
+          <AttrValueSetter name={name} />
         </div>
       ))}
     </Flex>

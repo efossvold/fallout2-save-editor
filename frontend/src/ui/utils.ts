@@ -1,4 +1,5 @@
 import type { ColorToken } from '~/styled-system/tokens'
+import type { IKbdEvent } from '~/types'
 
 import { colors } from '~/style/preset/colors'
 
@@ -39,4 +40,22 @@ export const getFileService = async () => {
 export const getWailsRuntimeApp = async () => {
   const res = await import('@wailsio/runtime')
   return res.Application
+}
+
+type KbdKeys =
+  | 'ArrowDown'
+  | 'ArrowLeft'
+  | 'ArrowRight'
+  | 'ArrowUp'
+  | 'Space'
+  | 'Enter'
+  | 'Tab'
+  | 'Escape'
+
+export const matchKey = (ev: IKbdEvent, keys: KbdKeys[]) => keys.includes(ev.key as KbdKeys)
+
+export const onMatchKey = (ev: IKbdEvent, keys: KbdKeys[], onMatch: (ev: IKbdEvent) => any) => {
+  if (keys.includes(ev.code as KbdKeys)) {
+    onMatch(ev)
+  }
 }

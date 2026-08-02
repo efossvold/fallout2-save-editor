@@ -21,7 +21,7 @@ export const Panels = () => {
   })
 
   return (
-    <div ref={ref} id="panels" className={flex({ direction: 'column', gap: '0.5' })}>
+    <div role="main" ref={ref} id="panels" className={flex({ direction: 'column', gap: '0.5' })}>
       <Toolbar />
       <Grid templateCols={{ lg: '47% 1fr' }} gap="0.5">
         <Grid templateCols={{ sm: 'repeat(2,minmax(0,1fr))' }} gap="0.5">
@@ -79,7 +79,11 @@ export const Panels = () => {
             <HelpText />
             <Flex justify="space-between" sx={css({ color: 'gray.50', fill: 'gray.50' })}>
               <div>v{VERSION}</div>
-              <a href="https://github.com/efossvold/fallout2-save-editor" target="_blank">
+              <a
+                href="https://github.com/efossvold/fallout2-save-editor"
+                target="_blank"
+                aria-label="Checkout project at github"
+              >
                 <GithubIcon
                   className={css({
                     _hover: { fill: 'gray.800' },
