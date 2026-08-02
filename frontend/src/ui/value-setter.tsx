@@ -195,6 +195,12 @@ export const ValueSetter = ({
                     _parentFocus: { visibility: 'visible' },
                   })}
                   onClick={onDecreasePress}
+                  onKeyUp={ev => {
+                    ev.stopPropagation()
+                    onMatchKey(ev, ['Enter', 'Space'], () => {
+                      onDecreasePress(ev)
+                    })
+                  }}
                 />
               </Flex>
             )}
@@ -219,6 +225,12 @@ export const ValueSetter = ({
                     _parentFocus: { visibility: 'visible' },
                   })}
                   onClick={onIncreasePress}
+                  onKeyUp={ev => {
+                    ev.stopPropagation()
+                    onMatchKey(ev, ['Enter', 'Space'], () => {
+                      onIncreasePress(ev)
+                    })
+                  }}
                 />
               </Flex>
             )}

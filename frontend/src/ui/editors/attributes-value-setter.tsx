@@ -134,7 +134,7 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
             className={caretStyle({ size: 'large', direction: 'down' })}
             onClick={onValueDown}
             onKeyUp={ev => {
-              onMatchKey(ev, ['ArrowDown', 'ArrowLeft', 'Space', 'Enter'], onValueUp)
+              onMatchKey(ev, ['ArrowDown', 'ArrowLeft', 'Space', 'Enter'], onValueDown)
             }}
           />
         </Grid>
