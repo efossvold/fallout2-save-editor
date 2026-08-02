@@ -244,27 +244,32 @@ export const Toolbar = () => {
 
         <HStack gap="4" justify="space-around">
           {isWeb ? (
-            <span
-              role="button"
-              aria-label="Open"
-              tabIndex={0}
-              className={flex({
-                justify: 'center',
-                color: 'gray.900',
-                bg: 'gray.100',
-                rounded: 'sm',
-                align: 'center',
-                h: '11',
-                w: '24',
-                cursor: 'pointer',
-                fontWeight: 'semibold',
-                sm: { fs: 'lg' },
-                _hover: { bg: 'gray.200' },
-              })}
-            >
+            <>
               <input type="file" id="open-file" onInput={onFileChange} hidden />
-              <label htmlFor="open-file">Open</label>
-            </span>
+              <label htmlFor="open-file">
+                <span
+                  role="button"
+                  aria-label="Open"
+                  tabIndex={0}
+                  aria-controls="open-file"
+                  className={flex({
+                    justify: 'center',
+                    color: 'gray.900',
+                    bg: 'gray.100',
+                    rounded: 'sm',
+                    align: 'center',
+                    h: '11',
+                    w: '24',
+                    cursor: 'pointer',
+                    fontWeight: 'semibold',
+                    sm: { fs: 'lg' },
+                    _hover: { bg: 'gray.200' },
+                  })}
+                >
+                  Open
+                </span>
+              </label>
+            </>
           ) : (
             <ToolbarButton onClick={handleOpenFile}>Open</ToolbarButton>
           )}
