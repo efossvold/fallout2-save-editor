@@ -32,7 +32,7 @@ const SkillSetter = (p: { name: keyof SkillValues; value: number }) => {
       minValueMsg="Minimum level reached for this skill, why go lower?"
       maxValueMsg="Max level reached. Way to go! Or... Did you cheat?"
       color={isSkillTagged ? getColorToken('gray.200') : getColorToken('green.200')}
-      hoverColor={isSkillTagged ? getColorToken('gold.200') : getColorToken('white')}
+      hoverColor={isSkillTagged ? getColorToken('gold.200') : getColorToken('gray.50')}
       onClick={() => {
         // Tag/untag skill
         if (isSkillTagged) {
