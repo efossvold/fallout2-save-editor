@@ -46,7 +46,6 @@ export const ValueCheckbox = (p: Props) => {
             toggleChecked()
           }}
           onKeyUp={ev => {
-            console.log(ev.key, ev)
             onMatchKey(ev, ['Enter', 'Space'], () => {
               toggleChecked()
             })

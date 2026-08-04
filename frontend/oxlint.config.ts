@@ -168,10 +168,10 @@ export default defineConfig({
         'react-perf/jsx-no-new-object-as-prop': 'off',
 
         // PandaCSS
-        // 'pandacss-js/file-not-included': 'error',
+        // 'pandacss-js/file-not-included': 'error', // breaks oxlint
         'pandacss-js/no-config-function-in-source': 'error',
         'pandacss-js/no-debug': 'warn',
-        'pandacss-js/no-dynamic-styling': 'warn',
+        // 'pandacss-js/no-dynamic-styling': 'warn', // breaks oxlint
         'pandacss-js/no-hardcoded-color': 'warn',
         'pandacss-js/no-invalid-nesting': 'error',
         'pandacss-js/no-invalid-token-paths': 'error',

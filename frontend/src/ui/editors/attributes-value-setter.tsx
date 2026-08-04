@@ -1,5 +1,3 @@
-// import { toast } from 'react-hot-toast'
-
 import { useState } from 'octane'
 
 import type { IInteractionEvent } from '~/types'
@@ -15,9 +13,11 @@ import { ATTR_PREFIX, MAX_ATTRIBUTE_VALUE, MIN_ATTRIBUTE_VAULE } from '../consta
 import { caretStyle } from '../icons'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
+import { useToaster } from '../toaster/store'
 import { onMatchKey } from '../utils'
 
 export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
+  const toast = useToaster()
   const setProp = useAPIStore(s => s.setProp)
   const baseValue = useAPIStore(s => s.data[prefixString(p.name, ATTR_PREFIX.BASE_ATTR)])
   const totalValue = useAPIStore(s => S.getAttributeTotal(s, p.name))
@@ -31,8 +31,7 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
     if (totalValue < MAX_ATTRIBUTE_VALUE) {
       setProp(prefixString(p.name, ATTR_PREFIX.BASE_ATTR), baseValue + 1)
     } else {
-      alert('Max attribute level reached, you rock!')
-      // toast('Max attribute level reached, you rock!')
+      toast.info('Max attribute level reached, you rock!')
     }
   }
 
@@ -43,8 +42,7 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
     if (totalValue > MIN_ATTRIBUTE_VAULE) {
       setProp(prefixString(p.name, ATTR_PREFIX.BASE_ATTR), baseValue - 1)
     } else {
-      alert('Minimum attribute level reached, not your strongest side is it?')
-      // toast('Minimum attribute level reached, not your strongest side is it?')
+      toast.info('Minimum attribute level reached, not your strongest side is it?')
     }
   }
 

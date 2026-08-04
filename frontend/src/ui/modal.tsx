@@ -1,4 +1,4 @@
-import { createPortal } from 'octane'
+import { createPortal, useRef } from 'octane'
 
 import type { Children } from '~/types'
 
@@ -7,6 +7,7 @@ import type { RecipeVariant } from '../styled-system/css'
 import { css, cva } from '../styled-system/css'
 import { useEventListener } from './hooks/use-add-event-listener'
 import { useDelayValue } from './hooks/use-delay-value'
+import { useOnClickOutside } from './hooks/use-on-click-outside'
 import { getDocument } from './utils'
 
 const backdropStyle = css({
@@ -50,9 +51,22 @@ interface ModalProps extends RecipeVariant<typeof modalStyle> {
 }
 
 export default function Modal({ isOpen, onClose, size, children }: ModalProps) {
-  const shouldRender = useDelayValue(isOpen, 1000)
+  const shouldRender = useDelayValue(isOpen, 200)
   const shouldAnimateFadeIn = useDelayValue(!isOpen, 1)
   const documentBody = getDocument()?.body
+  const modalRef = useRef<HTMLDivElement | null>(null)
+
+  useOnClickOutside(modalRef, () => {
+    if (isOpen) {
+      onClose()
+    }
+  })
+
+  useEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      onClose()
+    }
+  })
 
   let state = isOpen ? 'open' : 'closed'
 
@@ -63,12 +77,6 @@ export default function Modal({ isOpen, onClose, size, children }: ModalProps) {
     state = 'closed'
   }
 
-  useEventListener('keydown', event => {
-    if (event.key === 'Escape') {
-      onClose()
-    }
-  })
-
   if (!shouldRender || !documentBody) {
     // Need to return null here in Octane, returning undefined keeps the portal in DOM.
     // oxlint-disable-next-line unicorn/no-null
@@ -76,25 +84,17 @@ export default function Modal({ isOpen, onClose, size, children }: ModalProps) {
   }
 
   return createPortal(
-    /* oxlint-disable jsx-a11y/no-static-element-interactions jsx-a11y/click-events-have-key-events jsx-a11y/no-noninteractive-element-interactions */
-    <div className={backdropStyle} data-state={state} onClick={onClose}>
+    <div id="modal" role="presentation" className={backdropStyle} data-state={state}>
       <div
+        ref={modalRef}
         className={modalStyle({ size })}
         data-state={state}
         role="dialog"
         aria-modal="true"
-        onClick={e => {
-          e.stopPropagation()
-        }}
       >
         {children}
       </div>
     </div>,
-    /* oxlint-enable jsx-a11y/no-static-element-interactions jsx-a11y/click-events-have-key-events jsx-a11y/no-noninteractive-element-interactions */
     documentBody,
-    {
-      onClose,
-      onDismiss: onClose,
-    },
   )
 }

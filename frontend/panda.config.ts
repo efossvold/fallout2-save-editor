@@ -63,6 +63,15 @@ export default defineConfig({
       },
       width: { shorthand: 'w' },
       height: { shorthand: 'h' },
+      size: {
+        values: 'sizes',
+        transform(value: number) {
+          return {
+            height: value,
+            width: value,
+          }
+        },
+      },
       posXY: {
         transform(value) {
           const [top = 0, right = 0, bottom = 0, left = 0] = value.split(' ')

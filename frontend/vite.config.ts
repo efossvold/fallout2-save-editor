@@ -14,11 +14,6 @@ export default defineConfig({
     panda(),
     octane(),
   ],
-  build: {
-    rolldownOptions: {
-      external: ['@wailsio/runtime'],
-    },
-  },
   // devtools: { enabled: true },
   resolve: {
     tsconfigPaths: true,

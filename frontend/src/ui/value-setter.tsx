@@ -1,5 +1,3 @@
-// import { toast } from 'react-hot-toast'
-
 import { useState } from 'octane'
 
 import type { ColorToken } from '~/styled-system/tokens'
@@ -13,6 +11,7 @@ import { useHelpTextStore } from './help-text/store'
 import { useHoverColor } from './hooks/use-hover-color'
 import { Hoverable } from './hoverable'
 import { caretStyle } from './icons'
+import { useToaster } from './toaster/store'
 import { getColorToken, onMatchKey } from './utils'
 
 interface Props {
@@ -66,6 +65,7 @@ export const ValueSetter = ({
   maxValueMsg = 'Max level reached',
   showControls = true,
 }: Props) => {
+  const toast = useToaster()
   const totalValue = baseValue + bonusValue
   const getHoverColor = useHoverColor()
   const setHelpText = useHelpTextStore(s => s.setHelpText)
@@ -92,8 +92,7 @@ export const ValueSetter = ({
       isMaxValue
     ) {
       if (maxValueMsg) {
-        alert(maxValueMsg as string)
-        // toast(maxValueMsg as string)
+        toast.info(maxValueMsg as string)
       }
       return
     }
@@ -115,8 +114,7 @@ export const ValueSetter = ({
       isMinValue
     ) {
       if (minValueMsg) {
-        alert(minValueMsg as string)
-        // toast(minValueMsg as string)
+        toast.info(minValueMsg as string)
       }
       return
     }

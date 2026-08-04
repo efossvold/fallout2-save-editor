@@ -19,6 +19,10 @@ const minifyHTML = (html: string) =>
 const render = async (url: string) => {
   const { html, css, head } = await prerender(App)
   const manifest = await Bun.file(path.join(CLIENT_DIR, '.vite/ssr-manifest.json')).json()
+
+  // Privacy first analytics: No cookies, no consent banner, no personal data.
+  const ssrData = '<script async src="https://scripts.simpleanalyticscdn.com/latest.js" />'
+
   let ssrHead = head ?? ''
 
   if ('index.html' in manifest) {
@@ -32,9 +36,14 @@ const render = async (url: string) => {
   }
 
   const index = await Bun.file(SRC_INDEX_HTML).text()
-  const htmlContent = index.replace('<!--ssr-body-->', html).replace('<!--ssr-head-->', ssrHead)
+  const htmlContent = index
+    .replace('<!--ssr-body-->', html)
+    .replace('<!--ssr-head-->', ssrHead)
+    .replace('<!--ssr-data-->', ssrData)
+
   const htmlMinified = minifyHTML(htmlContent)
   await Bun.write(DEST_INDEX_HTML, htmlMinified)
+
   console.log({ url, html: htmlContent.length, html2: htmlMinified.length, css, head: ssrHead })
 }
 

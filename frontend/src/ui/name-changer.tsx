@@ -72,7 +72,7 @@ export const NameChanger = (p: { name: string }) => {
           <button
             aria-label="Change character name"
             // oxlint-disable-next-line react/jsx-handler-names
-            onClick={disclosure.onOpen}
+            onClick={disclosure.onToggle}
             className={flex({
               cursor: 'pointer',
               _hover: { textDecoration: 'underline' },
