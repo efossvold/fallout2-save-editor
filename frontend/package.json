@@ -31,15 +31,15 @@
     "test": "bun test"
   },
   "dependencies": {
-    "@octanejs/vite-plugin": "^0.1.23",
-    "@octanejs/zustand": "^0.1.22",
+    "@octanejs/vite-plugin": "^0.1.28",
+    "@octanejs/zustand": "^0.1.27",
     "@wailsio/runtime": "latest",
-    "octane": "^0.1.23",
+    "octane": "^0.1.28",
     "reselect": "^5.2.0",
     "zustand": "^5.0.14"
   },
   "devDependencies": {
-    "@octanejs/cli": "^0.0.3",
+    "@octanejs/cli": "^0.0.6",
     "@pandacss/dev": "^1.12.0",
     "@pandacss/eslint-plugin": "^0.3.2",
     "@pandacss/vite": "^2.0.0-beta.12",
@@ -47,7 +47,7 @@
     "@types/bun": "1.3.14",
     "@vitejs/devtools": "^0.4.12",
     "eslint-plugin-react-you-might-not-need-an-effect": "^1.0.1",
-    "netlify-cli": "^27.0.2",
+    "netlify-cli": "^27.1.0",
     "oxfmt": "^0.62.0",
     "oxlint": "^1.77.0",
     "oxlint-tsgolint": "^7.0.2001",
