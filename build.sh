@@ -26,7 +26,7 @@ mv $BUILD_DIR/F2SaveEditor.exe $BUILD_DIR/F2SaveEditor-amd64.exe
 
 find $RELEASES_DIR -type f -exec ls -lh '{}' \;
 
-# Avoid linter errors. When panda codegen is run in production mode
+# Avoid linter errors. When bamboo codegen is run in production mode
 # vscode detect lots of errors. Thus, run codegen in dev mode (default)
 cd ../frontend
-panda codegen --clean --silent
+bamboo codegen --clean --silent

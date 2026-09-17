@@ -1,9 +1,10 @@
+import { flex } from '~/styled-system/patterns'
+
 import type { TaggedSkillsKeys } from '../../api/types/map'
 import type { SkillValues } from '../../api/types/skills'
 
 import { SKILLS } from '../../api/data/skills'
 import { entries } from '../../api/utils'
-import { Flex } from '../components/layout'
 import { MAX_SKILL_ID, MAX_SKILL_VALUE, MAX_TAGGED_SKILLS, MIN_SKILL_VALUE } from '../constants'
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
@@ -12,7 +13,7 @@ import { useToaster } from '../toaster/store'
 import { getColorToken } from '../utils'
 import { ValueSetter } from '../value-setter'
 
-const SkillSetter = (p: { name: keyof SkillValues; value: number }) => {
+export const SkillSetter = (p: { name: keyof SkillValues; value: number }) => {
   const toast = useToaster()
   const setProp = useAPIStore(s => s.setProp)
   const skillTotal = useAPIStore(s => S.getSkillTotal(s, p.name))
@@ -78,11 +79,11 @@ export const SkillsEditor = () => {
   return (
     <>
       <PanelHeader title="SKILLS" />
-      <Flex direction="column">
+      <div className={flex({ direction: 'column' })}>
         {entries(skills).map(([name, value]) => (
           <SkillSetter key={name} name={name} value={value} />
         ))}
-      </Flex>
+      </div>
     </>
   )
 }

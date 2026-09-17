@@ -1,7 +1,8 @@
+import { flex } from '~/styled-system/patterns'
+
 import { ATTRIBUTES } from '../../api/data/attributes'
 import { captializeFirstLetter, entries } from '../../api/utils'
 import { css } from '../../styled-system/css'
-import { Flex } from '../components/layout'
 import { useHelpTextStore } from '../help-text/store'
 import { AttrValueSetter } from './attributes-value-setter'
 
@@ -10,7 +11,7 @@ export const AttributesEditor = () => {
   const clearHelpText = useHelpTextStore(s => s.clearHelpText)
 
   return (
-    <Flex wrap="wrap" gap="1">
+    <div className={flex({ wrap: 'wrap', gap: '1' })}>
       {entries(ATTRIBUTES).map(([name, _attr]) => (
         <div
           key={name}
@@ -21,6 +22,6 @@ export const AttributesEditor = () => {
           <AttrValueSetter name={name} />
         </div>
       ))}
-    </Flex>
+    </div>
   )
 }

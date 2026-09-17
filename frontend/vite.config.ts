@@ -1,5 +1,5 @@
+import bamboo from '@bamboocss/vite'
 import { octane } from '@octanejs/vite-plugin'
-import panda from '@pandacss/vite'
 import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
@@ -9,12 +9,7 @@ export default defineConfig({
     port: Number(process.env['WAILS_VITE_PORT']) || 9245,
     strictPort: true,
   },
-  plugins: [
-    // DevTools(),
-    panda(),
-    octane(),
-  ],
-  // devtools: { enabled: true },
+  plugins: [bamboo(), octane()],
   resolve: {
     tsconfigPaths: true,
   },

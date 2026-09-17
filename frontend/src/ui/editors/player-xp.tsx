@@ -1,6 +1,7 @@
+import { flex } from '~/styled-system/patterns'
+
 import { getLevelXP } from '../../api/data/xp-levels'
 import { css } from '../../styled-system/css'
-import { Flex } from '../components/layout'
 import { MAX_LEVEL, MIN_LEVEL } from '../constants'
 import { NameChanger } from '../name-changer'
 import { PanelHeader } from '../panel'
@@ -92,13 +93,13 @@ export const PlayerXP = () => {
         dimOnZero={false}
       />
 
-      <Flex justify="space-between">
+      <div className={flex({ justify: 'space-between' })}>
         <p>Next Level</p>
-        <Flex justify="space-between">
+        <div className={flex({ justify: 'space-between' })}>
           {getLevelXP(data.playerLevel + 1)}
           <div className={css({ w: '4' })} />
-        </Flex>
-      </Flex>
+        </div>
+      </div>
     </div>
   )
 }

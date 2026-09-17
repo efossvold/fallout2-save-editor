@@ -6,7 +6,7 @@
     "jsxImportSource": "octane",
     "lib": [ "DOM", "DOM.Iterable", "ESNext" ],
     "paths": { "~/*": [ "./src/*" ] },
-    "types": [ "bun" ],
+    "types": [ "bun", "cypress" ],
     "useDefineForClassFields": true,
 
     // Bundler mode
@@ -30,5 +30,5 @@
     "noUnusedLocals": false, // Covered by no-unused-vars with tailored configuration
     "noUnusedParameters": true,
   },
-  "include": [ "src", "types.d.ts", "*.config.ts" ]
+  "include": [ "src", "types.d.ts", "*.config.ts", "cypress" ]
 }

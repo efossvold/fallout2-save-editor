@@ -1,4 +1,4 @@
-import type { TextStyles, Tokens } from '@pandacss/types'
+import type { Tokens, Mixins } from '@bamboocss/types'
 
 export const fontSizes = {
   '2xs': { value: '0.5rem' },
@@ -162,4 +162,4 @@ export const textStyles = {
       lineHeight: '1',
     },
   },
-} satisfies TextStyles
+} satisfies Mixins

@@ -3,12 +3,13 @@ import { useState } from 'octane'
 
 import type { Children, IInputEventHandler } from '~/types'
 
+import { grid, hstack } from '~/styled-system/patterns'
+
 import saveBase64 from '../api/fixtures/slot01-stats.base64'
 import { base64toBlob, getError } from '../api/utils'
 import { css } from '../styled-system/css'
 import { flex } from '../styled-system/patterns/flex'
 import { ToolbarButton } from './components/buttons'
-import { Grid, HStack } from './components/layout'
 import { DEFAULT_SAVE_FILENAME } from './constants'
 import { useIsWeb } from './hooks/use-is-web'
 import { Logo } from './logo'
@@ -42,10 +43,10 @@ const SaveGameMeta = () => {
   const savePathShort = currentSaveFile?.split('/').slice(-2).join('/')
 
   return currentSaveFile ? (
-    <Grid
-      templateCols={{ base: '50% 30%', sm: '40% 25%' }}
-      justify="space-between"
-      className={css({
+    <div
+      className={grid({
+        templateCols: { base: '50% 30%', sm: '40% 25%' },
+        justify: 'space-between',
         w: 'full',
         m: 'auto',
         order: '999',
@@ -79,7 +80,7 @@ const SaveGameMeta = () => {
       <InfoItem name="Save name">{saveName}</InfoItem>
       <InfoItem name="In-game time">{inGameTimeText}</InfoItem>
       <InfoItem name="Game version">{gameVersion}</InfoItem>
-    </Grid>
+    </div>
   ) : (
     <></>
   )
@@ -212,7 +213,7 @@ export const Toolbar = () => {
         w: 'full',
       })}
     >
-      <HStack justify="space-between" gap="1" className={css({ w: 'full', flexWrap: 'wrap' })}>
+      <div className={hstack({ justify: 'space-between', gap: '1', w: 'full', flexWrap: 'wrap' })}>
         <Logo
           active={Boolean(currentSaveFile)}
           className={css({
@@ -224,7 +225,7 @@ export const Toolbar = () => {
 
         <SaveGameMeta />
 
-        <HStack gap="4" justify="space-around">
+        <div className={hstack({ gap: '4', justify: 'space-around' })}>
           {isWeb ? (
             <>
               <input type="file" id="open-file" onInput={onFileChange} hidden />
@@ -256,6 +257,12 @@ export const Toolbar = () => {
             <ToolbarButton onClick={handleOpenFile}>Open</ToolbarButton>
           )}
           <ToolbarButton isDisabled={!currentSaveFile} onClick={handleSaveFile}>
+            {/* <ToolbarButton
+            isDisabled={!currentSaveFile}
+            onClick={() => {
+              otoast('hello world', { removeDelay: 99_999 })
+            }}
+          > */}
             Save
           </ToolbarButton>
 
@@ -286,8 +293,8 @@ export const Toolbar = () => {
               Quit
             </ToolbarButton>
           )}
-        </HStack>
-      </HStack>
+        </div>
+      </div>
     </div>
   )
 }

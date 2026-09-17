@@ -1,5 +1,3 @@
-@layer reset, base, tokens, recipes, utilities;
-
 @import './fonts.css';
 @import './scrollbar.css';
 

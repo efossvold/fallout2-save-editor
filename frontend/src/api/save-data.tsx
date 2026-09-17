@@ -19,7 +19,7 @@ const map = createMap()
 
 export type StatNames = keyof ReturnType<typeof createSaveData>
 
-export const createSaveData = (): SaveGameData => ({
+export const createSaveData = (data?: Partial<SaveGameData>): SaveGameData => ({
   // Header
   gameVersion: '',
   characterName: '',
@@ -158,4 +158,6 @@ export const createSaveData = (): SaveGameData => ({
     acc[key] = 0
     return acc
   }, {} as F17Preferences),
+
+  ...data,
 })

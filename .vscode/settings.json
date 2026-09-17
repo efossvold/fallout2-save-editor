@@ -1,7 +1,12 @@
 {
   "oxc.configPath": "frontend/oxlint.config.ts",
+  "oxc.enable": true,
   "oxc.fmt.configPath": "frontend/oxfmt.config.ts",
-  "oxc.path.oxfmt": "frontend/node_modules/.bin/oxfmt",
-  "oxc.path.oxlint": "frontend/node_modules/.bin/oxlint",
+  "oxc.path.oxfmt": "frontend/node_modules/oxfmt/bin/oxfmt",
+  "oxc.path.oxlint": "frontend/node_modules/oxlint/bin/oxlint",
   "oxc.path.tsgolint": "frontend/node_modules/.bin/tsgolint",
+  "oxc.requireConfig": true,
+  "oxc.tsConfigPath": "frontend/tsconfig.json",
+  "oxc.disableNestedConfig": true,
+  "oxc.suppressProgramErrors": true
 }

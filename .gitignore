@@ -238,7 +238,7 @@ tsconfig.tsbuildinfo
 # Local Netlify folder
 .netlify
 
-## Panda
+## Panda / Bamboo
 styled-system
 styled-system-studio
 

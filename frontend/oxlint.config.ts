@@ -11,7 +11,6 @@ export default defineConfig({
     'import',
     'jsx-a11y',
     'promise',
-    'vitest',
   ],
   categories: {
     correctness: 'error',
@@ -55,10 +54,10 @@ export default defineConfig({
       name: 'react-you-might-not-need-an-effect-js',
       specifier: 'eslint-plugin-react-you-might-not-need-an-effect',
     },
-    {
-      name: 'pandacss-js',
-      specifier: '@pandacss/eslint-plugin',
-    },
+    // {
+    //   name: 'pandacss-js',
+    //   specifier: '@pandacss/eslint-plugin',
+    // },
   ],
   rules: {
     /**
@@ -83,6 +82,7 @@ export default defineConfig({
     ],
     'no-duplicate-imports': ['error', { allowSeparateTypeImports: true }],
     'no-var': 'error',
+    'one-var': 'off',
     'prefer-destructuring': 'warn',
     'prefer-object-spread': 'warn',
     'prefer-spread': 'warn',
@@ -159,7 +159,6 @@ export default defineConfig({
         'jsx-a11y/prefer-tag-over-role': 'off',
         'react/jsx-max-depth': 'off',
         'react/jsx-props-no-spreading': 'off',
-        'react/react-compiler': 'error',
         'react/react-in-jsx-scope': 'off',
         'react/function-component-definition': 'off',
 
@@ -168,20 +167,21 @@ export default defineConfig({
         'react-perf/jsx-no-new-object-as-prop': 'off',
 
         // PandaCSS
-        // 'pandacss-js/file-not-included': 'error', // breaks oxlint
-        'pandacss-js/no-config-function-in-source': 'error',
-        'pandacss-js/no-debug': 'warn',
-        // 'pandacss-js/no-dynamic-styling': 'warn', // breaks oxlint
-        'pandacss-js/no-hardcoded-color': 'warn',
-        'pandacss-js/no-invalid-nesting': 'error',
-        'pandacss-js/no-invalid-token-paths': 'error',
-        'pandacss-js/no-property-renaming': 'warn',
-        'pandacss-js/no-unsafe-token-fn-usage': 'warn',
-        'pandacss-js/no-deprecated-tokens': 'warn',
+        // // 'pandacss-js/file-not-included': 'error', // breaks oxlint
+        // 'pandacss-js/no-config-function-in-source': 'error',
+        // 'pandacss-js/no-debug': 'warn',
+        // // 'pandacss-js/no-dynamic-styling': 'warn', // breaks oxlint
+        // 'pandacss-js/no-hardcoded-color': 'warn',
+        // 'pandacss-js/no-invalid-nesting': 'error',
+        // 'pandacss-js/no-invalid-token-paths': 'error',
+        // 'pandacss-js/no-property-renaming': 'warn',
+        // 'pandacss-js/no-unsafe-token-fn-usage': 'warn',
+        // 'pandacss-js/no-deprecated-tokens': 'warn',
       },
     },
     {
-      files: ['**/*.test.ts'],
+      files: ['**/*.test.ts', '**/*.test.tsx'],
+      plugins: ['vitest'],
       rules: {
         'prefer-importing-vitest-globals': 'off',
         'vitest/no-hooks': 'off',
@@ -189,6 +189,18 @@ export default defineConfig({
         'vitest/no-focused-tests': 'error',
         'jest/no-focused-tests': 'error',
       },
+    },
+    {
+      files: ['**/*.cy.tsx'],
+      globals: {
+        cy: 'readonly',
+        Cypress: 'readonly',
+        afterEach: 'readonly',
+        beforeEach: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+      },
+      rules: {},
     },
   ],
 

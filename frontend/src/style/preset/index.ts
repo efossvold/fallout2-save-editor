@@ -1,8 +1,9 @@
-import type { Preset } from '@pandacss/types'
+import type { Preset } from '@bamboocss/types'
 
 import { breakpoints } from './breakpoints'
 import { containerSizes } from './containers'
 import { keyframes } from './keyframes'
+import { patterns } from './patterns'
 import { tokens } from './tokens'
 import { textStyles } from './typography'
 
@@ -14,9 +15,10 @@ export const preset = definePreset({
     keyframes,
     breakpoints,
     tokens,
-    textStyles,
+    mixins: textStyles,
     containerSizes,
   },
+  patterns,
 })
 
 export default preset

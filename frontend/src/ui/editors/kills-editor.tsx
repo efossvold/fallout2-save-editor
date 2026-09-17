@@ -1,6 +1,7 @@
+import { flex } from '~/styled-system/patterns'
+
 import { KILLS } from '../../api/data/kills'
 import { keysOf, prefixString } from '../../api/utils'
-import { Flex } from '../components/layout'
 import { ATTR_PREFIX } from '../constants'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
@@ -12,7 +13,7 @@ export const KillsEditor = () => {
   const killKeysSorted = keysOf(KILLS).toSorted((a, b) => a.localeCompare(b))
 
   return (
-    <Flex direction="column">
+    <div className={flex({ direction: 'column' })}>
       {killKeysSorted.map(key => {
         const { name, desc } = KILLS[key]
         const killKey = prefixString(key, ATTR_PREFIX.KILL)
@@ -34,6 +35,6 @@ export const KillsEditor = () => {
           />
         )
       })}
-    </Flex>
+    </div>
   )
 }

@@ -1,4 +1,4 @@
-import { create } from '@octanejs/zustand';
+import { create } from '@octanejs/zustand'
 
 import type { StatNames } from '../api/save-data'
 import type * as M from '../api/types/map'
@@ -24,6 +24,7 @@ export type StoreState = Readonly<{
   getProp: <Prop extends keyof M.SaveGameData>(prop: Prop) => M.SaveGameData[Prop]
   setProp: <Prop extends keyof M.SaveGameData>(prop: Prop, value: M.SaveGameData[Prop]) => void
   setCrippledLimb: (bodyPart: keyof typeof Crippled, value: boolean) => void
+  setData: (data: M.SaveGameData) => void
   setPanelsHeight: (height: number) => void
   toggleDebugWindow: () => void
 }>
@@ -111,6 +112,12 @@ export const useAPIStore = create<StoreState>((set, get) => ({
         },
       }
     }),
+
+  setData(data) {
+    set({
+      data,
+    })
+  },
 
   setPanelsHeight: height =>
     set(() => ({

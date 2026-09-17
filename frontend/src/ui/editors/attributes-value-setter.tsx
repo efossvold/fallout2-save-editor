@@ -2,13 +2,12 @@ import { useState } from 'octane'
 
 import type { IInteractionEvent } from '~/types'
 
-import { flex } from '~/styled-system/patterns'
+import { flex, grid } from '~/styled-system/patterns'
 
 import type { AttributesValues } from '../../api/types/attributes'
 
 import { captializeFirstLetter, prefixString } from '../../api/utils'
 import { css } from '../../styled-system/css'
-import { Flex, Grid } from '../components/layout'
 import { ATTR_PREFIX, MAX_ATTRIBUTE_VALUE, MIN_ATTRIBUTE_VAULE } from '../constants'
 import { caretStyle } from '../icons'
 import * as S from '../selectors'
@@ -84,10 +83,10 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
         {captializeFirstLetter(p.name)}
       </div>
 
-      <Flex gap="2" alignItems="center">
-        <Flex
-          gap="2"
-          sx={css({
+      <div className={flex({ gap: '2', alignItems: 'center' })}>
+        <div
+          className={flex({
+            gap: '2',
             px: '2',
             rounded: 'sm',
             bg: 'gray.800',
@@ -111,10 +110,9 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
                 {digit}
               </div>
             ))}
-        </Flex>
-        <Grid gap="2">
-          <div
-            role="button"
+        </div>
+        <div className={grid({ gap: '2' })}>
+          <button
             aria-label={`Increase ${p.name}`}
             tabIndex={0}
             data-active={isArrowUpKeyPressed}
@@ -124,8 +122,7 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
               onMatchKey(ev, ['ArrowUp', 'ArrowRight', 'Space', 'Enter'], onValueUp)
             }}
           />
-          <div
-            role="button"
+          <button
             aria-label={`Decrease ${p.name}`}
             tabIndex={0}
             data-active={isArrowDownKeyPressed}
@@ -135,8 +132,8 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
               onMatchKey(ev, ['ArrowDown', 'ArrowLeft', 'Space', 'Enter'], onValueDown)
             }}
           />
-        </Grid>
-      </Flex>
+        </div>
+      </div>
     </div>
   )
 }

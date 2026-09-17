@@ -1,12 +1,13 @@
 import { useState } from 'octane'
 
+import { hstack } from '~/styled-system/patterns'
+
 import type { UseDisclosureReturn } from './hooks/use-disclosure'
 
 import { css } from '../styled-system/css'
 import { flex } from '../styled-system/patterns/flex'
 import { ModalButton } from './components/buttons'
 import { InputField } from './components/input-field'
-import { Flex, HStack } from './components/layout'
 import { MAX_CHARACTER_NAME_LENGTH } from './constants'
 import { useDisclosure } from './hooks/use-disclosure'
 import Modal from './modal'
@@ -39,7 +40,7 @@ const NameChangerModal = (p: { initialValue: string; disclosure: UseDisclosureRe
         // oxlint-disable-next-line jsx-a11y/no-autofocus
         autoFocus
       />
-      <HStack gap="4" justify="flex-end" className={css({ mt: '4' })}>
+      <div className={hstack({ gap: '4', justify: 'flex-end', mt: '4' })}>
         <ModalButton onClick={onClose} kind="secondary">
           Close
         </ModalButton>
@@ -53,7 +54,7 @@ const NameChangerModal = (p: { initialValue: string; disclosure: UseDisclosureRe
         >
           Save
         </ModalButton>
-      </HStack>
+      </div>
     </Modal>
   )
 }
@@ -63,12 +64,19 @@ export const NameChanger = (p: { name: string }) => {
 
   return (
     <>
-      <Flex
-        justify="space-between"
-        sx={css({ mr: '2.5', color: { base: 'green.200', _hover: 'gray.50' } })}
+      <div
+        className={flex({
+          justify: 'space-between',
+          mr: '2.5',
+          color: { base: 'green.200', _hover: 'gray.50' },
+        })}
       >
         <p>Name</p>
-        <Flex justify="space-between">
+        <div
+          className={flex({
+            justify: 'space-between',
+          })}
+        >
           <button
             aria-label="Change character name"
             // oxlint-disable-next-line react/jsx-handler-names
@@ -81,8 +89,8 @@ export const NameChanger = (p: { name: string }) => {
           >
             {p.name}
           </button>
-        </Flex>
-      </Flex>
+        </div>
+      </div>
       <NameChangerModal initialValue={p.name} disclosure={disclosure} />
     </>
   )

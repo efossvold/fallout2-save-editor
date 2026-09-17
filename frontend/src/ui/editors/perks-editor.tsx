@@ -1,7 +1,8 @@
+import { flex } from '~/styled-system/patterns'
+
 import { PERKS } from '../../api/data/perks'
 import { keysOf, prefixString } from '../../api/utils'
 import { css, cx } from '../../styled-system/css'
-import { Flex } from '../components/layout'
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
@@ -20,13 +21,13 @@ export const PerksEditor = () => {
       <div
         className={cx(
           css({
-            maxH: { base: 'auto', sm: '[420px]' },
+            maxHeight: { base: 'none', sm: '[420px]' },
             overflowY: 'auto',
           }),
           'styled-scrollbar',
         )}
       >
-        <Flex direction="column">
+        <div className={flex({ direction: 'column' })}>
           {perkKeysSorted.map(key => {
             const { name, ranks, desc } = PERKS[key]
             const perkKey = prefixString(key, 'perk')
@@ -59,7 +60,7 @@ export const PerksEditor = () => {
               />
             )
           })}
-        </Flex>
+        </div>
       </div>
     </>
   )

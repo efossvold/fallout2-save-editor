@@ -1,12 +1,13 @@
 import { useState } from 'octane'
 
+import { flex } from '~/styled-system/patterns'
+
 import type { SaveGameDataExtra } from '../../api/types/map'
 
 import { ATTRIBUTES } from '../../api/data/attributes'
 import { SKILLS } from '../../api/data/skills'
 import * as U from '../../api/utils'
 import { css } from '../../styled-system/css'
-import { Flex } from '../components/layout'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
 import { FilterField } from './filter-field'
@@ -73,9 +74,9 @@ export const StoreDebuggerPanel = () => {
         width: showDebugWindow ? '20rem' : '0',
       }}
     >
-      <Flex
-        direction="column"
-        sx={css({
+      <div
+        className={flex({
+          direction: 'column',
           py: '1',
           rounded: 'sm',
           bg: 'gray.50',
@@ -116,7 +117,7 @@ export const StoreDebuggerPanel = () => {
           <PropList data={dataExtra} filter={search} showChangesOnly={showChangesOnly} />
           <PropChangedList data={dataExtra} filter={search} showChangesOnly={showChangesOnly} />
         </div>
-      </Flex>
+      </div>
     </div>
   )
 }

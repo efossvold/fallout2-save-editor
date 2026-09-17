@@ -5,8 +5,7 @@ import type { IInteractionEvent } from '~/types'
 
 import { flex } from '~/styled-system/patterns'
 
-import { css } from '../styled-system/css'
-import { Flex } from './components/layout'
+import { css, cx } from '../styled-system/css'
 import { useHelpTextStore } from './help-text/store'
 import { useHoverColor } from './hooks/use-hover-color'
 import { Hoverable } from './hoverable'
@@ -127,6 +126,7 @@ export const ValueSetter = ({
       onHover={() => setHelpText(helperTitle ?? name, helperText)}
       onUnhover={() => clearHelpText()}
       className={css({ w: 'full' })}
+      data-cy="value-setter"
     >
       {({ isHovered }) => (
         <div
@@ -147,7 +147,6 @@ export const ValueSetter = ({
               onClick(ev)
             }
           }}
-
           onKeyDown={ev => {
             onMatchKey(ev, ['ArrowUp', 'ArrowRight'], () => {
               setIsArrowRightKeyPressed(true)
@@ -175,23 +174,25 @@ export const ValueSetter = ({
         >
           <span>{name}</span>
 
-          <Flex justifyItems="center" gap="0.5">
+          <div className={flex({ justifyItems: 'center', gap: '0.5' })}>
             {showControls && (
-              <Flex justifyItems="center" alignItems="center">
+              <div className={flex({ justifyItems: 'center', alignItems: 'center' })}>
                 <button
                   tabIndex={isHovered ? 0 : -1}
                   aria-label={`Decrease ${name}`}
                   data-active={isArrowLeftKeyPressed}
                   data-parent-focus={hasFocus}
                   data-parent-hover={isHovered}
-                  className={css({
-                    ...caretStyle.raw({ size: 'small', direction: 'left' }),
-                    pos: 'relative',
-                    top: { base: '0.25', sm: '0' },
-                    visibility: { base: 'visible', sm: 'hidden' },
-                    _parentHover: { visibility: 'visible' },
-                    _parentFocus: { visibility: 'visible' },
-                  })}
+                  className={cx(
+                    caretStyle({ size: 'small', direction: 'left' }),
+                    css({
+                      pos: 'relative',
+                      top: { base: '0.25', sm: '0' },
+                      visibility: { base: 'visible', sm: 'hidden' },
+                      _parentHover: { visibility: 'visible' },
+                      _parentFocus: { visibility: 'visible' },
+                    }),
+                  )}
                   onClick={onDecreasePress}
                   onKeyUp={ev => {
                     ev.stopPropagation()
@@ -200,28 +201,30 @@ export const ValueSetter = ({
                     })
                   }}
                 />
-              </Flex>
+              </div>
             )}
 
             <p style={{ color: getColor(isHovered) }}>{valueText ?? `${totalValue}${unit}`}</p>
 
             {showControls && (
-              <Flex justifyItems="center" alignItems="center" gap="0.5">
+              <div className={flex({ justifyItems: 'center', alignItems: 'center', gap: '0.5' })}>
                 <button
                   aria-label={`Increase ${name}`}
                   tabIndex={isHovered ? 0 : -1}
                   data-active={isArrowRightKeyPressed}
                   data-parent-focus={hasFocus}
                   data-parent-hover={isHovered}
-                  className={css({
-                    ...caretStyle.raw({ size: 'small', direction: 'right' }),
-                    pos: 'relative',
-                    top: { base: '0.25', sm: '0' },
-                    visibility: { base: 'visible', sm: 'hidden' },
-                    cursor: 'pointer',
-                    _parentHover: { visibility: 'visible' },
-                    _parentFocus: { visibility: 'visible' },
-                  })}
+                  className={cx(
+                    caretStyle({ size: 'small', direction: 'right' }),
+                    css({
+                      pos: 'relative',
+                      top: { base: '0.25', sm: '0' },
+                      visibility: { base: 'visible', sm: 'hidden' },
+                      cursor: 'pointer',
+                      _parentHover: { visibility: 'visible' },
+                      _parentFocus: { visibility: 'visible' },
+                    }),
+                  )}
                   onClick={onIncreasePress}
                   onKeyUp={ev => {
                     ev.stopPropagation()
@@ -230,9 +233,9 @@ export const ValueSetter = ({
                     })
                   }}
                 />
-              </Flex>
+              </div>
             )}
-          </Flex>
+          </div>
         </div>
       )}
     </Hoverable>

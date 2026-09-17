@@ -1,4 +1,4 @@
-import type { Tokens } from '@pandacss/types'
+import type { Tokens } from '@bamboocss/types'
 
 import { aspectRatios } from './aspect-ratios'
 import { borders } from './borders'

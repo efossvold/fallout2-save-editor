@@ -1,4 +1,5 @@
-import { Flex } from '../components/layout'
+import { flex } from '~/styled-system/patterns'
+
 import { PanelHeader } from '../panel'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
@@ -11,7 +12,7 @@ export const MiscStatsEditor = () => {
   return (
     <>
       <PanelHeader title="MISCHELLANEOUS" />
-      <Flex direction="column">
+      <div className={flex({ direction: 'column' })}>
         <ValueSetter
           name="Armor Class"
           baseValue={useAPIStore(S.getACDerived)}
@@ -174,7 +175,7 @@ export const MiscStatsEditor = () => {
             setProp('bonusCriticalChance', data.bonusCriticalChance - 1)
           }}
         />
-      </Flex>
+      </div>
     </>
   )
 }

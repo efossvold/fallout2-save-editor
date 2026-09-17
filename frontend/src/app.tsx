@@ -1,6 +1,7 @@
 import './style/index.css'
+import 'virtual:bamboo.css'
 import { css } from './styled-system/css'
-import { Flex } from './ui/components/layout'
+import { flex } from './styled-system/patterns'
 import { StoreDebuggerPanel } from './ui/debug-panel'
 import { Panels } from './ui/panels'
 import { Toaster } from './ui/toaster/toaster'
@@ -8,7 +9,7 @@ import { Toaster } from './ui/toaster/toaster'
 export const App = () => (
   <>
     <div className={css({ bg: 'gray.300', h: 'screen', w: 'screen' })}>
-      <Flex justify="center">
+      <div className={flex({ justify: 'center' })}>
         <div
           className={css({
             px: '0.5',
@@ -23,7 +24,8 @@ export const App = () => (
         </div>
 
         <StoreDebuggerPanel />
-      </Flex>
+        <div>1</div>
+      </div>
     </div>
 
     <Toaster />

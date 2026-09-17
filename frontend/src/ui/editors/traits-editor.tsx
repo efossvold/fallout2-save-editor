@@ -1,7 +1,8 @@
+import { flex } from '~/styled-system/patterns'
+
 import { TRAITS } from '../../api/data/traits'
 import { entries } from '../../api/utils'
 import { css } from '../../styled-system/css'
-import { Flex } from '../components/layout'
 import { MAX_TRAITS } from '../constants'
 import * as S from '../selectors'
 import { useAPIStore } from '../store'
@@ -25,7 +26,7 @@ export const TraitsEditor = () => {
   }
 
   return (
-    <Flex justify="space-between" wrap="wrap" sx={css({ w: 'full' })}>
+    <div className={flex({ justify: 'space-between', wrap: 'wrap', w: 'full' })}>
       {entries(TRAITS).map(([, trait]) => (
         <div key={trait.name} className={css({ w: { base: 'full', md: '[45%]' } })}>
           <ValueCheckbox
@@ -57,6 +58,6 @@ export const TraitsEditor = () => {
           />
         </div>
       ))}
-    </Flex>
+    </div>
   )
 }

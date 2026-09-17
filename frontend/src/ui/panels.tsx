@@ -1,8 +1,8 @@
+import { grid } from '~/styled-system/patterns'
+
 import { css } from '../styled-system/css'
 import { flex } from '../styled-system/patterns/flex'
-import { Grid } from '../ui/components/layout'
 import { VERSION } from '../version'
-import { Flex } from './components/layout'
 import * as E from './editors'
 import { HelpText } from './help-text'
 import { useHeightObserver } from './hooks/use-height-observer'
@@ -23,9 +23,9 @@ export const Panels = () => {
   return (
     <div role="main" ref={ref} id="panels" className={flex({ direction: 'column', gap: '0.5' })}>
       <Toolbar />
-      <Grid templateCols={{ lg: '47% 1fr' }} gap="0.5">
-        <Grid templateCols={{ sm: 'repeat(2,minmax(0,1fr))' }} gap="0.5">
-          <Grid templateRows="auto 1fr" gap="0.5">
+      <div className={grid({ templateCols: { lg: '47% 1fr' }, gap: '0.5' })}>
+        <div className={grid({ templateCols: { sm: 'repeat(2,minmax(0,1fr))' }, gap: '0.5' })}>
+          <div className={grid({ templateRows: 'auto 1fr', gap: '0.5' })}>
             <Panel
               className={css({
                 bgLinear: 'to-r',
@@ -38,30 +38,32 @@ export const Panels = () => {
             <Panel>
               <E.PlayerXP />
             </Panel>
-          </Grid>
-          <Grid templateRows="auto 1fr" gap="0.5">
+          </div>
+          <div className={grid({ templateRows: 'auto 1fr', gap: '0.5' })}>
             <Panel>
               <E.HealthEditor />
             </Panel>
             <Panel>
               <E.MiscStatsEditor />
             </Panel>
-          </Grid>
-        </Grid>
+          </div>
+        </div>
 
-        <Grid templateCols={{ base: '1fr', sm: '44% 1fr' }} gap="0.5">
+        <div className={grid({ templateCols: { base: '1fr', sm: '44% 1fr' }, gap: '0.5' })}>
           <Panel>
             <E.SkillsEditor />
           </Panel>
           <Panel>
             <E.PerksEditor />
           </Panel>
-        </Grid>
-      </Grid>
-      <Grid
-        templateCols={{ sm: '47% 1fr' }}
-        gap="0.5"
-        className={css({ minH: { base: '80', lg: '55' } })}
+        </div>
+      </div>
+      <div
+        className={grid({
+          templateCols: { sm: '47% 1fr' },
+          gap: '0.5',
+          minH: { base: '80', lg: '55' },
+        })}
       >
         <Panel>
           <Tabs />
@@ -75,9 +77,9 @@ export const Panels = () => {
             minH: { base: '80', lg: '55' },
           })}
         >
-          <Flex direction="column" justify="space-between" sx={css({ h: 'full' })}>
+          <div className={flex({ direction: 'column', justify: 'space-between', h: 'full' })}>
             <HelpText />
-            <Flex justify="space-between" sx={css({ color: 'gray.50', fill: 'gray.50' })}>
+            <div className={flex({ justify: 'space-between', color: 'gray.50', fill: 'gray.50' })}>
               <div>v{VERSION}</div>
               <a
                 href="https://github.com/efossvold/fallout2-save-editor"
@@ -90,10 +92,10 @@ export const Panels = () => {
                   })}
                 />
               </a>
-            </Flex>
-          </Flex>
+            </div>
+          </div>
         </Panel>
-      </Grid>
+      </div>
     </div>
   )
 }
