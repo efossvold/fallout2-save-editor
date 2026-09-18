@@ -257,12 +257,6 @@ export const Toolbar = () => {
             <ToolbarButton onClick={handleOpenFile}>Open</ToolbarButton>
           )}
           <ToolbarButton isDisabled={!currentSaveFile} onClick={handleSaveFile}>
-            {/* <ToolbarButton
-            isDisabled={!currentSaveFile}
-            onClick={() => {
-              otoast('hello world', { removeDelay: 99_999 })
-            }}
-          > */}
             Save
           </ToolbarButton>
 

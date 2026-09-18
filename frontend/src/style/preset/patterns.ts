@@ -29,7 +29,6 @@ const flex = definePattern({
 })
 
 const vstack = definePattern({
-  jsxName: 'VStack',
   properties: {
     justify: { type: 'property', value: 'justifyContent' },
     gap: { type: 'property', value: 'gap' },
@@ -51,7 +50,6 @@ const vstack = definePattern({
 })
 
 const hstack = definePattern({
-  jsxName: 'HStack',
   properties: {
     justify: { type: 'property', value: 'justifyContent' },
     gap: { type: 'property', value: 'gap' },
