@@ -53,7 +53,7 @@ export const Tabs = () => {
       </div>
       <div
         className={cx(
-          css({ maxHeight: { base: '0', sm: '[276px]' }, overflowY: 'auto' }),
+          css({ maxH: { base: '0', sm: '[276px]' }, overflowY: 'auto' }),
           'styled-scrollbar',
         )}
       >

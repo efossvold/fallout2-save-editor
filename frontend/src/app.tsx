@@ -24,7 +24,6 @@ export const App = () => (
         </div>
 
         <StoreDebuggerPanel />
-        <div>1</div>
       </div>
     </div>
 

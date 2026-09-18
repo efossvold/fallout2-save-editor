@@ -21,7 +21,7 @@ export const PerksEditor = () => {
       <div
         className={cx(
           css({
-            maxHeight: { base: 'none', sm: '[420px]' },
+            maxH: { base: 'none', sm: '[420px]' },
             overflowY: 'auto',
           }),
           'styled-scrollbar',
