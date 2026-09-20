@@ -9,14 +9,20 @@ I wrote this editor for fun as hobby project for learning react-native. While re
 Mainly tested with the amazing [Fallout CE](https://github.com/fallout2-ce/fallout2-ce) (check it out), but also briefly verified it works with the GoG version.
 
 **Update:**
-I migrated from react-native to [Wails](https://wails.io/) as it is much easier to work with both in terms of support for web libraries and native OS components across supported platforms (Mac, Windows and Linux).
+This repo has now become more of a project for trying out various frameworks, libraries and technologies.
 
-**Update:**
-This repo has now become more of a project for trying out various frameworks, libraries and technologies. [Wails](https://wails.io/) is used to generate native apps for MacOS and Windows. Migrating from react-native to Wails made it possible to setup a [webapp](https://fallout2-savegame-editor.netlify.app/) as well.
+After some time I migrated from react-native to [Wails](https://wails.io/) as it is much easier to work with both in terms of support for web libraries and native OS components across supported platforms (Mac, Windows and Linux). [Wails](https://wails.io/) is used to generate native apps for MacOS and Windows. Migrating from react-native to Wails also made it possible to setup a [webapp](https://fallout2-savegame-editor.netlify.app/) as well.
 
-[Octane](https://octanejs.dev/) was a fun framework to work with. It offers blazing performance and no virtual DOM or rules of hook. However, after version 0.2.0 the bundle size exploded, that's when I looked to Preact. Octane'
-[PandaCSS](https://panda-css.com/), [BambooCSS](https://bamboocss.com/), [dx-styles](https://dx-styles.dev/), [Tailwind CSS](https://tailwindcss.com/), [UnoCSS](https://unocss.dev/) and
+[Octane](https://octanejs.dev/) was a fun framework to work with. It offers blazing performance and no virtual DOM or rules of hook. However, after version 0.2.0 the bundle size exploded, that's when I looked to [Preact](https://preactjs.com/). At version 0.2.16 octane's bundle size came in at 65 kb gzipped. In comparison preact's bundle size (11.0.0-rc2) 5.72 kb gzipped, that's a **91,2% decrease in size**.
 
+In addition I've been testing out different css framework:
+
+- [Tailwind CSS](https://tailwindcss.com/). No introduction needed...
+- [UnoCSS](https://unocss.dev/). Uno supports all of Tailwind but has some extra things such as variant groups, fluid columns with CSS grids which are useful.
+- [PandaCSS](https://panda-css.com/). Tailwind is great, but I find it hard to read as the number of classes add up. Panda is definitely more verbose, however, I prefer its readability and clarity over Tailwind.
+- [BambooCSS](https://bamboocss.com/). Bamboo CSS a true zero-runtime fork of Panda CSS designed to fix runtime overhead and eliminate unused styles and as a result produces smaller CSS than PandaCSS. It's what I ended up using in this project.
+
+There's a branch for each for these migrations if you're interested in looking at the code.
 
 ## Features
 
