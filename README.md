@@ -14,7 +14,7 @@ I migrated from react-native to [Wails](https://wails.io/) as it is much easier 
 **Update:**
 This repo has now become more of a project for trying out various frameworks, libraries and technologies. [Wails](https://wails.io/) is used to generate native apps for MacOS and Windows. Migrating from react-native to Wails made it possible to setup a [webapp](https://fallout2-savegame-editor.netlify.app/) as well.
 
-[Octane](https://octanejs.dev/) was a fun framework to work with. It offers blazing performance and no virtual DOM or rules of hook. However, after version 0.2.0 the bundle size exploded, that's when I looked to Preact 
+[Octane](https://octanejs.dev/) was a fun framework to work with. It offers blazing performance and no virtual DOM or rules of hook. However, after version 0.2.0 the bundle size exploded, that's when I looked to Preact. Octane'
 [PandaCSS](https://panda-css.com/), [BambooCSS](https://bamboocss.com/), [dx-styles](https://dx-styles.dev/), [Tailwind CSS](https://tailwindcss.com/), [UnoCSS](https://unocss.dev/) and
 
 
