@@ -44,7 +44,7 @@
     "@rolldown/plugin-babel": "^0.2.4",
     "@types/bun": "1.4.2",
     "cypress": "^16.1.0",
-    "cypress-ct-preact": "link:cypress-ct-preact",
+    "cypress-ct-preact": "^1.0.0",
     "eslint-plugin-react-you-might-not-need-an-effect": "^1.0.2",
     "netlify-cli": "^27.8.0",
     "oxfmt": "^0.68.0",
