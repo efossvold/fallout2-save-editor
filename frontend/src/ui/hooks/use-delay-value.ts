@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'octane'
+import { useEffect, useState } from 'preact/hooks'
 
 export const useDelayValue = (isOpen: boolean, delayTime: number) => {
   const [shouldRender, setShouldRender] = useState(isOpen)

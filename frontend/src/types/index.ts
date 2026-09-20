@@ -1,4 +1,4 @@
-import type { Octane } from 'octane/jsx-runtime'
+import type { ComponentChildren, HTMLAttributes, InputHTMLAttributes, Ref } from 'preact'
 
 export type Dict<T> = Record<string, T>
 
@@ -46,14 +46,11 @@ export type IPointerEventHandler = (ev: IPointerEvent) => void
 export type IKbdEvent = Parameters<IKbdEventHandler>[0]
 
 export type IKbdEventHandler = Exclude<
-  Octane.InputHTMLAttributes<HTMLDivElement | HTMLButtonElement | HTMLSpanElement>['onKeyPress'],
+  InputHTMLAttributes<HTMLDivElement | HTMLButtonElement | HTMLSpanElement>['onKeyPress'],
   undefined
 >
 
-export type IInputEventHandler = Exclude<
-  Octane.InputHTMLAttributes<HTMLInputElement>['onInput'],
-  undefined
->
+export type IInputEventHandler = Exclude<InputHTMLAttributes['onInput'], undefined>
 
 export type IInteractionEvent = IMouseEvent | IPointerEvent | IKbdEvent
 export type IInteractionEventHandler = IMouseEventHandler | IPointerEventHandler | IKbdEventHandler
@@ -61,24 +58,9 @@ export type IInteractionEventHandler = IMouseEventHandler | IPointerEventHandler
 /*
  * JSX
  */
-export type Children = unknown
-// | Element
-// | Octane.JSX.Element
-// | Iterable<Octane.JSX.Element>
-// // | string
-// | number
-// | bigint
-// | boolean
-// | null
-// | undefined
-// | Promise<Octane.JSX.Element>
-// | Iterable<React.ReactNode>
-// | React.ReactPortal
-// | Promise<Octane.JSX.Element>
-
 export interface BoxProps {
-  children?: Children
-  className?: string
+  children?: ComponentChildren
+  class?: string
   onClick?: IMouseEventHandler
   onKeyUp?: IKbdEventHandler
   onKeyDown?: IKbdEventHandler
@@ -87,28 +69,13 @@ export interface BoxProps {
   onAction?: (ev: IInteractionEvent | undefined) => void
 }
 
-export type OctaneNode =
-  | Element
-  | Octane.JSX.Element
-  | Iterable<Octane.JSX.Element>
-  | string
-  | number
-  | bigint
-  | boolean
-  | null
-  | undefined
-  | Promise<Octane.JSX.Element>
-
-export type CSSProperties = Exclude<
-  Octane.HTMLAttributes<HTMLDivElement>['style'],
-  undefined | string
->
+export type CSSProperties = Exclude<HTMLAttributes<HTMLDivElement>['style'], undefined | string>
 
 export interface StyleElementProps {
-  className?: string
-  children?: Children
+  class?: string
+  children?: ComponentChildren
   id?: string
-  ref?: Octane.Ref<HTMLDivElement>
+  ref?: Ref<HTMLDivElement>
   style?: CSSProperties
   sx?: string
 }

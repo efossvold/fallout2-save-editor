@@ -1,4 +1,4 @@
-import { useState } from 'octane'
+import { useState } from 'preact/hooks'
 
 import { flex } from '~/styled-system/patterns'
 
@@ -63,7 +63,7 @@ export const StoreDebuggerPanel = () => {
 
   return (
     <div
-      className={css({
+      class={css({
         display: { base: 'none', sm: 'block' },
         my: '1',
         transition: '[width]',
@@ -75,7 +75,7 @@ export const StoreDebuggerPanel = () => {
       }}
     >
       <div
-        className={flex({
+        class={flex({
           direction: 'column',
           py: '1',
           rounded: 'sm',
@@ -91,7 +91,7 @@ export const StoreDebuggerPanel = () => {
           maxHeight: panelsHeight ? `${panelsHeight}px` : 'auto',
         }}
       >
-        <h1 className={css({ color: 'gray.700', fs: 'md' })}>Data</h1>
+        <h1 class={css({ color: 'gray.700', fs: 'md' })}>Data</h1>
 
         <FilterField
           value={search}
@@ -111,7 +111,7 @@ export const StoreDebuggerPanel = () => {
           }}
         />
 
-        <div className={css({ overflow: 'auto' })}>
+        <div class={css({ overflow: 'auto' })}>
           <PropList data={data} filter={search} showChangesOnly={showChangesOnly} />
           <PropChangedList data={data} filter={search} showChangesOnly={showChangesOnly} />
           <PropList data={dataExtra} filter={search} showChangesOnly={showChangesOnly} />

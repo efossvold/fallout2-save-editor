@@ -1,6 +1,7 @@
-import { createPortal, useRef } from 'octane'
+import type { ComponentChildren } from 'preact'
 
-import type { Children } from '~/types'
+import { createPortal } from 'preact'
+import { useRef } from 'preact/hooks'
 
 import type { RecipeVariant } from '../styled-system/css'
 
@@ -46,8 +47,8 @@ const modalStyle = cva({
 interface ModalProps extends RecipeVariant<typeof modalStyle> {
   isOpen: boolean
   onClose: () => void
-  children: Children
-  className?: string
+  children: ComponentChildren
+  class?: string
 }
 
 export default function Modal({ isOpen, onClose, size, children }: ModalProps) {
@@ -78,16 +79,14 @@ export default function Modal({ isOpen, onClose, size, children }: ModalProps) {
   }
 
   if (!shouldRender || !documentBody) {
-    // Need to return null here in Octane, returning undefined keeps the portal in DOM.
-    // oxlint-disable-next-line unicorn/no-null
-    return null
+    return undefined
   }
 
   return createPortal(
-    <div id="modal" role="presentation" className={backdropStyle} data-state={state}>
+    <div id="modal" role="presentation" class={backdropStyle} data-state={state}>
       <div
         ref={modalRef}
-        className={modalStyle({ size })}
+        class={modalStyle({ size })}
         data-state={state}
         role="dialog"
         aria-modal="true"

@@ -1,11 +1,11 @@
-import type { Octane } from 'octane/jsx-runtime'
+import type { Ref } from 'preact'
 
-import { useEffect } from 'octane'
+import { useEffect } from 'preact/hooks'
 
 type IEvent = MouseEvent | TouchEvent
 
 export const useOnClickOutside = <T extends HTMLElement>(
-  ref: Octane.Ref<T> | Element | null,
+  ref: Ref<T> | Element | null,
   handler: (event: IEvent) => void,
 ): void => {
   useEffect(() => {

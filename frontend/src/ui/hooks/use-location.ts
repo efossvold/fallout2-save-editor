@@ -1,4 +1,4 @@
-import { useState } from 'octane'
+import { useState } from 'preact/hooks'
 
 import { getWindow } from '../utils'
 import { useMountEffect } from './use-mount-effect'

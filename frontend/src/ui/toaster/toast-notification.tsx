@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'octane'
+import { useEffect, useState } from 'preact/hooks'
 
 import { css } from '~/styled-system/css'
 import { flex } from '~/styled-system/patterns'
@@ -85,7 +85,7 @@ export const ToastNotification = (p: ToastNotificationProps) => {
         transform: `translateY(-${p.offset}px)`,
         opacity: transition.shouldStartAnimation ? 0 : 1,
       }}
-      className={flex({
+      class={flex({
         pos: 'absolute',
         maxW: '[280px]',
         bg: 'gray.50',
@@ -101,13 +101,13 @@ export const ToastNotification = (p: ToastNotificationProps) => {
     >
       <div class={flex({ align: 'center', gap: '3' })}>
         {p.severity === 'success' && (
-          <div className={css({ size: '[20px]' })}>
-            <CheckmarkCircle className={css({ fill: 'green.600' })} />
+          <div class={css({ size: '[20px]' })}>
+            <CheckmarkCircle class={css({ fill: 'green.600' })} />
           </div>
         )}
         {p.severity === 'error' && (
-          <div className={css({ size: '[20px]' })}>
-            <AlertCircle className={css({ fill: 'red.500' })} />
+          <div class={css({ size: '[20px]' })}>
+            <AlertCircle class={css({ fill: 'red.500' })} />
           </div>
         )}
         <div>{p.message}</div>

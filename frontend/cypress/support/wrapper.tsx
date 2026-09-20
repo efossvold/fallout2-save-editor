@@ -1,8 +1,6 @@
-import type { ComponentBody } from 'octane'
-
 import '../../src/style/index.css'
-
-import type { OctaneElement } from 'octane/jsx-runtime'
+import 'virtual:bamboo.css'
+import type { ComponentChildren } from 'preact'
 
 import type { SaveGameData } from '~/api/types/map'
 
@@ -12,7 +10,7 @@ import { useAPIStore } from '~/ui/store'
 import { Toaster } from '~/ui/toaster/toaster'
 
 interface WrapperProps {
-  children: OctaneElement
+  children: ComponentChildren
   data?: SaveGameData
 }
 
@@ -31,7 +29,7 @@ export const Wrapper = ({ children, data = STATS }: WrapperProps) => {
   )
 }
 
-export const wrapper = (component: Parameters<ComponentBody>[0]) => (
+export const wrapper = (component: ComponentChildren) => (
   <>
     {component}
     <Toaster />

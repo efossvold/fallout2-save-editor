@@ -1,4 +1,4 @@
-import { useState } from 'octane'
+import { useState } from 'preact/hooks'
 
 import type { IInteractionEvent } from '~/types'
 
@@ -47,7 +47,7 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
 
   return (
     <div
-      className={flex({
+      class={flex({
         justify: 'space-between',
         alignItems: 'center',
       })}
@@ -74,7 +74,7 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
       }}
     >
       <div
-        className={flex({
+        class={flex({
           fs: { base: '2xl', sm: 'xl' },
           textAlign: 'left',
           color: { base: 'gold.400', _hover: 'gray.50' },
@@ -83,9 +83,9 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
         {captializeFirstLetter(p.name)}
       </div>
 
-      <div className={flex({ gap: '2', alignItems: 'center' })}>
+      <div class={flex({ gap: '2', alignItems: 'center' })}>
         <div
-          className={flex({
+          class={flex({
             gap: '2',
             px: '2',
             rounded: 'sm',
@@ -98,7 +98,7 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
             .split('')
             .map((digit, index) => (
               <div
-                className={css({
+                class={css({
                   color: 'gray.50',
                   fs: { base: '[32px]', sm: '2xl' },
                   lineHeight: 'tight',
@@ -111,12 +111,12 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
               </div>
             ))}
         </div>
-        <div className={grid({ gap: '2' })}>
+        <div class={grid({ gap: '2' })}>
           <button
             aria-label={`Increase ${p.name}`}
             tabIndex={0}
             data-active={isArrowUpKeyPressed}
-            className={caretStyle({ size: 'large', direction: 'up' })}
+            class={caretStyle({ size: 'large', direction: 'up' })}
             onClick={onValueUp}
             onKeyUp={ev => {
               onMatchKey(ev, ['ArrowUp', 'ArrowRight', 'Space', 'Enter'], onValueUp)
@@ -126,7 +126,7 @@ export const AttrValueSetter = (p: { name: keyof AttributesValues }) => {
             aria-label={`Decrease ${p.name}`}
             tabIndex={0}
             data-active={isArrowDownKeyPressed}
-            className={caretStyle({ size: 'large', direction: 'down' })}
+            class={caretStyle({ size: 'large', direction: 'down' })}
             onClick={onValueDown}
             onKeyUp={ev => {
               onMatchKey(ev, ['ArrowDown', 'ArrowLeft', 'Space', 'Enter'], onValueDown)

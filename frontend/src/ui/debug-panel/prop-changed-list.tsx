@@ -1,9 +1,11 @@
-import { useDeferredValue, useState } from 'octane'
+import { useState } from 'preact/hooks'
 
 import { entries } from '~/api/utils'
 import { css } from '~/styled-system/css'
 
 import type { SaveGameData, SaveGameDataExtra } from '../../api/types/map'
+
+import { useDebounce } from '../hooks/use-debounced-value'
 
 type UseChangedPropsChanges = { name: string; prev: string | number; current: string | number }[]
 
@@ -35,7 +37,7 @@ const getChangedProps = (
 }
 
 const Arrow = () => (
-  <span className={css({ color: 'gray.500', mx: '1', pos: 'relative', top: '[1px]' })}>→</span>
+  <span class={css({ color: 'gray.500', mx: '1', pos: 'relative', top: '[1px]' })}>→</span>
 )
 
 interface PropChangedProps {
@@ -45,12 +47,12 @@ interface PropChangedProps {
 }
 
 export const PropChangedList = (p: PropChangedProps) => {
-  const data = useDeferredValue(p.data)
+  const data = useDebounce(p.data)
   const [prevData, setPrevData] = useState(data)
   const [changedProps, setChangedProps] = useState<UseChangedPropsChanges>([])
 
   if (data !== prevData) {
-    const changes = getChangedProps(data as any, prevData as any, 'DebugPanel', false)
+    const changes = getChangedProps(data as any, prevData as any, 'DebugPanel', true)
 
     setPrevData(data)
     setChangedProps(changes)
@@ -58,7 +60,7 @@ export const PropChangedList = (p: PropChangedProps) => {
 
   return (
     <div
-      className={css({ mt: '1' })}
+      class={css({ mt: '1' })}
       style={{
         display: p.showChangesOnly ? 'table' : 'none',
       }}
@@ -72,30 +74,30 @@ export const PropChangedList = (p: PropChangedProps) => {
 
         return (
           <div key={prop.name} style={{ display: isVisible ? 'table-row' : 'none' }}>
-            <div className={css({ display: 'table-cell' })}>
-              <span className={css({ color: 'gray.500' })}>{prop.name}</span>
-              <span className={css({ color: 'gray.900', ml: '1', mr: '2' })}>:</span>
+            <div class={css({ display: 'table-cell' })}>
+              <span class={css({ color: 'gray.500' })}>{prop.name}</span>
+              <span class={css({ color: 'gray.900', ml: '1', mr: '2' })}>:</span>
               {typeof prop.current === 'number' && (
                 <>
-                  <span className={css({ color: 'gray.200' })}>{prop.prev}</span>
+                  <span class={css({ color: 'gray.200' })}>{prop.prev}</span>
                   <Arrow />
-                  <span className={css({ color: 'green.600' })}>{prop.current}</span>
+                  <span class={css({ color: 'green.600' })}>{prop.current}</span>
                 </>
               )}
               {typeof prop.current === 'boolean' && (
                 <>
-                  <span className={css({ color: 'gray.200' })}>{prop.prev ? 'true' : 'false'}</span>
+                  <span class={css({ color: 'gray.200' })}>{prop.prev ? 'true' : 'false'}</span>
                   <Arrow />
-                  <span className={css({ color: 'blue.600' })}>
+                  <span class={css({ color: 'blue.600' })}>
                     {prop.current === true ? 'true' : 'false'}
                   </span>
                 </>
               )}
               {typeof prop.current === 'string' && (
                 <>
-                  <span className={css({ color: 'gray.200' })}>"{prop.prev}"</span>
+                  <span class={css({ color: 'gray.200' })}>"{prop.prev}"</span>
                   <Arrow />
-                  <span className={css({ color: 'green.600' })}>"{prop.current}"</span>
+                  <span class={css({ color: 'green.600' })}>"{prop.current}"</span>
                 </>
               )}
             </div>

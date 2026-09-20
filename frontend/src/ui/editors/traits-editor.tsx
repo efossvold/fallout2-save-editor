@@ -26,9 +26,9 @@ export const TraitsEditor = () => {
   }
 
   return (
-    <div className={flex({ justify: 'space-between', wrap: 'wrap', w: 'full' })}>
+    <div class={flex({ justify: 'space-between', wrap: 'wrap', w: 'full' })}>
       {entries(TRAITS).map(([, trait]) => (
-        <div key={trait.name} className={css({ w: { base: 'full', md: '[45%]' } })}>
+        <div key={trait.name} class={css({ w: { base: 'full', md: '[45%]' } })}>
           <ValueCheckbox
             name={trait.name}
             value={traits.includes(trait.id)}

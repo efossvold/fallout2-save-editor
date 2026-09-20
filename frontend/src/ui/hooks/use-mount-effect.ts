@@ -1,16 +1,10 @@
-import { useEffect, useEffectEvent, useState } from 'octane'
+import { useState } from 'preact/hooks'
 
 export const useMountEffect = (fn: () => any) => {
   const [mounted, setMounted] = useState(false)
 
-  const onMount = useEffectEvent(() => {
-    if (!mounted) {
-      setMounted(true)
-      fn()
-    }
-  })
-
-  useEffect(() => {
-    onMount()
-  }, [])
+  if (!mounted) {
+    setMounted(true)
+    fn()
+  }
 }

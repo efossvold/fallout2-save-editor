@@ -1,12 +1,12 @@
-import type { Octane } from 'octane/jsx-runtime'
+import type { ComponentChildren } from 'preact'
 
 import type { BoxProps, IPointerEvent } from '~/types'
 
 import { useHover } from './hooks/use-hover'
 
 interface HoverableProps extends Omit<BoxProps, 'children'> {
-  children: Octane.JSX.Element | ((state: { isHovered: boolean }) => Octane.JSX.Element)
-  className?: string
+  children: ComponentChildren | ((state: { isHovered: boolean }) => ComponentChildren)
+  class?: string
   onHover?: (ev: IPointerEvent) => any
   onUnhover?: (ev: IPointerEvent) => any
 }

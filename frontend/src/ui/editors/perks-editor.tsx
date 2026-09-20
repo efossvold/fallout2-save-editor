@@ -19,7 +19,7 @@ export const PerksEditor = () => {
     <>
       <PanelHeader title="PERKS" />
       <div
-        className={cx(
+        class={cx(
           css({
             maxH: { base: 'none', sm: '[420px]' },
             overflowY: 'auto',
@@ -27,7 +27,7 @@ export const PerksEditor = () => {
           'styled-scrollbar',
         )}
       >
-        <div className={flex({ direction: 'column' })}>
+        <div class={flex({ direction: 'column' })}>
           {perkKeysSorted.map(key => {
             const { name, ranks, desc } = PERKS[key]
             const perkKey = prefixString(key, 'perk')

@@ -1,12 +1,22 @@
-import { createRoot } from 'octane'
+import { hydrate, prerender as ssr } from 'preact-iso'
 
 import { App } from './app'
 import { getDocument } from './ui/utils'
 
-const container = getDocument()?.getElementById('root')
+if (typeof globalThis.window !== 'undefined') {
+  const container = getDocument()?.getElementById('root')
 
-if (!container) {
-  throw new Error("'root' element not found")
+  if (!container) {
+    throw new Error("'root' element not found")
+  }
+
+  hydrate(<App />, container)
 }
 
-createRoot(container).render(App)
+export const prerender = async () =>
+  await ssr(
+    <>
+      <App />
+      <script async src="https://scripts.simpleanalyticscdn.com/latest.js" />
+    </>,
+  )

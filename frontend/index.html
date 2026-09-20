@@ -14,11 +14,9 @@
       sizes="196x196"
       href="./src/assets/images/fallout-icon-196x196.png"
     />
-    <!--ssr-head-->
   </head>
   <body>
-    <div id="root"><!--ssr-body--></div>
-    <script src="./src/main.tsx" type="module"></script>
-    <!--ssr-data-->
+    <div id="root"></div>
+    <script prerender src="./src/main.tsx" type="module"></script>
   </body>
 </html>

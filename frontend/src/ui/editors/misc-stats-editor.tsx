@@ -12,7 +12,7 @@ export const MiscStatsEditor = () => {
   return (
     <>
       <PanelHeader title="MISCHELLANEOUS" />
-      <div className={flex({ direction: 'column' })}>
+      <div class={flex({ direction: 'column' })}>
         <ValueSetter
           name="Armor Class"
           baseValue={useAPIStore(S.getACDerived)}

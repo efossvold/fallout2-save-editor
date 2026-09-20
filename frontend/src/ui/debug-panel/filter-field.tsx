@@ -8,7 +8,7 @@ export const FilterField = (p: {
   handleChange: IInputEventHandler
   handleReset: IMouseEventHandler
 }) => (
-  <div className={css({ pos: 'relative' })}>
+  <div class={css({ pos: 'relative' })}>
     <InputField
       name="filter"
       size="sm"
@@ -18,7 +18,7 @@ export const FilterField = (p: {
       onInput={p.handleChange}
     />
     <button
-      className={css({
+      class={css({
         color: 'gray.400',
         cursor: 'pointer',
         right: '2',

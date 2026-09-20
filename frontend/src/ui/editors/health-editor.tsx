@@ -5,7 +5,7 @@ import { useAPIStore } from '../store'
 import { ValueCheckbox } from '../value-checkbox'
 import { ValueSetter } from '../value-setter'
 
-const checkboxClassName = css({ mr: '3.5' })
+const checkboxclass = css({ mr: '3.5' })
 
 export const HealthEditor = () => {
   const data = useAPIStore(s => s.data)
@@ -77,7 +77,7 @@ export const HealthEditor = () => {
         onUncheck={() => {
           setCrippledLimb('EYES', !hasEyeDamage)
         }}
-        className={checkboxClassName}
+        class={checkboxclass}
       />
 
       <ValueCheckbox
@@ -90,7 +90,7 @@ export const HealthEditor = () => {
         onUncheck={() => {
           setCrippledLimb('RIGHT_ARM', !hasCrippledRightArm)
         }}
-        className={checkboxClassName}
+        class={checkboxclass}
       />
 
       <ValueCheckbox
@@ -103,7 +103,7 @@ export const HealthEditor = () => {
         onUncheck={() => {
           setCrippledLimb('LEFT_ARM', !hasCrippledLeftArm)
         }}
-        className={checkboxClassName}
+        class={checkboxclass}
       />
 
       <ValueCheckbox
@@ -116,7 +116,7 @@ export const HealthEditor = () => {
         onUncheck={() => {
           setCrippledLimb('RIGHT_LEG', !hasCrippledRightLeg)
         }}
-        className={checkboxClassName}
+        class={checkboxclass}
       />
 
       <ValueCheckbox
@@ -129,7 +129,7 @@ export const HealthEditor = () => {
         onUncheck={() => {
           setCrippledLimb('LEFT_LEG', !hasCrippledLeftLeg)
         }}
-        className={checkboxClassName}
+        class={checkboxclass}
       />
     </>
   )

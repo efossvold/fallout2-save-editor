@@ -10,7 +10,7 @@ export default defineConfig({
   component: {
     specPattern: 'src/**/*.cy.tsx',
     devServer: {
-      framework: 'cypress-ct-octane-js' as any,
+      framework: 'cypress-ct-preact' as any,
       bundler: 'vite',
       viteConfig,
     },

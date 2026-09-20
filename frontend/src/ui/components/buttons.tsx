@@ -46,16 +46,12 @@ type ModalButtonProps = RecipeVariantProps<typeof buttonStyle> & BoxProps
 
 export const ModalButton = ({
   children,
-  className = '',
   kind = 'primary',
   isDisabled = false,
+  class: className = '',
   ...rest
 }: ModalButtonProps) => (
-  <button
-    className={cx(buttonStyle({ kind, isDisabled }), className)}
-    disabled={isDisabled}
-    {...rest}
-  >
+  <button class={cx(buttonStyle({ kind, isDisabled }), className)} disabled={isDisabled} {...rest}>
     {children}
   </button>
 )
@@ -103,13 +99,13 @@ type ToolbarButtonProps = RecipeVariantProps<typeof toolbarButtonStyle> & BoxPro
 
 export const ToolbarButton = ({
   children,
-  className = '',
+  class: className = '',
   onClick,
   isDisabled = false,
   isToggled = false,
 }: ToolbarButtonProps) => (
   <button
-    className={cx(toolbarButtonStyle({ isDisabled, isToggled }), className)}
+    class={cx(toolbarButtonStyle({ isDisabled, isToggled }), className)}
     onClick={ev => {
       if (onClick) {
         onClick(ev)

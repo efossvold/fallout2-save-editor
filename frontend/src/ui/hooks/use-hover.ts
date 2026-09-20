@@ -1,11 +1,8 @@
-import type { Octane } from 'octane/jsx-runtime'
+import type { Ref } from 'preact'
 
-import { useEffect, useRef, useState } from 'octane'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
-export const useHover = <ElementType extends HTMLElement>(): [
-  Octane.Ref<ElementType | null>,
-  boolean,
-] => {
+export const useHover = <ElementType extends HTMLElement>(): [Ref<ElementType | null>, boolean] => {
   const [value, setValue] = useState(false)
   const ref = useRef<ElementType | null>(null)
 

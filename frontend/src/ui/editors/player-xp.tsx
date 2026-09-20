@@ -15,7 +15,7 @@ export const PlayerXP = () => {
   const playerAge = useAPIStore(S.getPlayerAge)
 
   return (
-    <div className={css({ color: 'green.200' })}>
+    <div class={css({ color: 'green.200' })}>
       <PanelHeader title="PLAYER INFO" />
 
       <NameChanger name={data.characterName} />
@@ -93,11 +93,11 @@ export const PlayerXP = () => {
         dimOnZero={false}
       />
 
-      <div className={flex({ justify: 'space-between' })}>
+      <div class={flex({ justify: 'space-between' })}>
         <p>Next Level</p>
-        <div className={flex({ justify: 'space-between' })}>
+        <div class={flex({ justify: 'space-between' })}>
           {getLevelXP(data.playerLevel + 1)}
-          <div className={css({ w: '4' })} />
+          <div class={css({ w: '4' })} />
         </div>
       </div>
     </div>

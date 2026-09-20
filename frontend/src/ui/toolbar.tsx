@@ -1,7 +1,8 @@
-import { useShallow } from '@octanejs/zustand/shallow'
-import { useState } from 'octane'
+import type { FunctionComponent } from 'preact'
 
-import type { Children, IInputEventHandler } from '~/types'
+import { useState } from 'preact/hooks'
+
+import type { IInputEventHandler } from '~/types'
 
 import { grid, hstack } from '~/styled-system/patterns'
 
@@ -18,33 +19,29 @@ import { useAPIStore, handler } from './store'
 import { useToaster } from './toaster/store'
 import { basename, dirname, getFileService, getWailsRuntimeApp, getDocument } from './utils'
 
-const InfoItem = (p: { children: Children; name: string }) => (
+const InfoItem: FunctionComponent<{ name: string }> = p => (
   <div
-    className={css({
+    class={css({
       display: 'flex',
       justifyContent: 'space-between',
       fs: 'xs',
     })}
   >
-    <p className={css({ color: 'gray.600' })}>{p.name}</p>
-    <div className={css({ color: 'gray.400' })}>{p.children}</div>
+    <p class={css({ color: 'gray.600' })}>{p.name}</p>
+    <div class={css({ color: 'gray.400' })}>{p.children}</div>
   </div>
 )
 
 const SaveGameMeta = () => {
-  const { currentSaveFile, saveName, gameVersion, inGameTimeText } = useAPIStore(
-    useShallow(s => ({
-      currentSaveFile: s.currentSaveFile,
-      saveName: s.data.saveName,
-      gameVersion: s.data.gameVersion,
-      inGameTimeText: S.getInGameTimeText(s),
-    })),
-  )
+  const currentSaveFile = useAPIStore(s => s.currentSaveFile)
+  const saveName = useAPIStore(s => s.data.saveName)
+  const gameVersion = useAPIStore(s => s.data.gameVersion)
+  const inGameTimeText = useAPIStore(s => S.getInGameTimeText(s))
   const savePathShort = currentSaveFile?.split('/').slice(-2).join('/')
 
   return currentSaveFile ? (
     <div
-      className={grid({
+      class={grid({
         templateCols: { base: '50% 30%', sm: '40% 25%' },
         justify: 'space-between',
         w: 'full',
@@ -59,7 +56,7 @@ const SaveGameMeta = () => {
           // @ts-expect-error
           interestfor="tooltip-save-path"
           id="save-path-btn"
-          className={css({ cursor: 'pointer' })}
+          class={css({ cursor: 'pointer' })}
           style={{
             anchorName: '--tooltip-anchor',
           }}
@@ -69,7 +66,7 @@ const SaveGameMeta = () => {
         <div
           id="tooltip-save-path"
           popover="hint"
-          className="tooltip"
+          class="tooltip"
           style={{
             positionAnchor: '--tooltip-anchor',
           }}
@@ -205,7 +202,7 @@ export const Toolbar = () => {
 
   return (
     <div
-      className={css({
+      class={css({
         px: '2',
         py: '1',
         rounded: 'sm',
@@ -213,10 +210,10 @@ export const Toolbar = () => {
         w: 'full',
       })}
     >
-      <div className={hstack({ justify: 'space-between', gap: '1', w: 'full', flexWrap: 'wrap' })}>
+      <div class={hstack({ justify: 'space-between', gap: '1', w: 'full', flexWrap: 'wrap' })}>
         <Logo
           active={Boolean(currentSaveFile)}
-          className={css({
+          class={css({
             h: '11',
             fill: 'gray.200',
             _active: { fill: 'blue.400' },
@@ -225,7 +222,7 @@ export const Toolbar = () => {
 
         <SaveGameMeta />
 
-        <div className={hstack({ gap: '4', justify: 'space-around' })}>
+        <div class={hstack({ gap: '4', justify: 'space-around' })}>
           {isWeb ? (
             <>
               <input type="file" id="open-file" onInput={onFileChange} hidden />
@@ -235,7 +232,7 @@ export const Toolbar = () => {
                   aria-label="Open"
                   tabIndex={0}
                   aria-controls="open-file"
-                  className={flex({
+                  class={flex({
                     justify: 'center',
                     color: 'gray.900',
                     bg: 'gray.100',
@@ -264,7 +261,7 @@ export const Toolbar = () => {
             <ToolbarButton
               isToggled={showDebugWindow}
               onClick={toggleDebugWindow}
-              className={css({
+              class={css({
                 display: {
                   base: 'none',
                   // sm: 'none',

@@ -1,4 +1,4 @@
-import { useState } from 'octane'
+import { useState } from 'preact/hooks'
 
 import type { ColorToken } from '~/styled-system/tokens'
 import type { IInteractionEvent } from '~/types'
@@ -125,12 +125,12 @@ export const ValueSetter = ({
     <Hoverable
       onHover={() => setHelpText(helperTitle ?? name, helperText)}
       onUnhover={() => clearHelpText()}
-      className={css({ w: 'full' })}
+      class={css({ w: 'full' })}
       data-cy="value-setter"
     >
       {({ isHovered }) => (
         <div
-          className={flex({
+          class={flex({
             justify: 'space-between',
             '&[data-onclick=true]': { cursor: 'pointer' },
           })}
@@ -174,16 +174,16 @@ export const ValueSetter = ({
         >
           <span>{name}</span>
 
-          <div className={flex({ justifyItems: 'center', gap: '0.5' })}>
+          <div class={flex({ justifyItems: 'center', gap: '0.5' })}>
             {showControls && (
-              <div className={flex({ justifyItems: 'center', alignItems: 'center' })}>
+              <div class={flex({ justifyItems: 'center', alignItems: 'center' })}>
                 <button
                   tabIndex={isHovered ? 0 : -1}
                   aria-label={`Decrease ${name}`}
                   data-active={isArrowLeftKeyPressed}
                   data-parent-focus={hasFocus}
                   data-parent-hover={isHovered}
-                  className={cx(
+                  class={cx(
                     caretStyle({ size: 'small', direction: 'left' }),
                     css({
                       pos: 'relative',
@@ -207,14 +207,14 @@ export const ValueSetter = ({
             <p style={{ color: getColor(isHovered) }}>{valueText ?? `${totalValue}${unit}`}</p>
 
             {showControls && (
-              <div className={flex({ justifyItems: 'center', alignItems: 'center', gap: '0.5' })}>
+              <div class={flex({ justifyItems: 'center', alignItems: 'center', gap: '0.5' })}>
                 <button
                   aria-label={`Increase ${name}`}
                   tabIndex={isHovered ? 0 : -1}
                   data-active={isArrowRightKeyPressed}
                   data-parent-focus={hasFocus}
                   data-parent-hover={isHovered}
-                  className={cx(
+                  class={cx(
                     caretStyle({ size: 'small', direction: 'right' }),
                     css({
                       pos: 'relative',

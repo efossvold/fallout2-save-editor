@@ -1,4 +1,4 @@
-import type { Octane } from 'octane/jsx-runtime'
+import type { InputHTMLAttributes } from 'preact'
 
 import type { RecipeVariant } from '../../styled-system/css'
 
@@ -39,29 +39,30 @@ const inputStyle = cva({
   },
 })
 
-interface InputProps
-  extends
-    Omit<Octane.InputHTMLAttributes<HTMLInputElement>, 'size'>,
-    RecipeVariant<typeof inputStyle> {
+interface InputProps extends Omit<InputHTMLAttributes, 'size'>, RecipeVariant<typeof inputStyle> {
   autoFocus?: boolean
-  className?: string
-  ref?: Octane.Ref<HTMLInputElement>
+  class?: string
 }
 
 export const InputField = ({
   autoFocus,
-  ref,
-  variant,
+  class: className,
+  maxLength,
+  name,
+  onInput,
+  placeholder,
   size,
-  className = '',
-  ...rest
+  value,
+  variant,
 }: InputProps) => (
   <input
-    ref={ref}
     // oxlint-disable-next-line jsx-a11y/no-autofocus
     autoFocus={autoFocus}
-    placeholder="Enter name..."
-    className={cx(inputStyle({ variant, size }), className)}
-    {...rest}
+    class={cx(inputStyle({ variant, size }), className)}
+    maxLength={maxLength}
+    name={name}
+    onInput={onInput}
+    placeholder={placeholder}
+    value={value}
   />
 )

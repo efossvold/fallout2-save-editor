@@ -13,7 +13,7 @@ export const GVAREditor = () => {
   const gvarKeysSorted = keysOf(GVARS).toSorted((a, b) => a.localeCompare(b))
 
   return (
-    <div className={flex({ direction: 'column' })}>
+    <div class={flex({ direction: 'column' })}>
       {gvarKeysSorted.map(key => {
         const { name, maxValue, desc } = GVARS[key]
         const gvarKey = prefixString(key, ATTR_PREFIX.GVAR)

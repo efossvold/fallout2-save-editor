@@ -11,13 +11,13 @@ export const AttributesEditor = () => {
   const clearHelpText = useHelpTextStore(s => s.clearHelpText)
 
   return (
-    <div className={flex({ wrap: 'wrap', gap: '1' })}>
+    <div class={flex({ wrap: 'wrap', gap: '1' })}>
       {entries(ATTRIBUTES).map(([name, _attr]) => (
         <div
           key={name}
           onMouseEnter={() => setHelpText(captializeFirstLetter(name), ATTRIBUTES[name].desc)}
           onMouseLeave={() => clearHelpText()}
-          className={css({ w: 'full' })}
+          class={css({ w: 'full' })}
         >
           <AttrValueSetter name={name} />
         </div>

@@ -15,7 +15,7 @@ export const SimpleCheckbox = (p: SimpleCheckboxProps) => {
 
   return (
     <button
-      className={flex({
+      class={flex({
         cursor: 'pointer',
         alignItems: 'center',
       })}
@@ -25,8 +25,8 @@ export const SimpleCheckbox = (p: SimpleCheckboxProps) => {
         }
       }}
     >
-      <CheckBox className={css({ mr: '1' })} />
-      <p className={css({ fs: 'xs', color: 'gray.500' })}>{p.label}</p>
+      <CheckBox class={css({ mr: '1' })} />
+      <p class={css({ fs: 'xs', color: 'gray.500' })}>{p.label}</p>
     </button>
   )
 }

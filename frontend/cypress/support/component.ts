@@ -2,7 +2,7 @@
 // Import commands.js using ES2015 syntax:
 // oxlint-disable-next-line import/no-unassigned-import
 import './commands'
-import { mount } from 'cypress-ct-octane-js'
+import { mount } from 'cypress-ct-preact'
 
 // Augment the Cypress namespace to include type definitions for
 // your custom command.

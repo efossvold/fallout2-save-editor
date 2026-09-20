@@ -12,7 +12,7 @@ interface Props {
   helperText: string
   onCheck: () => void
   onUncheck: () => void
-  className?: string
+  class?: string
 }
 
 export const ValueCheckbox = (p: Props) => {
@@ -35,7 +35,7 @@ export const ValueCheckbox = (p: Props) => {
           role="button"
           aria-label={p.name}
           tabIndex={0}
-          className={flex({
+          class={flex({
             justify: 'space-between',
             alignItems: 'center',
             cursor: 'pointer',
@@ -54,7 +54,7 @@ export const ValueCheckbox = (p: Props) => {
           <span
             data-checked={p.value}
             data-parent-hover={isHovered}
-            className={css({
+            class={css({
               color: 'green.900',
               _dataChecked: { color: 'green.200' },
               _parentHover: { base: { color: 'gray.50' }, _dataChecked: { color: 'gray.50' } },
@@ -67,13 +67,13 @@ export const ValueCheckbox = (p: Props) => {
 
           <CheckBox
             data-parent-hover={isHovered}
-            className={cx(
+            class={cx(
               css({
                 fill: 'green.900',
                 _dataChecked: { fill: 'green.200' },
                 _parentHover: { base: { fill: 'gold.400' }, _dataChecked: { fill: 'gold.400' } },
               }),
-              p.className,
+              p.class,
             )}
           />
         </span>

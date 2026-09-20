@@ -1,4 +1,4 @@
-import type { Children } from '~/types'
+import type { ComponentChildren } from 'preact'
 
 import { flex } from '~/styled-system/patterns'
 
@@ -7,7 +7,7 @@ import * as E from '../editors'
 import { useTabsStore } from './store'
 
 interface TabButtonProps {
-  children?: Children
+  children?: ComponentChildren
   index: number
 }
 
@@ -18,7 +18,7 @@ const TabButton = (p: TabButtonProps) => {
   return (
     <button
       aria-pressed={p.index === store.index}
-      className={css({
+      class={css({
         color: 'beige.500',
         _hover: {
           color: 'gray.50',
@@ -42,7 +42,7 @@ export const Tabs = () => {
   return (
     <>
       <div
-        className={flex({
+        class={flex({
           justify: 'space-between',
           w: 'full',
         })}
@@ -52,7 +52,7 @@ export const Tabs = () => {
         <TabButton index={2}>KILLS</TabButton>
       </div>
       <div
-        className={cx(
+        class={cx(
           css({ maxH: { base: '0', sm: '[276px]' }, overflowY: 'auto' }),
           'styled-scrollbar',
         )}

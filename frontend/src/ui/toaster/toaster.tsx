@@ -1,4 +1,5 @@
-import { createPortal, useLayoutEffect, useRef } from 'octane'
+import { createPortal } from 'preact'
+import { useLayoutEffect, useRef } from 'preact/hooks'
 
 import { flex } from '~/styled-system/patterns'
 
@@ -62,7 +63,7 @@ export const Toaster = () => {
     <div
       id="toaster"
       ref={toasterRef}
-      className={flex({
+      class={flex({
         height: '0',
         align: 'center',
         direction: 'column',

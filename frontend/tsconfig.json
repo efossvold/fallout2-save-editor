@@ -3,7 +3,7 @@
     "allowJs": true, // necessary for Wails bindings
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "octane",
+    "jsxImportSource": "preact",
     "lib": [ "DOM", "DOM.Iterable", "ESNext" ],
     "paths": { "~/*": [ "./src/*" ] },
     "types": [ "bun", "cypress" ],

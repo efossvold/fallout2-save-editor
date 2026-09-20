@@ -40,15 +40,15 @@ export const caretStyle = cva({
 })
 
 export const Checkbox = (p: {
-  className?: string
+  class?: string
   'data-hover'?: boolean
   'data-parent-hover'?: boolean
 }) => (
   <svg
     stroke="currentColor"
     fill="currentColor"
-    className={p.className}
-    strokeWidth="0"
+    class={p.class}
+    stroke-width="0"
     viewBox="0 0 24 24"
     focusable="false"
     height="1em"
@@ -63,15 +63,15 @@ export const Checkbox = (p: {
 )
 
 export const CheckboxChecked = (p: {
-  className?: string
+  class?: string
   'data-hover'?: boolean
   'data-parent-hover'?: boolean
 }) => (
   <svg
     stroke="currentColor"
     fill="currentColor"
-    className={p.className}
-    strokeWidth="0"
+    class={p.class}
+    stroke-width="0"
     viewBox="0 0 24 24"
     focusable="false"
     height="1em"
@@ -85,12 +85,12 @@ export const CheckboxChecked = (p: {
   </svg>
 )
 
-export const GithubIcon = (p: { className?: string }) => (
+export const GithubIcon = (p: { class?: string }) => (
   <svg
     stroke="currentColor"
     fill="currentColor"
-    className={p.className}
-    strokeWidth="0"
+    class={p.class}
+    stroke-width="0"
     viewBox="0 0 16 16"
     focusable="false"
     height="1.5em"
@@ -100,12 +100,12 @@ export const GithubIcon = (p: { className?: string }) => (
   </svg>
 )
 
-export const CheckmarkCircle = (p: { className?: string }) => (
+export const CheckmarkCircle = (p: { class?: string }) => (
   <svg
     stroke="currentColor"
     fill="currentColor"
-    className={p.className}
-    strokeWidth="0"
+    class={p.class}
+    stroke-width="0"
     viewBox="0 0 24 24"
     focusable="false"
     height="24px"
@@ -116,11 +116,11 @@ export const CheckmarkCircle = (p: { className?: string }) => (
   </svg>
 )
 
-export const AlertCircle = (p: { className?: string }) => (
+export const AlertCircle = (p: { class?: string }) => (
   <svg
     stroke="currentColor"
     fill="currentColor"
-    className={p.className}
+    class={p.class}
     strokeWidth="0"
     viewBox="0 0 24 24"
     focusable="false"

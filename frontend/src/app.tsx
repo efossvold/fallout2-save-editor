@@ -8,10 +8,10 @@ import { Toaster } from './ui/toaster/toaster'
 
 export const App = () => (
   <>
-    <div className={css({ bg: 'gray.300', h: 'screen', w: 'screen' })}>
-      <div className={flex({ justify: 'center' })}>
+    <div class={css({ bg: 'gray.300', h: 'screen', w: 'screen' })}>
+      <div class={flex({ justify: 'center' })}>
         <div
-          className={css({
+          class={css({
             px: '0.5',
             py: '1',
             minW: '[500px]',

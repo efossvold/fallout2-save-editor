@@ -21,13 +21,13 @@ export const Panels = () => {
   })
 
   return (
-    <div role="main" ref={ref} id="panels" className={flex({ direction: 'column', gap: '0.5' })}>
+    <div role="main" ref={ref} id="panels" class={flex({ direction: 'column', gap: '0.5' })}>
       <Toolbar />
-      <div className={grid({ templateCols: { lg: '47% 1fr' }, gap: '0.5' })}>
-        <div className={grid({ templateCols: { sm: 'repeat(2,minmax(0,1fr))' }, gap: '0.5' })}>
-          <div className={grid({ templateRows: 'auto 1fr', gap: '0.5' })}>
+      <div class={grid({ templateCols: { lg: '47% 1fr' }, gap: '0.5' })}>
+        <div class={grid({ templateCols: { sm: 'repeat(2,minmax(0,1fr))' }, gap: '0.5' })}>
+          <div class={grid({ templateRows: 'auto 1fr', gap: '0.5' })}>
             <Panel
-              className={css({
+              class={css({
                 bgLinear: 'to-r',
                 gradientFrom: 'brown.400',
                 gradientTo: 'brown.600',
@@ -39,7 +39,7 @@ export const Panels = () => {
               <E.PlayerXP />
             </Panel>
           </div>
-          <div className={grid({ templateRows: 'auto 1fr', gap: '0.5' })}>
+          <div class={grid({ templateRows: 'auto 1fr', gap: '0.5' })}>
             <Panel>
               <E.HealthEditor />
             </Panel>
@@ -49,7 +49,7 @@ export const Panels = () => {
           </div>
         </div>
 
-        <div className={grid({ templateCols: { base: '1fr', sm: '44% 1fr' }, gap: '0.5' })}>
+        <div class={grid({ templateCols: { base: '1fr', sm: '44% 1fr' }, gap: '0.5' })}>
           <Panel>
             <E.SkillsEditor />
           </Panel>
@@ -59,7 +59,7 @@ export const Panels = () => {
         </div>
       </div>
       <div
-        className={grid({
+        class={grid({
           templateCols: { sm: '47% 1fr' },
           gap: '0.5',
           minH: { base: '80', lg: '55' },
@@ -69,7 +69,7 @@ export const Panels = () => {
           <Tabs />
         </Panel>
         <Panel
-          className={css({
+          class={css({
             bgLinear: 'to-r',
             gradientFrom: 'beige.600',
             gradientTo: 'beige.400',
@@ -77,9 +77,9 @@ export const Panels = () => {
             minH: { base: '80', lg: '55' },
           })}
         >
-          <div className={flex({ direction: 'column', justify: 'space-between', h: 'full' })}>
+          <div class={flex({ direction: 'column', justify: 'space-between', h: 'full' })}>
             <HelpText />
-            <div className={flex({ justify: 'space-between', color: 'gray.50', fill: 'gray.50' })}>
+            <div class={flex({ justify: 'space-between', color: 'gray.50', fill: 'gray.50' })}>
               <div>v{VERSION}</div>
               <a
                 href="https://github.com/efossvold/fallout2-save-editor"
@@ -87,7 +87,7 @@ export const Panels = () => {
                 aria-label="Checkout project at github"
               >
                 <GithubIcon
-                  className={css({
+                  class={css({
                     _hover: { fill: 'gray.800' },
                   })}
                 />

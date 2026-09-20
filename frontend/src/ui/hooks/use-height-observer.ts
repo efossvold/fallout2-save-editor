@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'octane'
+import { useLayoutEffect, useRef, useState } from 'preact/hooks'
 
 /**
  * Return an array with a element ref and the height of the element

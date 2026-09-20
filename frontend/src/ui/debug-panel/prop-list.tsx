@@ -10,7 +10,7 @@ interface PropListProps {
 
 export const PropList = (p: PropListProps) => (
   <div
-    className={css({ mt: '1' })}
+    class={css({ mt: '1' })}
     style={{
       display: p.showChangesOnly ? 'none' : 'table',
     }}
@@ -24,17 +24,15 @@ export const PropList = (p: PropListProps) => (
 
       return (
         <div key={name} style={{ display: isVisible ? 'table-row' : 'none' }}>
-          <div className={css({ display: 'table-cell' })}>
-            <span className={css({ color: 'gray.500' })}>{name}</span>
-            <span className={css({ color: 'gray.900', ml: '0.5', mr: '2' })}>:</span>
-            {typeof value === 'number' && (
-              <span className={css({ color: 'red.400' })}>{value}</span>
-            )}
+          <div class={css({ display: 'table-cell' })}>
+            <span class={css({ color: 'gray.500' })}>{name}</span>
+            <span class={css({ color: 'gray.900', ml: '0.5', mr: '2' })}>:</span>
+            {typeof value === 'number' && <span class={css({ color: 'red.400' })}>{value}</span>}
             {typeof value === 'boolean' && (
-              <span className={css({ color: 'blue.400' })}>{value ? 'true' : 'false'}</span>
+              <span class={css({ color: 'blue.400' })}>{value ? 'true' : 'false'}</span>
             )}
             {typeof value === 'string' && (
-              <span className={css({ color: 'green.600' })}>"{value}"</span>
+              <span class={css({ color: 'green.600' })}>"{value}"</span>
             )}
           </div>
         </div>

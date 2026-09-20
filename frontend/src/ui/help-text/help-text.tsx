@@ -6,14 +6,14 @@ export const HelpText = () => {
   const helpText = useHelpTextStore(s => s.helpText)
 
   return (
-    <div className={css({ flex: '1', pb: '2', pt: '1' })}>
-      <p className={css({ color: 'gray.800', fs: 'xl' })}>{title}</p>
+    <div class={css({ flex: '1', pb: '2', pt: '1' })}>
+      <p class={css({ color: 'gray.800', fs: 'xl' })}>{title}</p>
       {title ? (
-        <div className={css({ mb: '2', borderWidth: '1px', borderColor: 'gray.800', w: 'full' })} />
+        <div class={css({ mb: '2', borderWidth: '1px', borderColor: 'gray.800', w: 'full' })} />
       ) : (
         <></>
       )}
-      <p className={css({ fs: 'md', color: 'gray.800' })}>{helpText}</p>
+      <p class={css({ fs: 'md', color: 'gray.800' })}>{helpText}</p>
     </div>
   )
 }

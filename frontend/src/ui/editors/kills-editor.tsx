@@ -13,7 +13,7 @@ export const KillsEditor = () => {
   const killKeysSorted = keysOf(KILLS).toSorted((a, b) => a.localeCompare(b))
 
   return (
-    <div className={flex({ direction: 'column' })}>
+    <div class={flex({ direction: 'column' })}>
       {killKeysSorted.map(key => {
         const { name, desc } = KILLS[key]
         const killKey = prefixString(key, ATTR_PREFIX.KILL)

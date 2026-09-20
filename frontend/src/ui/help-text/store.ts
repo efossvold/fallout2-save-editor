@@ -1,4 +1,4 @@
-import { create } from '@octanejs/zustand'
+import { create } from 'preact-zustand'
 
 interface HelpTextState {
   title: string

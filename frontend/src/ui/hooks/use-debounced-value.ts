@@ -1,31 +1,21 @@
-import type { Octane } from 'octane/jsx-runtime'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
-import { useEffect, useRef, useState } from 'octane'
+const DEFAULT_DELAY = 250
 
-/* Deprecated over native useDeferredValue */
-export const useDebouncedValue = <T>(value: T, delay = 500): [Octane.Ref<T>, T] => {
-  const prevValue = useRef(value)
-  const isPrevValueSet = useRef(false)
-  const [debouncedValue, setDebouncedValue] = useState(value)
+export const useDebounce = <T>(value: T, delay: number = DEFAULT_DELAY): T => {
+  const [debouncedValue, setDebouncedValue] = useState(() => value)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   useEffect(() => {
-    let handler: NodeJS.Timeout | undefined
-
-    if (!isPrevValueSet.current) {
-      handler = setTimeout(() => {
-        setDebouncedValue(value)
-        isPrevValueSet.current = false
-        prevValue.current = value
-        isPrevValueSet.current = true
-      }, delay)
+    if (timerRef.current != undefined) {
+      clearTimeout(timerRef.current)
     }
 
-    return () => {
-      if (handler) {
-        clearTimeout(handler)
-      }
-    }
-  }, [value, delay, prevValue])
+    timerRef.current = setTimeout(() => {
+      timerRef.current = undefined
+      setDebouncedValue(() => value)
+    }, delay)
+  }, [value, delay])
 
-  return [prevValue, debouncedValue]
+  return debouncedValue
 }

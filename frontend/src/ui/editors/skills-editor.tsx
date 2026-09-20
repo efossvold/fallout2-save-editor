@@ -79,7 +79,7 @@ export const SkillsEditor = () => {
   return (
     <>
       <PanelHeader title="SKILLS" />
-      <div className={flex({ direction: 'column' })}>
+      <div class={flex({ direction: 'column' })}>
         {entries(skills).map(([name, value]) => (
           <SkillSetter key={name} name={name} value={value} />
         ))}

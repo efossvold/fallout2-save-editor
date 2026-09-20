@@ -1,4 +1,4 @@
-import { useState } from 'octane'
+import { useState } from 'preact/hooks'
 
 import type { Fn } from '~/types'
 

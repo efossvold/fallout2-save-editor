@@ -1,4 +1,4 @@
-import { create } from '@octanejs/zustand'
+import { create } from 'preact-zustand'
 
 type Severity = 'info' | 'success' | 'error'
 

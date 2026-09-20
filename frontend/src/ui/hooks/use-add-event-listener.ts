@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'octane'
+import { useRef, useEffect } from 'preact/hooks'
 
 interface TOptions {
   register: boolean

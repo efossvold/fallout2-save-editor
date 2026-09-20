@@ -6,12 +6,9 @@
   "type": "module",
   "scripts": {
     "analyze": "vite analyze",
-    "build:all": "bun run build:clean && bun run build && bun run build:server && bun run build:ssg",
+    "build": "bun run build:clean && bun run bamboogen:prod && vite build --outDir dist",
     "build:clean": "rm -rf dist/*",
     "build:dev": "bun run bamboogen && vite dev",
-    "build:server": "vite build --outDir dist/server --ssr ./src/entry-server.ts",
-    "build:ssg": "bun run ./dist/server/entry-server.js",
-    "build": "bun run bamboogen:prod && vite build --outDir dist/client --ssrManifest",
     "cypress:ct": "cypress open --component --browser chrome",
     "compress": "find dist -type f -exec brotli -jf {} \\;",
     "deploy:prod": "git hook run pre-commit && bunx netlify-cli deploy --prod",
@@ -27,28 +24,27 @@
     "bamboogen:prod": "NODE_ENV=production bamboo codegen --clean",
     "bamboogen": "bamboo codegen --clean --silent",
     "preview": "vite preview",
-    "serve": "http-server dist/client -bS -C cert/icert.org+1.pem -K cert/icert.org+1-key.pem",
+    "serve": "http-server dist -bS -C cert/icert.org+1.pem -K cert/icert.org+1-key.pem",
     "test:watch": "bun test --watch",
     "test": "bun test"
   },
   "dependencies": {
-    "@octanejs/zustand": "0.1.32",
     "@wailsio/runtime": "latest",
-    "cypress": "^16.1.0",
-    "cypress-ct-octane-js": "^0.1.36",
-    "octane": "0.1.32",
-    "reselect": "^5.3.0",
-    "zustand": "^5.0.15"
+    "preact": "11.0.0-rc.2",
+    "preact-iso": "^2.12.2",
+    "preact-zustand": "^1.0.5",
+    "reselect": "^5.3.0"
   },
   "devDependencies": {
     "@bamboocss/dev": "1.55.6",
     "@bamboocss/preset-base": "1.55.6",
     "@bamboocss/types": "1.55.6",
     "@bamboocss/vite": "1.55.6",
-    "@octanejs/cli": "^0.0.11",
-    "@octanejs/vite-plugin": "0.1.32",
+    "@preact/preset-vite": "^2.10.6",
     "@rolldown/plugin-babel": "^0.2.4",
     "@types/bun": "1.4.2",
+    "cypress": "^16.1.0",
+    "cypress-ct-preact": "link:cypress-ct-preact",
     "eslint-plugin-react-you-might-not-need-an-effect": "^1.0.2",
     "netlify-cli": "^27.8.0",
     "oxfmt": "^0.68.0",
@@ -57,6 +53,7 @@
     "typescript": "^7.0.2",
     "vite": "^8.3.0",
     "vite-bundle-analyzer": "^1.3.9",
+    "vite-plugin-html-minifier": "^1.0.5",
     "watch-exec": "^1.2.2"
   }
 }

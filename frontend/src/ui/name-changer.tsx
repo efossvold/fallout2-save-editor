@@ -1,4 +1,4 @@
-import { useState } from 'octane'
+import { useState } from 'preact/hooks'
 
 import { hstack } from '~/styled-system/patterns'
 
@@ -27,7 +27,7 @@ const NameChangerModal = (p: { initialValue: string; disclosure: UseDisclosureRe
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="md">
-      <label htmlFor="character-name" className={css({ display: 'block', fs: 'xl' })}>
+      <label htmlFor="character-name" class={css({ display: 'block', fs: 'xl' })}>
         Character Name
       </label>
       <InputField
@@ -40,7 +40,7 @@ const NameChangerModal = (p: { initialValue: string; disclosure: UseDisclosureRe
         // oxlint-disable-next-line jsx-a11y/no-autofocus
         autoFocus
       />
-      <div className={hstack({ gap: '4', justify: 'flex-end', mt: '4' })}>
+      <div class={hstack({ gap: '4', justify: 'flex-end', mt: '4' })}>
         <ModalButton onClick={onClose} kind="secondary">
           Close
         </ModalButton>
@@ -65,7 +65,7 @@ export const NameChanger = (p: { name: string }) => {
   return (
     <>
       <div
-        className={flex({
+        class={flex({
           justify: 'space-between',
           mr: '2.5',
           color: { base: 'green.200', _hover: 'gray.50' },
@@ -73,7 +73,7 @@ export const NameChanger = (p: { name: string }) => {
       >
         <p>Name</p>
         <div
-          className={flex({
+          class={flex({
             justify: 'space-between',
           })}
         >
@@ -81,7 +81,7 @@ export const NameChanger = (p: { name: string }) => {
             aria-label="Change character name"
             // oxlint-disable-next-line react/jsx-handler-names
             onClick={disclosure.onToggle}
-            className={flex({
+            class={flex({
               cursor: 'pointer',
               _hover: { textDecoration: 'underline' },
               mr: '2',
