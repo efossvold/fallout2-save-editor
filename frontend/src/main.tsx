@@ -13,10 +13,4 @@ if (typeof globalThis.window !== 'undefined') {
   hydrate(<App />, container)
 }
 
-export const prerender = async () =>
-  await ssr(
-    <>
-      <App />
-      <script async src="https://scripts.simpleanalyticscdn.com/latest.js" />
-    </>,
-  )
+export const prerender = async () => await ssr(<App />)

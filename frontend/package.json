@@ -41,7 +41,6 @@
     "@bamboocss/types": "1.55.6",
     "@bamboocss/vite": "1.55.6",
     "@preact/preset-vite": "^2.10.6",
-    "@rolldown/plugin-babel": "^0.2.4",
     "@types/bun": "1.4.2",
     "cypress": "^16.1.0",
     "cypress-ct-preact": "^1.0.0",
