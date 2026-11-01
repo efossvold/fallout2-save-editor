@@ -13,4 +13,4 @@ if (typeof globalThis.window !== 'undefined') {
   hydrate(<App />, container)
 }
 
-export const prerender = async () => await ssr(<App />)
+export const prerender = async (data: any) => await ssr(<App {...data} />)

@@ -30,7 +30,13 @@ export const App = () => {
 
           <StoreDebuggerPanel />
         </div>
-        {isWeb && <SimpleAnalyticsBadge />}
+
+        {isWeb && (
+          <>
+            <SimpleAnalyticsBadge />
+            <script async src="https://scripts.simpleanalyticscdn.com/latest.js" />
+          </>
+        )}
       </div>
 
       <Toaster />

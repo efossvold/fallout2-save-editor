@@ -74,6 +74,7 @@ export const saveHandler = (args?: SaveHandlerArgs): SaveHandler => {
     return U.entries(section.keys).reduce((setters, [key, _entry]) => {
       // @ts-expect-error key is string and cannot be used to index element
       setters[`set${prefix}${U.captializeFirstLetter(key)}`] = (value: string | number) => {
+        // oxlint-disable-next-line typescript/no-unsafe-enum-assignment
         setValue(getOffset(sectionName), section.keys[key], value)
       }
       return setters

@@ -16,7 +16,7 @@ export default defineConfig({
     bamboo(),
     preact({
       prerender: {
-        enabled: false,
+        enabled: true,
         renderTarget: '#root',
       },
     }),
